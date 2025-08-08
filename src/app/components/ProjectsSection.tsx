@@ -38,7 +38,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-
 // TypeScript interfaces
 interface Project {
   id: number;
@@ -229,18 +228,20 @@ const projects: Project[] = [
   },
 ];
 
-// Memoized ProjectDetailsModal component
+// Memoized ProjectDetailsModal component with updated colors
 const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
   project,
   isOpen,
   onClose,
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+
   // Memoized swiper modules
   const swiperModules = useMemo(
     () => [Navigation, Pagination, Autoplay, Thumbs],
     []
   );
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -256,10 +257,10 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-200/50 dark:border-slate-700/50"
+              className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-teal-200/50 dark:border-teal-700/50"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
+              <div className="p-6 border-b border-teal-200/50 dark:border-teal-700/50">
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
@@ -267,15 +268,15 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     </h3>
                     <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                       <div className="flex items-center gap-1">
-                        <FiCalendar className="text-blue-500" />
+                        <FiCalendar className="text-teal-500" />
                         <span>{project.date}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <FiUser className="text-blue-500" />
+                        <FiUser className="text-teal-500" />
                         <span>{project.client}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <FiClock className="text-blue-500" />
+                        <FiClock className="text-teal-500" />
                         <span>{project.duration}</span>
                       </div>
                     </div>
@@ -344,20 +345,20 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiInfo className="text-blue-500" />
+                        <FiInfo className="text-teal-500" />
                         Project Overview
                       </h4>
                       <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                         {project.description}
                       </p>
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiTag className="text-blue-500" />
+                        <FiTag className="text-teal-500" />
                         Key Features
                       </h4>
                       <ul className="space-y-3 mb-8">
                         {project.features.map((feature, i) => (
                           <li key={i} className="flex items-start">
-                            <span className="text-blue-500 dark:text-blue-400 mr-3 mt-1">
+                            <span className="text-teal-500 dark:text-teal-400 mr-3 mt-1">
                               ▹
                             </span>
                             <span className="text-slate-600 dark:text-slate-300">
@@ -367,14 +368,14 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         ))}
                       </ul>
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiTag className="text-blue-500" />
+                        <FiTag className="text-teal-500" />
                         Project Tags
                       </h4>
                       <div className="flex flex-wrap gap-2 mb-8">
                         {project.tags.map((tag, i) => (
                           <span
                             key={i}
-                            className="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium"
+                            className="px-3 py-1.5 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-200 rounded-full text-sm font-medium"
                           >
                             {tag}
                           </span>
@@ -390,7 +391,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                             {project.testimonials.map((testimonial, i) => (
                               <div
                                 key={i}
-                                className="bg-blue-50 dark:bg-blue-900/20 p-5 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm"
+                                className="bg-teal-50 dark:bg-teal-900/20 p-5 rounded-xl border border-teal-100 dark:border-teal-900/30 shadow-sm"
                               >
                                 <p className="text-slate-600 dark:text-slate-300 italic mb-3 text-lg">
                                   &quot;{testimonial.quote} &quot;
@@ -409,7 +410,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiCode className="text-blue-500" />
+                        <FiCode className="text-teal-500" />
                         Technologies Used
                       </h4>
                       <div className="flex flex-wrap gap-2 mb-8">
@@ -423,13 +424,13 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         ))}
                       </div>
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiInfo className="text-blue-500" />
+                        <FiInfo className="text-teal-500" />
                         Project Statistics
                       </h4>
                       <div className="grid grid-cols-2 gap-4 mb-8">
                         <div className="bg-slate-100 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
                           <div className="flex items-center gap-2 mb-2">
-                            <FiClock className="text-blue-500" />
+                            <FiClock className="text-teal-500" />
                             <span className="text-sm text-slate-600 dark:text-slate-400">
                               Duration
                             </span>
@@ -440,7 +441,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         </div>
                         <div className="bg-slate-100 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
                           <div className="flex items-center gap-2 mb-2">
-                            <FiUsers className="text-blue-500" />
+                            <FiUsers className="text-teal-500" />
                             <span className="text-sm text-slate-600 dark:text-slate-400">
                               Team Size
                             </span>
@@ -451,7 +452,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         </div>
                         <div className="bg-slate-100 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
                           <div className="flex items-center gap-2 mb-2">
-                            <FiUser className="text-blue-500" />
+                            <FiUser className="text-teal-500" />
                             <span className="text-sm text-slate-600 dark:text-slate-400">
                               Users
                             </span>
@@ -462,7 +463,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         </div>
                         <div className="bg-slate-100 dark:bg-slate-700/50 p-4 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
                           <div className="flex items-center gap-2 mb-2">
-                            <FiTag className="text-blue-500" />
+                            <FiTag className="text-teal-500" />
                             <span className="text-sm text-slate-600 dark:text-slate-400">
                               Features
                             </span>
@@ -499,7 +500,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                         </>
                       )}
                       <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2 text-lg">
-                        <FiExternalLink className="text-blue-500" />
+                        <FiExternalLink className="text-teal-500" />
                         Project Links
                       </h4>
                       <div className="space-y-3">
@@ -530,7 +531,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                             href={project.liveLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl transition-all shadow-md"
+                            className="flex items-center gap-3 p-4 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white rounded-xl transition-all shadow-md"
                           >
                             <FiExternalLink className="text-xl" />
                             <span className="font-medium">Live Demo</span>
@@ -549,7 +550,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
   );
 };
 
-// Memoized ProjectCard component
+// Memoized ProjectCard component with updated colors
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -558,6 +559,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
   // Memoized swiper modules
   const swiperModules = useMemo(
     () => [Navigation, Pagination, Autoplay, EffectCreative],
@@ -598,18 +600,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
         variants={variants}
         className={cn(
           "relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500",
-          "bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm",
-          "border border-slate-200/50 dark:border-slate-700/50"
+          "bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm",
+          "border border-teal-200/50 dark:border-teal-700/50"
         )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* Animated gradient overlay on hover */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 dark:from-blue-500/5 dark:to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-blue-500/10 dark:from-teal-500/5 dark:to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
         />
+
         {/* Content grid */}
         <div className="grid lg:grid-cols-2 gap-0 h-full">
           {/* Image slider */}
@@ -667,6 +670,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 </SwiperSlide>
               ))}
             </Swiper>
+
             {/* Custom navigation buttons */}
             <div
               className={cn(
@@ -688,6 +692,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             >
               <FiChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
             </div>
+
             {/* Custom pagination */}
             <div
               className={cn(
@@ -696,18 +701,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
               )}
             ></div>
           </div>
+
           {/* Content */}
           <div className="p-6 md:p-8 flex flex-col">
             {/* Project meta */}
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <motion.span
-                className="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 text-sm font-medium"
+                className="px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-200 text-sm font-medium"
                 whileHover={{ scale: 1.05 }}
               >
                 {project.category}
               </motion.span>
               <div className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400">
-                <FiCalendar className="w-4 h-4 text-blue-500" />
+                <FiCalendar className="w-4 h-4 text-teal-500" />
                 <span>{project.date}</span>
               </div>
               {project.awards.length > 0 && (
@@ -729,6 +735,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 </motion.div>
               )}
             </div>
+
             {/* Project title */}
             <motion.h3
               className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3"
@@ -736,14 +743,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             >
               {project.title}
             </motion.h3>
+
             {/* Project description */}
             <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
               {project.description}
             </p>
+
             {/* Key features */}
             <div className="mb-6">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <FiInfo className="text-blue-500" />
+                <FiInfo className="text-teal-500" />
                 Key Features
               </h4>
               <ul className="space-y-2">
@@ -755,7 +764,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                     transition={{ delay: 0.1 + i * 0.05 }}
                     className="flex items-start"
                   >
-                    <span className="text-blue-500 dark:text-blue-400 mr-2 mt-1">
+                    <span className="text-teal-500 dark:text-teal-400 mr-2 mt-1">
                       ▹
                     </span>
                     <span className="text-slate-600 dark:text-slate-300 text-sm">
@@ -770,17 +779,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 )}
               </ul>
             </div>
+
             {/* Tags */}
             <div className="mb-6">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <FiTag className="text-blue-500" />
+                <FiTag className="text-teal-500" />
                 Tags
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.tags.slice(0, 4).map((tag, i) => (
                   <motion.span
                     key={i}
-                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-pointer"
+                    className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium hover:bg-teal-200 dark:hover:bg-teal-900/50 transition-colors cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -794,10 +804,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 )}
               </div>
             </div>
+
             {/* Technologies */}
             <div className="mt-auto">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <FiCode className="text-blue-500" />
+                <FiCode className="text-teal-500" />
                 Technologies
               </h4>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -820,6 +831,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                   </span>
                 )}
               </div>
+
               {/* Action buttons */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {project.githubClient && (
@@ -861,13 +873,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                   <motion.a
                     whileHover={{
                       y: -3,
-                      boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
+                      boxShadow: "0 4px 14px rgba(20, 184, 166, 0.3)",
                     }}
                     whileTap={{ scale: 0.98 }}
                     href={project.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-lg transition-all shadow-md"
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white rounded-lg transition-all shadow-md"
                   >
                     <FiExternalLink />
                     <span className="text-sm">Live Demo</span>
@@ -878,6 +890,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           </div>
         </div>
       </motion.div>
+
       {/* Project Details Modal */}
       <ProjectDetailsModal
         project={project}
@@ -968,19 +981,20 @@ const ProjectsSection: React.FC = () => {
 
   return (
     <section id="projects" className="relative py-20 md:py-28 overflow-hidden">
-      {/* Professional background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20">
-        {/* Subtle animated gradient orbs */}
+      {/* Professional background with teal/blue theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
+        {/* Simplified animated gradient orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-teal-200/20 dark:bg-teal-800/10 blur-3xl"
           animate={{ y: [0, -30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-indigo-200/20 dark:bg-indigo-800/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl"
           animate={{ y: [0, 30, 0] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
+
         {/* Grid pattern */}
         <div className="absolute inset-0 opacity-20 dark:opacity-30">
           <div
@@ -996,9 +1010,10 @@ const ProjectsSection: React.FC = () => {
           />
         </div>
       </div>
-      {/* Subtle floating shapes */}
+
+      {/* Simplified floating shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(5)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0 }}
@@ -1017,15 +1032,16 @@ const ProjectsSection: React.FC = () => {
               top: `${Math.random() * 100}%`,
               background:
                 i % 2 === 0
-                  ? "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)"
-                  : "radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 70%)",
+                  ? "radial-gradient(circle, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0) 70%)"
+                  : "radial-gradient(circle, rgba(8, 145, 178, 0.1) 0%, rgba(8, 145, 178, 0) 70%)",
               filter: "blur(70px)",
             }}
           />
         ))}
       </div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
+        {/* Header with teal/blue theme */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1041,7 +1057,7 @@ const ProjectsSection: React.FC = () => {
             className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
             My{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400">
               Projects
             </span>
           </motion.h2>
@@ -1050,7 +1066,7 @@ const ProjectsSection: React.FC = () => {
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             viewport={{ once: true }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 mx-auto mb-6 transform origin-left"
+            className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 transform origin-left"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -1062,6 +1078,7 @@ const ProjectsSection: React.FC = () => {
             Selected work showcasing my full-stack development capabilities
           </motion.p>
         </motion.div>
+
         {/* Search bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1075,7 +1092,7 @@ const ProjectsSection: React.FC = () => {
             <input
               type="text"
               placeholder="Search projects by name, technology, or description..."
-              className="w-full pl-12 pr-10 py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-transparent shadow-sm"
+              className="w-full pl-12 pr-10 py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-teal-200/50 dark:border-teal-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-500 focus:border-transparent shadow-sm"
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -1089,6 +1106,7 @@ const ProjectsSection: React.FC = () => {
             )}
           </div>
         </motion.div>
+
         {/* Filter tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1097,14 +1115,14 @@ const ProjectsSection: React.FC = () => {
           viewport={{ once: true }}
           className="flex justify-center mb-12"
         >
-          <div className="inline-flex p-1 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
+          <div className="inline-flex p-1 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-teal-200/50 dark:border-teal-700/50 shadow-sm">
             {categories.map((category) => (
               <button
                 key={category}
                 className={cn(
                   "px-4 py-2 rounded-md text-sm font-medium transition-colors",
                   activeFilter === category
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-sm"
+                    ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-sm"
                     : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50"
                 )}
                 onClick={() => handleFilterChange(category)}
@@ -1114,6 +1132,7 @@ const ProjectsSection: React.FC = () => {
             ))}
           </div>
         </motion.div>
+
         {/* Tags filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1130,8 +1149,8 @@ const ProjectsSection: React.FC = () => {
               className={cn(
                 "px-3 py-1 rounded-full text-xs font-medium transition-colors",
                 selectedTag === null
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white"
-                  : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-200/50 dark:border-slate-700/50"
+                  ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white"
+                  : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-teal-200/50 dark:border-teal-700/50"
               )}
               onClick={() => handleTagChange(null)}
             >
@@ -1143,8 +1162,8 @@ const ProjectsSection: React.FC = () => {
                 className={cn(
                   "px-3 py-1 rounded-full text-xs font-medium transition-colors",
                   selectedTag === tag
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white"
-                    : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-200/50 dark:border-slate-700/50"
+                    ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white"
+                    : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-teal-200/50 dark:border-teal-700/50"
                 )}
                 onClick={() => handleTagChange(tag)}
               >
@@ -1153,6 +1172,7 @@ const ProjectsSection: React.FC = () => {
             ))}
           </div>
         </motion.div>
+
         {/* Results count */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -1163,6 +1183,7 @@ const ProjectsSection: React.FC = () => {
         >
           Showing {filteredProjects.length} of {projects.length} projects
         </motion.div>
+
         {/* Projects grid */}
         <div className="grid gap-10">
           {filteredProjects.length > 0 ? (
@@ -1173,7 +1194,7 @@ const ProjectsSection: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50"
+              className="text-center py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-teal-200/50 dark:border-teal-700/50"
             >
               <h3 className="text-xl font-medium text-slate-900 dark:text-white mb-2">
                 No projects found
@@ -1184,6 +1205,7 @@ const ProjectsSection: React.FC = () => {
             </motion.div>
           )}
         </div>
+
         {/* View more button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1195,12 +1217,28 @@ const ProjectsSection: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-lg font-medium shadow-md transition-all"
+            className="px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white rounded-lg font-medium shadow-md transition-all"
           >
             <Link href="/projects"> View All Projects</Link>
           </motion.button>
         </motion.div>
       </div>
+
+      {/* Custom CSS animations for performance */}
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+
 export default function LoadingScreen() {
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState(3);
@@ -39,11 +40,11 @@ export default function LoadingScreen() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900"
         >
           {/* Background pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-purple-600/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-blue-500/10" />
             <div
               className="absolute inset-0"
               style={{
@@ -56,6 +57,7 @@ export default function LoadingScreen() {
               }}
             />
           </div>
+
           {/* Logo with animation */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -64,7 +66,7 @@ export default function LoadingScreen() {
             className="mb-12 relative z-10"
           >
             <motion.h1
-              className="text-5xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
+              className="text-5xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -80,18 +82,20 @@ export default function LoadingScreen() {
               CodesWithRakib
             </motion.h1>
           </motion.div>
+
           {/* Countdown animation */}
           <div className="relative w-64 h-64 flex items-center justify-center mb-8">
             {/* Outer ring */}
             <motion.div
-              className="absolute w-full h-full rounded-full border-4 border-muted"
+              className="absolute w-full h-full rounded-full border-4 border-slate-200 dark:border-slate-700"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             />
+
             {/* Animated progress ring */}
             <motion.div
-              className="absolute w-full h-full rounded-full border-4 border-transparent border-t-primary border-r-purple-600"
+              className="absolute w-full h-full rounded-full border-4 border-transparent border-t-teal-500 border-r-blue-500"
               initial={{ rotate: -90, scale: 0.9, opacity: 0 }}
               animate={{
                 rotate: 270,
@@ -107,6 +111,7 @@ export default function LoadingScreen() {
                   "polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%)",
               }}
             />
+
             {/* Countdown number */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -115,25 +120,26 @@ export default function LoadingScreen() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 1.5, opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-7xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
+                className="text-7xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent"
               >
                 {countdown}
               </motion.div>
             </AnimatePresence>
-            {/* Pulsing dots */}
+
+            {/* Simplified pulsing dots */}
             <div className="absolute inset-0 flex items-center justify-center">
-              {[...Array(8)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-2 h-2 rounded-full bg-primary"
+                  className="absolute w-2 h-2 rounded-full bg-teal-500"
                   style={{
                     top: "50%",
                     left: "50%",
                     transformOrigin: "0 0",
                   }}
                   animate={{
-                    x: [0, 100 * Math.cos((i * Math.PI) / 4)],
-                    y: [0, 100 * Math.sin((i * Math.PI) / 4)],
+                    x: [0, 100 * Math.cos((i * Math.PI) / 3)],
+                    y: [0, 100 * Math.sin((i * Math.PI) / 3)],
                     opacity: [0, 1, 0],
                     scale: [0.5, 1, 0.5],
                   }}
@@ -147,6 +153,7 @@ export default function LoadingScreen() {
               ))}
             </div>
           </div>
+
           {/* Status text */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -155,7 +162,7 @@ export default function LoadingScreen() {
             className="flex flex-col items-center"
           >
             <motion.p
-              className="text-lg text-muted-foreground mb-2"
+              className="text-lg text-slate-600 dark:text-slate-400 mb-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -170,12 +177,13 @@ export default function LoadingScreen() {
                       ? "Almost there..."
                       : "Complete!"}
             </motion.p>
+
             {/* Animated loader dots */}
             <div className="flex space-x-1">
               {[...Array(3)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="w-2 h-2 rounded-full bg-primary"
+                  className="w-2 h-2 rounded-full bg-teal-500"
                   animate={{
                     y: [0, -5, 0],
                   }}
@@ -189,6 +197,7 @@ export default function LoadingScreen() {
               ))}
             </div>
           </motion.div>
+
           {/* Bottom decorative element */}
           <motion.div
             className="absolute bottom-10 left-1/2 -translate-x-1/2"
@@ -197,7 +206,7 @@ export default function LoadingScreen() {
             transition={{ delay: 0.6 }}
           >
             <motion.div
-              className="w-8 h-1 rounded-full bg-gradient-to-r from-primary to-purple-600"
+              className="w-8 h-1 rounded-full bg-gradient-to-r from-teal-500 to-blue-500"
               animate={{ width: [0, 64, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             />

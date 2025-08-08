@@ -9,16 +9,24 @@ export function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 }); // Default to center
 
-  // Add interactive mouse effect
+  // Simplified mouse effect with throttling
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      setMousePosition({ x, y });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const rect = section.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          setMousePosition({ x, y });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     section.addEventListener("mousemove", handleMouseMove);
@@ -33,17 +41,17 @@ export function ContactSection() {
       style={{
         background:
           theme === "dark"
-            ? `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9))`
-            : `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(241, 245, 249, 0.9), rgba(226, 232, 240, 0.8))`,
+            ? `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9))`
+            : `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(240, 253, 250, 0.9), rgba(224, 242, 254, 0.8))`,
       }}
     >
-      {/* Enhanced background with multiple layers */}
+      {/* Simplified background with fewer elements */}
       <div className="absolute inset-0">
-        {/* Animated gradient orbs */}
+        {/* Reduced animated gradient orbs */}
         <motion.div
           animate={{
-            y: [0, -30, 0],
-            x: [0, 20, 0],
+            y: [0, -20, 0],
+            x: [0, 15, 0],
           }}
           transition={{
             duration: 20,
@@ -51,12 +59,12 @@ export function ContactSection() {
             repeatType: "reverse",
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-blue-400/20 to-indigo-500/20 dark:from-blue-600/20 dark:to-indigo-700/20 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-teal-400/20 to-blue-500/20 dark:from-teal-600/20 dark:to-blue-700/20 blur-3xl"
         />
         <motion.div
           animate={{
-            y: [0, 30, 0],
-            x: [0, -20, 0],
+            y: [0, 20, 0],
+            x: [0, -15, 0],
           }}
           transition={{
             duration: 25,
@@ -65,8 +73,9 @@ export function ContactSection() {
             ease: "easeInOut",
             delay: 2,
           }}
-          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-indigo-400/20 to-purple-500/20 dark:from-indigo-600/20 dark:to-purple-700/20 blur-3xl"
+          className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-blue-400/20 to-cyan-500/20 dark:from-blue-600/20 dark:to-cyan-700/20 blur-3xl"
         />
+
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 opacity-20 dark:opacity-30">
           <div
@@ -81,9 +90,10 @@ export function ContactSection() {
             }}
           />
         </div>
-        {/* Floating shapes */}
+
+        {/* Reduced floating shapes */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0 }}
@@ -96,22 +106,23 @@ export function ContactSection() {
               }}
               className="absolute rounded-full"
               style={{
-                width: `${Math.random() * 250 + 100}px`,
-                height: `${Math.random() * 250 + 100}px`,
+                width: `${Math.random() * 200 + 100}px`,
+                height: `${Math.random() * 200 + 100}px`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 background:
                   i % 2 === 0
-                    ? "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)"
-                    : "radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 70%)",
+                    ? "radial-gradient(circle, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0) 70%)"
+                    : "radial-gradient(circle, rgba(8, 145, 178, 0.1) 0%, rgba(8, 145, 178, 0) 70%)",
                 filter: "blur(70px)",
               }}
             />
           ))}
         </div>
       </div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Enhanced Section Heading */}
+        {/* Enhanced Section Heading with teal/blue theme */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -132,8 +143,8 @@ export function ContactSection() {
             style={{
               backgroundImage:
                 theme === "dark"
-                  ? "linear-gradient(90deg, #e2e8f0, #cbd5e1, #94a3b8, #e2e8f0)"
-                  : "linear-gradient(90deg, #1e293b, #334155, #475569, #1e293b)",
+                  ? "linear-gradient(90deg, #2dd4bf, #06b6d4, #0ea5e9, #2dd4bf)"
+                  : "linear-gradient(90deg, #0d9488, #0891b2, #0ea5e9, #0d9488)",
               backgroundSize: "300% 100%",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
@@ -147,7 +158,7 @@ export function ContactSection() {
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 mx-auto mb-6 rounded-full"
+            className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 rounded-full"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -160,7 +171,8 @@ export function ContactSection() {
             I&apos;d love to hear from you!
           </motion.p>
         </motion.div>
-        {/* Enhanced Contact Form Container */}
+
+        {/* Enhanced Contact Form Container with teal/blue theme */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -168,11 +180,12 @@ export function ContactSection() {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
-          <div className="bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-100 dark:border-blue-900/30 overflow-hidden">
+          <div className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-xl border border-teal-100/50 dark:border-teal-700/30 overflow-hidden">
             <div className="p-8">
               <ContactForm />
             </div>
           </div>
+
           {/* Additional contact info */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -183,13 +196,29 @@ export function ContactSection() {
           >
             <p>
               Alternatively, you can reach me directly at{" "}
-              <span className="font-medium text-blue-600 dark:text-blue-400">
+              <span className="font-medium text-teal-600 dark:text-teal-400">
                 codeswithrakib@gmail.com
               </span>
             </p>
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Custom CSS animations for performance */}
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 }

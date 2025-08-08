@@ -29,9 +29,9 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative w-full border-t border-slate-200/50 dark:border-slate-800/50 overflow-hidden">
-      {/* Enhanced background with gradient and pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-slate-900">
+    <footer className="relative w-full border-t border-teal-200/50 dark:border-teal-800/50 overflow-hidden">
+      {/* Enhanced background with teal/blue gradient and pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900">
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 opacity-20 dark:opacity-30">
           <div
@@ -47,10 +47,10 @@ export function Footer() {
           />
         </div>
 
-        {/* Subtle animated gradient orbs */}
+        {/* Simplified animated gradient orbs */}
         <motion.div
           animate={{
-            y: [0, -20, 0],
+            y: [0, -15, 0],
           }}
           transition={{
             duration: 15,
@@ -58,11 +58,11 @@ export function Footer() {
             repeatType: "reverse",
             ease: "easeInOut",
           }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-teal-200/20 dark:bg-teal-800/10 blur-3xl"
         />
         <motion.div
           animate={{
-            y: [0, 20, 0],
+            y: [0, 15, 0],
           }}
           transition={{
             duration: 18,
@@ -71,7 +71,7 @@ export function Footer() {
             ease: "easeInOut",
             delay: 2,
           }}
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-indigo-200/20 dark:bg-indigo-800/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl"
         />
       </div>
 
@@ -79,7 +79,7 @@ export function Footer() {
         initial={{ width: 0 }}
         whileInView={{ width: "100%" }}
         transition={{ duration: 1, ease: "easeInOut" }}
-        className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+        className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent"
       />
 
       <div className="container mx-auto px-4 py-12 relative z-10">
@@ -90,7 +90,7 @@ export function Footer() {
             transition={{ duration: 0.5 }}
             className="text-center md:text-left"
           >
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent">
               CodesWithRakib
             </h3>
             <p className="text-slate-600 dark:text-slate-400 mt-2">
@@ -110,35 +110,32 @@ export function Footer() {
                   href="https://github.com/codeswithrakib"
                   target="_blank"
                   aria-label="GitHub"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                 >
                   <FaGithub className="w-5 h-5" />
                 </Link>
               </motion.div>
-
               <motion.div whileHover={{ y: -5 }} whileTap={{ scale: 0.9 }}>
                 <Link
                   href="https://linkedin.com/in/codeswithrakib"
                   target="_blank"
                   aria-label="LinkedIn"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                 >
                   <FaLinkedin className="w-5 h-5" />
                 </Link>
               </motion.div>
-
               <motion.div whileHover={{ y: -5 }} whileTap={{ scale: 0.9 }}>
                 <Link
                   href="https://x.com/codeswithrakib"
                   target="_blank"
                   aria-label="Twitter"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                 >
                   <FaTwitter className="w-5 h-5" />
                 </Link>
               </motion.div>
             </div>
-
             <p className="text-sm text-slate-500 dark:text-slate-400 text-center md:text-right">
               © {new Date().getFullYear()} All rights reserved
             </p>
@@ -149,26 +146,26 @@ export function Footer() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10 pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-sm text-slate-500 dark:text-slate-400"
+          className="mt-10 pt-6 border-t border-teal-100 dark:border-teal-800 text-center text-sm text-slate-500 dark:text-slate-400"
         >
           <p className="leading-relaxed">
             Built with{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-medium">
+            <span className="text-teal-600 dark:text-teal-400 font-medium">
               Next.js
             </span>
             ,{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-medium">
+            <span className="text-teal-600 dark:text-teal-400 font-medium">
               Tailwind CSS
             </span>
             , and{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-medium">
+            <span className="text-teal-600 dark:text-teal-400 font-medium">
               TypeScript
             </span>
           </p>
         </motion.div>
       </div>
 
-      {/* Scroll to top button */}
+      {/* Scroll to top button with teal/blue theme */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
@@ -176,13 +173,29 @@ export function Footer() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-500 dark:to-indigo-600 text-white shadow-lg hover:shadow-xl transition-all"
+            className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-500 dark:to-blue-500 text-white shadow-lg hover:shadow-xl transition-all"
             aria-label="Scroll to top"
           >
             <FaArrowUp className="w-5 h-5" />
           </motion.button>
         )}
       </AnimatePresence>
+
+      {/* Custom CSS animations for performance */}
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+      `}</style>
     </footer>
   );
 }

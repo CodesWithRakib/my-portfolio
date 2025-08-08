@@ -133,7 +133,7 @@ const useMeetingTypeOptions = () =>
 
 // Main Contact Form Component
 export const ContactForm = memo(() => {
-  // State declarations
+  // State declarations remain the same
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [messageLength, setMessageLength] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -155,18 +155,16 @@ export const ContactForm = memo(() => {
   const [locationPermission, setLocationPermission] = useState<
     "granted" | "denied" | "pending"
   >("pending");
-
-  // Ably state
   const [ablyClient, setAblyClient] = useState<Ably.Realtime | null>(null);
 
-  // Refs
+  // Refs remain the same
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const draftTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const locationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Form initialization
+  // Form initialization remains the same
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -188,7 +186,7 @@ export const ContactForm = memo(() => {
   const timeOptions = useTimeOptions();
   const meetingTypeOptions = useMeetingTypeOptions();
 
-  // Fetch chat messages
+  // Fetch chat messages remains the same
   const fetchChatMessages = useCallback(async () => {
     try {
       const response = await axios.get("/api/chat");
@@ -215,7 +213,7 @@ export const ContactForm = memo(() => {
     }
   }, []);
 
-  // Load saved information from localStorage
+  // Load saved information from localStorage remains the same
   useEffect(() => {
     const loadSavedInfo = () => {
       try {
@@ -247,7 +245,7 @@ export const ContactForm = memo(() => {
     loadSavedInfo();
   }, [form]);
 
-  // Auto-save draft with debouncing
+  // Auto-save draft with debouncing remains the same
   useEffect(() => {
     const subscription = form.watch((value, { type }) => {
       if (type === "change") {
@@ -272,7 +270,7 @@ export const ContactForm = memo(() => {
     };
   }, [form]);
 
-  // Get user location
+  // Get user location remains the same
   useEffect(() => {
     const fetchLocation = async () => {
       setLocationLoading(true);
@@ -342,7 +340,7 @@ export const ContactForm = memo(() => {
     fetchLocation();
   }, []);
 
-  // Monitor online status
+  // Monitor online status remains the same
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -354,7 +352,7 @@ export const ContactForm = memo(() => {
     };
   }, []);
 
-  // Initialize Ably when chat is opened
+  // Initialize Ably when chat is opened remains the same
   useEffect(() => {
     if (showChat) {
       const client = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_API_KEY!);
@@ -390,14 +388,14 @@ export const ContactForm = memo(() => {
     };
   }, [showChat, ablyClient]);
 
-  // Fetch chat messages when chat is opened
+  // Fetch chat messages when chat is opened remains the same
   useEffect(() => {
     if (showChat) {
       fetchChatMessages();
     }
   }, [showChat, fetchChatMessages]);
 
-  // Scroll to bottom of chat when new messages are added
+  // Scroll to bottom of chat when new messages are added remains the same
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -405,7 +403,7 @@ export const ContactForm = memo(() => {
     }
   }, [chatMessages, isTyping]);
 
-  // Cleanup timeouts on unmount
+  // Cleanup timeouts on unmount remains the same
   useEffect(() => {
     const currentLocationTimeout = locationTimeoutRef.current;
     return () => {
@@ -421,7 +419,7 @@ export const ContactForm = memo(() => {
     };
   }, []);
 
-  // Memoized handlers
+  // Memoized handlers remain the same
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
@@ -532,19 +530,19 @@ export const ContactForm = memo(() => {
     }
   }, []);
 
-  // Memoized status functions
+  // Memoized status functions remain the same
   const getStatusColor = useCallback(() => {
     switch (connectionStatus) {
       case "sending":
-        return "text-yellow-500";
+        return "text-amber-500";
       case "error":
         return "text-red-500";
       case "fast":
         return "text-green-500";
       case "stable":
-        return "text-blue-500";
+        return "text-teal-500";
       default:
-        return "text-green-500";
+        return "text-teal-500";
     }
   }, [connectionStatus]);
 
@@ -586,13 +584,13 @@ export const ContactForm = memo(() => {
   }, [locationLoading, locationError, locationPermission, userLocation]);
 
   const getLocationStatusColor = useCallback(() => {
-    if (locationLoading) return "text-blue-500";
+    if (locationLoading) return "text-teal-500";
     if (locationError) return "text-red-500";
     if (locationPermission === "denied") return "text-amber-500";
     return "text-slate-600 dark:text-slate-300";
   }, [locationLoading, locationError, locationPermission]);
 
-  // Form submission handler
+  // Form submission handler remains the same
   const onSubmit = useCallback(
     async (values: FormValues) => {
       if (!isOnline) {
@@ -620,11 +618,13 @@ export const ContactForm = memo(() => {
           formData.append("files", file);
         });
         formData.append("location", userLocation || "Unknown");
+
         const response = await axios.post("/api/contact", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+
         const data = response.data;
         if (data.success) {
           toast.success("Message sent successfully!");
@@ -671,7 +671,7 @@ export const ContactForm = memo(() => {
         <div className="space-y-8">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
                 Get In Touch
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 mb-2">
@@ -695,7 +695,7 @@ export const ContactForm = memo(() => {
           </div>
           <div className="space-y-6">
             <div className="flex items-start gap-4 group">
-              <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+              <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="flex-1">
@@ -722,7 +722,7 @@ export const ContactForm = memo(() => {
               </div>
             </div>
             <div className="flex items-start gap-4 group">
-              <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+              <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                 <Phone className="w-5 h-5" />
               </div>
               <div className="flex-1">
@@ -749,7 +749,7 @@ export const ContactForm = memo(() => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+              <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
@@ -758,7 +758,7 @@ export const ContactForm = memo(() => {
                     Location
                   </h3>
                   {locationLoading && (
-                    <Loader className="w-4 h-4 animate-spin text-blue-500" />
+                    <Loader className="w-4 h-4 animate-spin text-teal-500" />
                   )}
                 </div>
                 <p className={getLocationStatusColor()}>
@@ -767,7 +767,7 @@ export const ContactForm = memo(() => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+              <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                 <Calendar className="w-5 h-5" />
               </div>
               <div>
@@ -780,7 +780,7 @@ export const ContactForm = memo(() => {
               </div>
             </div>
           </div>
-          <div className="pt-6 border-t border-slate-200 dark:border-slate-700 space-y-4">
+          <div className="pt-6 border-t border-teal-200 dark:border-teal-700 space-y-4">
             <h3 className="font-semibold text-slate-900 dark:text-white">
               Quick Actions
             </h3>
@@ -791,7 +791,7 @@ export const ContactForm = memo(() => {
                 onClick={handleSchedulerOpen}
                 className={cn(
                   "flex items-center gap-2",
-                  "border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                  "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
                 )}
               >
                 <Calendar className="w-4 h-4" />
@@ -803,7 +803,7 @@ export const ContactForm = memo(() => {
                 onClick={handleChatOpen}
                 className={cn(
                   "flex items-center gap-2",
-                  "border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                  "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
                 )}
               >
                 <MessageSquareCode className="w-4 h-4" />
@@ -811,7 +811,7 @@ export const ContactForm = memo(() => {
               </Button>
             </div>
           </div>
-          <div className="pt-6 border-t border-slate-200 dark:border-slate-700/80">
+          <div className="pt-6 border-t border-teal-200 dark:border-teal-700/80">
             <h3 className="font-medium text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
               Connect with me
             </h3>
@@ -853,7 +853,7 @@ export const ContactForm = memo(() => {
                   rel="noopener noreferrer"
                   className={cn(
                     "p-2.5 rounded-full transition-colors duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800",
+                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:focus:ring-offset-slate-800",
                     platform.className
                   )}
                   aria-label={`Connect on ${platform.name}`}
@@ -863,12 +863,12 @@ export const ContactForm = memo(() => {
               ))}
             </div>
           </div>
-          <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
+          <div className="pt-6 border-t border-teal-200 dark:border-teal-700">
             <h3 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <Star className="w-4 h-4 text-amber-500" />
               Client Reviews
             </h3>
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-900/30">
+            <div className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20 p-4 rounded-lg border border-teal-100 dark:border-teal-900/30">
               <div className="flex items-center mb-2">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -887,8 +887,9 @@ export const ContactForm = memo(() => {
             </div>
           </div>
         </div>
+
         {/* Contact Form */}
-        <div className="bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-100 dark:border-blue-900/30 p-8">
+        <div className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-teal-100 dark:border-teal-900/30 p-8">
           {isSubmitted ? (
             <div className="text-center py-12">
               <div className="flex justify-center mb-6">
@@ -905,7 +906,7 @@ export const ContactForm = memo(() => {
               <Button
                 onClick={() => setIsSubmitted(false)}
                 variant="outline"
-                className="mt-4 border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                className="mt-4 border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
               >
                 Send Another Message
               </Button>
@@ -945,14 +946,14 @@ export const ContactForm = memo(() => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <User className="w-4 h-4 text-blue-500" />
+                          <User className="w-4 h-4 text-teal-500" />
                           Name
                         </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Your name"
                             {...field}
-                            className="bg-white dark:bg-slate-800/50 border-blue-200 dark:border-blue-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
+                            className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
                           />
                         </FormControl>
                         <FormMessage />
@@ -965,14 +966,14 @@ export const ContactForm = memo(() => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <Mail className="w-4 h-4 text-blue-500" />
+                          <Mail className="w-4 h-4 text-teal-500" />
                           Email
                         </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="your.email@example.com"
                             {...field}
-                            className="bg-white dark:bg-slate-800/50 border-blue-200 dark:border-blue-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
+                            className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
                           />
                         </FormControl>
                         <FormMessage />
@@ -987,14 +988,14 @@ export const ContactForm = memo(() => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <Phone className="w-4 h-4 text-blue-500" />
+                          <Phone className="w-4 h-4 text-teal-500" />
                           Phone (Optional)
                         </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="+880 176 747 6724"
                             {...field}
-                            className="bg-white dark:bg-slate-800/50 border-blue-200 dark:border-blue-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
+                            className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
                           />
                         </FormControl>
                         <FormMessage />
@@ -1007,14 +1008,14 @@ export const ContactForm = memo(() => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <FileText className="w-4 h-4 text-blue-500" />
+                          <FileText className="w-4 h-4 text-teal-500" />
                           Subject
                         </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="What's this about?"
                             {...field}
-                            className="bg-white dark:bg-slate-800/50 border-blue-200 dark:border-blue-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
+                            className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
                           />
                         </FormControl>
                         <FormMessage />
@@ -1028,7 +1029,7 @@ export const ContactForm = memo(() => {
                   render={({}) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                        <Clock className="w-4 h-4 text-blue-500" />
+                        <Clock className="w-4 h-4 text-teal-500" />
                         Preferred Contact Method
                       </FormLabel>
                       <FormControl>
@@ -1049,8 +1050,8 @@ export const ContactForm = memo(() => {
                                   className={cn(
                                     "w-full",
                                     field.value === option.value
-                                      ? "bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-md"
-                                      : "border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                                      ? "bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white shadow-md"
+                                      : "border-teal-200 dark:border-teal-800 hover:bg-teal-50 dark:hover:bg-teal-900/20"
                                   )}
                                   onClick={() => field.onChange(option.value)}
                                 >
@@ -1076,7 +1077,7 @@ export const ContactForm = memo(() => {
                       <FormControl>
                         <select
                           {...field}
-                          className="w-full p-3 bg-white dark:bg-slate-800/50 border border-blue-200 dark:border-blue-800 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-500"
+                          className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
                         >
                           {hearAboutOptions.map((option) => (
                             <option key={option.value} value={option.value}>
@@ -1095,13 +1096,13 @@ export const ContactForm = memo(() => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                        <MessageSquare className="w-4 h-4 text-blue-500" />
+                        <MessageSquare className="w-4 h-4 text-teal-500" />
                         Message
                       </FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Your message here..."
-                          className="min-h-[150px] bg-white dark:bg-slate-800/50 border-blue-200 dark:border-blue-800 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500 resize-none"
+                          className="min-h-[150px] bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500 resize-none"
                           {...field}
                           onChange={(e) => {
                             field.onChange(e);
@@ -1130,7 +1131,7 @@ export const ContactForm = memo(() => {
                 {/* File Upload */}
                 <div>
                   <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                    <Paperclip className="w-4 h-4 text-blue-500" />
+                    <Paperclip className="w-4 h-4 text-teal-500" />
                     Attachments (Optional)
                   </FormLabel>
                   <div className="mt-2">
@@ -1148,7 +1149,7 @@ export const ContactForm = memo(() => {
                       onClick={() => fileInputRef.current?.click()}
                       className={cn(
                         "w-full flex items-center gap-2",
-                        "border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                        "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
                       )}
                     >
                       <Upload className="w-4 h-4" />
@@ -1159,7 +1160,7 @@ export const ContactForm = memo(() => {
                         {files.map((file, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-between bg-blue-50 dark:bg-blue-900/20 p-2 rounded-md border border-blue-100 dark:border-blue-900/30"
+                            className="flex items-center justify-between bg-teal-50 dark:bg-teal-900/20 p-2 rounded-md border border-teal-100 dark:border-teal-900/30"
                           >
                             <span className="text-sm truncate max-w-[200px] text-slate-700 dark:text-slate-300">
                               {file.name}
@@ -1195,7 +1196,7 @@ export const ContactForm = memo(() => {
                             type="checkbox"
                             checked={field.value ?? false}
                             onChange={field.onChange}
-                            className="mt-1 accent-blue-600 dark:accent-blue-500"
+                            className="mt-1 accent-teal-600 dark:accent-teal-500"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -1216,12 +1217,12 @@ export const ContactForm = memo(() => {
                             type="checkbox"
                             checked={field.value ?? false}
                             onChange={field.onChange}
-                            className="mt-1 accent-blue-600 dark:accent-blue-500"
+                            className="mt-1 accent-teal-600 dark:accent-teal-500"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                            <Save className="w-4 h-4 text-blue-500" />
+                            <Save className="w-4 h-4 text-teal-500" />
                             Save my information for next time
                           </FormLabel>
                         </div>
@@ -1234,7 +1235,7 @@ export const ContactForm = memo(() => {
                     type="submit"
                     disabled={isSubmitting || !isOnline}
                     className={cn(
-                      "flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                      "flex-1 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
                     )}
                   >
                     {isSubmitting ? (
@@ -1253,7 +1254,7 @@ export const ContactForm = memo(() => {
                     type="button"
                     variant="outline"
                     onClick={clearDraft}
-                    className="border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                    className="border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
                   >
                     Clear Draft
                   </Button>
@@ -1267,6 +1268,7 @@ export const ContactForm = memo(() => {
           )}
         </div>
       </div>
+
       {/* Meeting Scheduler Modal */}
       <AnimatePresence>
         {showScheduler && (
@@ -1281,7 +1283,7 @@ export const ContactForm = memo(() => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-blue-100 dark:border-blue-900/30"
+              className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-teal-100 dark:border-teal-900/30"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
@@ -1308,7 +1310,7 @@ export const ContactForm = memo(() => {
                   </label>
                   <input
                     type="date"
-                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-blue-200 dark:border-blue-800 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-500"
+                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
                     min={new Date().toISOString().split("T")[0]}
                   />
                 </div>
@@ -1316,7 +1318,7 @@ export const ContactForm = memo(() => {
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                     Time
                   </label>
-                  <select className="w-full p-3 bg-white dark:bg-slate-800/50 border border-blue-200 dark:border-blue-800 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-500">
+                  <select className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500">
                     {timeOptions.map((time) => (
                       <option key={time} value={time}>
                         {time}
@@ -1328,7 +1330,7 @@ export const ContactForm = memo(() => {
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                     Meeting Type
                   </label>
-                  <select className="w-full p-3 bg-white dark:bg-slate-800/50 border border-blue-200 dark:border-blue-800 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-500">
+                  <select className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500">
                     {meetingTypeOptions.map((type) => (
                       <option key={type} value={type}>
                         {type}
@@ -1339,7 +1341,7 @@ export const ContactForm = memo(() => {
               </div>
               <div className="mt-6">
                 <Button
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white"
+                  className="w-full bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white"
                   onClick={handleScheduleMeeting}
                 >
                   Schedule Meeting
@@ -1349,6 +1351,7 @@ export const ContactForm = memo(() => {
           </motion.div>
         )}
       </AnimatePresence>
+
       {/* Live Chat Modal */}
       <AnimatePresence>
         {showChat && (
@@ -1358,8 +1361,8 @@ export const ContactForm = memo(() => {
             exit={{ opacity: 0, y: 20 }}
             className="fixed bottom-6 right-6 z-50"
           >
-            <div className="bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-2xl border border-blue-100 dark:border-blue-900/30 w-80 h-96 flex flex-col">
-              <div className="p-4 border-b border-blue-100 dark:border-blue-900/30 flex justify-between items-center">
+            <div className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-2xl border border-teal-100 dark:border-teal-900/30 w-80 h-96 flex flex-col">
+              <div className="p-4 border-b border-teal-100 dark:border-teal-900/30 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="relative">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -1368,7 +1371,7 @@ export const ContactForm = memo(() => {
                   <h3 className="font-bold text-slate-900 dark:text-white">
                     Live Chat
                   </h3>
-                  <div className="flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded-full">
+                  <div className="flex items-center gap-1 bg-teal-100 dark:bg-teal-900/30 px-2 py-1 rounded-full">
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     <span className="text-xs text-green-600 dark:text-green-400">
                       Online
@@ -1403,8 +1406,8 @@ export const ContactForm = memo(() => {
                         className={cn(
                           "max-w-[80%] p-3 rounded-lg",
                           message.sender === "user"
-                            ? "bg-blue-500 text-white"
-                            : "bg-blue-100 dark:bg-blue-900/30 text-slate-700 dark:text-slate-300"
+                            ? "bg-teal-500 text-white"
+                            : "bg-teal-100 dark:bg-teal-900/30 text-slate-700 dark:text-slate-300"
                         )}
                       >
                         <p className="text-sm">{message.text}</p>
@@ -1419,7 +1422,7 @@ export const ContactForm = memo(() => {
                   ))}
                   {isTyping && (
                     <div className="flex justify-start">
-                      <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg max-w-[80%]">
+                      <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-lg max-w-[80%]">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"></div>
                           <div
@@ -1436,14 +1439,14 @@ export const ContactForm = memo(() => {
                   )}
                 </div>
               </div>
-              <div className="p-4 border-t border-blue-100 dark:border-blue-900/30">
+              <div className="p-4 border-t border-teal-100 dark:border-teal-900/30">
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={newChatMessage}
                     onChange={handleChatInputChange}
                     placeholder="Type a message..."
-                    className="flex-1 p-2 bg-white dark:bg-slate-800/50 border border-blue-200 dark:border-blue-800 rounded-md focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-500 text-sm"
+                    className="flex-1 p-2 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500 text-sm"
                     onKeyPress={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
@@ -1455,7 +1458,7 @@ export const ContactForm = memo(() => {
                     size="sm"
                     onClick={sendChatMessage}
                     disabled={!newChatMessage.trim()}
-                    className="bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
+                    className="bg-teal-500 hover:bg-teal-600 text-white disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                   </Button>

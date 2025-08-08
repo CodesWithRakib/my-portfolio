@@ -24,7 +24,7 @@ type CursorType =
   | "zoom"
   | "magnetic";
 
-// Define cursor colors
+// Define cursor colors with teal/blue theme
 type CursorColors = Record<
   CursorType,
   {
@@ -45,6 +45,7 @@ export default function CustomCursor() {
     x: number;
     y: number;
   } | null>(null);
+
   const cursorRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const requestRef = useRef<number>(0);
@@ -62,18 +63,19 @@ export default function CustomCursor() {
     }
   }, []);
 
-  // Animation loop for smoother performance
+  // Simplified animation loop for better performance
   const animateCursor = useCallback((time: number) => {
     if (previousTimeRef.current !== undefined) {
       setPosition(positionRef.current);
 
       // Check cursor type less frequently
-      if (time % 200 < 16) {
-        // Check every ~200ms
+      if (time % 300 < 16) {
+        // Reduced check frequency
         const target = document.elementFromPoint(
           positionRef.current.x,
           positionRef.current.y
         );
+
         if (target) {
           const computedStyle = window.getComputedStyle(target);
           const cursorValue = computedStyle.getPropertyValue("cursor");
@@ -85,6 +87,7 @@ export default function CustomCursor() {
           ) {
             setCursorType("pointer");
             setIsHoveringClickable(true);
+
             if (target.closest('[data-cursor="magnetic"]')) {
               const rect = target.getBoundingClientRect();
               setMagneticTarget({
@@ -121,6 +124,7 @@ export default function CustomCursor() {
         }
       }
     }
+
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(animateCursor);
   }, []);
@@ -180,6 +184,7 @@ export default function CustomCursor() {
           ) {
             setCursorType("text");
           }
+
           if (activeElement instanceof HTMLElement) {
             const rect = activeElement.getBoundingClientRect();
             positionRef.current = {
@@ -206,8 +211,9 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
-      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scroll", handleScroll);
+
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
@@ -239,38 +245,39 @@ export default function CustomCursor() {
     magnetic: <Target className="w-3 h-3 text-white" />,
   };
 
+  // Updated cursor colors with teal/blue theme
   const cursorColors: CursorColors = {
     default: {
-      border: "border-slate-600 dark:border-slate-400",
-      bg: "bg-slate-600 dark:bg-slate-400",
+      border: "border-teal-600 dark:border-teal-400",
+      bg: "bg-teal-600 dark:bg-teal-400",
     },
     pointer: {
-      border: "border-slate-700 dark:border-slate-300",
-      bg: "bg-slate-700 dark:bg-slate-300",
+      border: "border-teal-700 dark:border-teal-300",
+      bg: "bg-teal-700 dark:bg-teal-300",
     },
     text: {
-      border: "border-slate-500 dark:border-slate-400",
-      bg: "bg-slate-500 dark:bg-slate-400",
+      border: "border-blue-600 dark:border-blue-400",
+      bg: "bg-blue-600 dark:bg-blue-400",
     },
     grab: {
-      border: "border-slate-600 dark:border-slate-400",
-      bg: "bg-slate-600 dark:bg-slate-400",
+      border: "border-teal-600 dark:border-teal-400",
+      bg: "bg-teal-600 dark:bg-teal-400",
     },
     drag: {
-      border: "border-slate-700 dark:border-slate-300",
-      bg: "bg-slate-700 dark:bg-slate-300",
+      border: "border-teal-700 dark:border-teal-300",
+      bg: "bg-teal-700 dark:bg-teal-300",
     },
     link: {
-      border: "border-slate-600 dark:border-slate-400",
-      bg: "bg-slate-600 dark:bg-slate-400",
+      border: "border-teal-600 dark:border-teal-400",
+      bg: "bg-teal-600 dark:bg-teal-400",
     },
     zoom: {
-      border: "border-slate-500 dark:border-slate-400",
-      bg: "bg-slate-500 dark:bg-slate-400",
+      border: "border-blue-600 dark:border-blue-400",
+      bg: "bg-blue-600 dark:bg-blue-400",
     },
     magnetic: {
-      border: "border-slate-600 dark:border-slate-400",
-      bg: "bg-slate-600 dark:bg-slate-400",
+      border: "border-teal-600 dark:border-teal-400",
+      bg: "bg-teal-600 dark:bg-teal-400",
     },
   };
 
@@ -419,7 +426,7 @@ export default function CustomCursor() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, repeat: Infinity }}
           >
-            <div className="w-20 h-20 rounded-full bg-slate-400/10 dark:bg-slate-500/10 blur-lg" />
+            <div className="w-20 h-20 rounded-full bg-teal-400/10 dark:bg-teal-500/10 blur-lg" />
           </motion.div>
         )}
       </AnimatePresence>
