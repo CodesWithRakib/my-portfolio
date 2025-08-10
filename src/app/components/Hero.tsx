@@ -402,7 +402,7 @@ export default function Hero() {
               {/* Profile image container with unique shadow */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl transform transition-transform duration-500 hover:scale-105">
                 <Image
-                  src="/images/profile.jpg"
+                  src="/images/profile.png"
                   alt="Profile"
                   fill
                   className="object-cover"

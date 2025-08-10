@@ -35,6 +35,7 @@ interface PersonalInterest {
   content: string;
   color: string;
 }
+
 interface EducationTimeline {
   year: string;
   title: string;
@@ -42,12 +43,14 @@ interface EducationTimeline {
   color: string;
   icon: React.ReactNode;
 }
+
 interface SkillCategory {
   name: string;
   icon: React.ReactNode;
   skills: string[];
   color: string;
 }
+
 interface ExperienceItem {
   id: number;
   role: string;
@@ -69,9 +72,11 @@ const MotionDiv = ({
   useEffect(() => {
     setIsClient(true);
   }, []);
+
   if (!isClient) {
     return <div {...props}>{children}</div>;
   }
+
   return <motion.div {...props}>{children}</motion.div>;
 };
 
@@ -87,20 +92,12 @@ export default function AboutPage() {
     setMounted(true);
   }, []);
 
-  // Track mouse position only on client side
-  useEffect(() => {
-    if (!mounted) return;
-    const handleMouseMove = () => {};
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mounted]);
-
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto"></div>
           <p className="mt-4 text-slate-600 dark:text-slate-300">Loading...</p>
         </div>
       </div>
@@ -109,28 +106,28 @@ export default function AboutPage() {
 
   const personalInterests: PersonalInterest[] = [
     {
-      icon: <Gamepad2 className="text-blue-600 dark:text-blue-400" />,
+      icon: <Gamepad2 className="text-teal-600 dark:text-teal-400" />,
       title: "Passionate Gamer",
       content:
         "Love playing strategy games like Clash of Clans & Free Fire - they sharpen my problem-solving skills!",
       color:
-        "from-blue-100/50 to-blue-200/50 dark:from-blue-900/30 dark:to-blue-800/30",
+        "from-teal-100/50 to-cyan-100/50 dark:from-teal-900/30 dark:to-cyan-900/30",
     },
     {
-      icon: <Headphones className="text-indigo-600 dark:text-indigo-400" />,
+      icon: <Headphones className="text-blue-600 dark:text-blue-400" />,
       title: "Music Enthusiast",
       content:
         "Always listening to music while coding - it helps me focus and get into the flow state.",
       color:
-        "from-indigo-100/50 to-indigo-200/50 dark:from-indigo-900/30 dark:to-indigo-800/30",
+        "from-blue-100/50 to-indigo-100/50 dark:from-blue-900/30 dark:to-indigo-900/30",
     },
     {
-      icon: <Code className="text-purple-600 dark:text-purple-400" />,
+      icon: <Code className="text-cyan-600 dark:text-cyan-400" />,
       title: "Creator at Heart",
       content:
         "Enjoy turning ideas into real applications - the process from concept to deployment excites me.",
       color:
-        "from-purple-100/50 to-purple-200/50 dark:from-purple-900/30 dark:to-purple-800/30",
+        "from-cyan-100/50 to-sky-100/50 dark:from-cyan-900/30 dark:to-sky-900/30",
     },
   ];
 
@@ -139,21 +136,21 @@ export default function AboutPage() {
       year: "2021–2024",
       title: "HSC - Science | Hossenpur Degree College",
       content: "Built foundation in logical thinking & analytical approaches",
-      color: "bg-blue-600 dark:bg-blue-700",
+      color: "bg-teal-600 dark:bg-teal-700",
       icon: <School className="text-white" />,
     },
     {
       year: "Self-Taught",
       title: "Early Exploration",
       content: "Learned fundamentals from YouTube (Jonas, Apna College, Harry)",
-      color: "bg-indigo-600 dark:bg-indigo-700",
+      color: "bg-cyan-600 dark:bg-cyan-700",
       icon: <BookOpen className="text-white" />,
     },
     {
       year: "2024–Present",
       title: "Programming Hero Course",
       content: "Intensive full-stack MERN training with real-world projects",
-      color: "bg-purple-600 dark:bg-purple-700",
+      color: "bg-blue-600 dark:bg-blue-700",
       icon: <Code className="text-white" />,
     },
   ];
@@ -161,7 +158,7 @@ export default function AboutPage() {
   const skillCategories: SkillCategory[] = [
     {
       name: "Frontend",
-      icon: <Smartphone className="text-blue-600 dark:text-blue-400" />,
+      icon: <Smartphone className="text-teal-600 dark:text-teal-400" />,
       skills: [
         "React",
         "Next.js",
@@ -172,11 +169,11 @@ export default function AboutPage() {
         "CSS3",
         "JavaScript",
       ],
-      color: "text-blue-600 dark:text-blue-400",
+      color: "text-teal-600 dark:text-teal-400",
     },
     {
       name: "Backend",
-      icon: <Database className="text-indigo-600 dark:text-indigo-400" />,
+      icon: <Database className="text-cyan-600 dark:text-cyan-400" />,
       skills: [
         "Node.js",
         "Express.js",
@@ -186,11 +183,11 @@ export default function AboutPage() {
         "JWT",
         "GraphQL",
       ],
-      color: "text-indigo-600 dark:text-indigo-400",
+      color: "text-cyan-600 dark:text-cyan-400",
     },
     {
       name: "UI/UX",
-      icon: <Palette className="text-purple-600 dark:text-purple-400" />,
+      icon: <Palette className="text-blue-600 dark:text-blue-400" />,
       skills: [
         "Figma",
         "Responsive Design",
@@ -198,11 +195,11 @@ export default function AboutPage() {
         "Wireframing",
         "Prototyping",
       ],
-      color: "text-purple-600 dark:text-purple-400",
+      color: "text-blue-600 dark:text-blue-400",
     },
     {
       name: "Tools",
-      icon: <Terminal className="text-cyan-600 dark:text-cyan-400" />,
+      icon: <Terminal className="text-sky-600 dark:text-sky-400" />,
       skills: [
         "Git",
         "VS Code",
@@ -211,7 +208,7 @@ export default function AboutPage() {
         "Netlify",
         "Vercel",
       ],
-      color: "text-cyan-600 dark:text-cyan-400",
+      color: "text-sky-600 dark:text-sky-400",
     },
   ];
 
@@ -237,18 +234,18 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
       {/* Simplified animated background with fewer elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <MotionDiv
-          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-teal-200/15 dark:bg-teal-800/10 blur-3xl"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         >
           {/* Empty child element to satisfy children requirement */}
         </MotionDiv>
         <MotionDiv
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-indigo-200/15 dark:bg-indigo-800/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl"
           animate={{ y: [0, 20, 0] }}
           transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -287,8 +284,8 @@ export default function AboutPage() {
               top: `${Math.random() * 100}%`,
               background:
                 i % 2 === 0
-                  ? "radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0) 70%)"
-                  : "radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0) 70%)",
+                  ? "radial-gradient(circle, rgba(20, 184, 166, 0.05) 0%, rgba(20, 184, 166, 0) 70%)"
+                  : "radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0) 70%)",
               filter: "blur(60px)",
             }}
           >
@@ -296,6 +293,7 @@ export default function AboutPage() {
           </MotionDiv>
         ))}
       </div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-16">
         {/* Simplified hero section with reduced animations */}
         <MotionDiv
@@ -316,7 +314,7 @@ export default function AboutPage() {
             }}
             style={{
               backgroundImage:
-                "linear-gradient(90deg, #1e40af, #3b82f6, #6366f1, #8b5cf6, #1e40af)",
+                "linear-gradient(90deg, #0d9488, #14b8a6, #06b6d4, #0ea5e9, #3b82f6)",
               backgroundSize: "300% 100%",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
@@ -326,19 +324,20 @@ export default function AboutPage() {
             About Me
           </MotionDiv>
           <MotionDiv
-            className="w-20 h-1 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 mx-auto mb-5 rounded-full"
+            className="w-20 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-5 rounded-full"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             Developer &{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-semibold">
+            <span className="text-teal-600 dark:text-teal-400 font-semibold">
               Creative Problem Solver
             </span>{" "}
             passionate about building impactful digital experiences
           </p>
         </MotionDiv>
+
         {/* Simplified personal introduction card */}
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
@@ -350,15 +349,15 @@ export default function AboutPage() {
           <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-200/50 dark:border-slate-700/50 overflow-hidden hover:shadow-lg transition-all duration-300">
             <div className="md:flex">
               <div className="md:w-1/3 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 opacity-90"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-700 opacity-90"></div>
                 <div className="relative p-6 h-full flex flex-col items-center justify-center text-white">
                   <div className="w-28 h-28 rounded-full bg-white/20 backdrop-blur-sm mb-5 overflow-hidden border-4 border-white/30">
-                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center">
                       <span className="text-4xl font-bold">CR</span>
                     </div>
                   </div>
                   <h2 className="text-xl font-bold mb-2">CodesWithRakib</h2>
-                  <p className="text-blue-100 mb-4">Full Stack Developer</p>
+                  <p className="text-teal-100 mb-4">Full Stack Developer</p>
                   <div className="flex gap-2 flex-wrap justify-center">
                     <Badge
                       variant="secondary"
@@ -390,7 +389,7 @@ export default function AboutPage() {
                   <p className="leading-relaxed">
                     My coding journey started in 2021 when I first discovered
                     the{" "}
-                    <span className="font-medium text-blue-600 dark:text-blue-400">
+                    <span className="font-medium text-teal-600 dark:text-teal-400">
                       &quot;100 Days of Python&quot;
                     </span>{" "}
                     course on Udemy. Although I couldn&apos;t complete it at the
@@ -399,7 +398,7 @@ export default function AboutPage() {
                   </p>
                   <p className="leading-relaxed">
                     Everything changed when I enrolled in the{" "}
-                    <span className="font-medium text-blue-600 dark:text-blue-400">
+                    <span className="font-medium text-teal-600 dark:text-teal-400">
                       Programming Hero
                     </span>{" "}
                     course, where I discovered my love for building complete web
@@ -412,7 +411,7 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <Button className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800">
+                  <Button className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800">
                     <Briefcase className="mr-2 h-4 w-4" />
                     Hire Me
                   </Button>
@@ -429,6 +428,7 @@ export default function AboutPage() {
             </div>
           </Card>
         </MotionDiv>
+
         {/* Simplified tabs with reduced animations */}
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
@@ -445,29 +445,30 @@ export default function AboutPage() {
             <TabsList className="grid w-full grid-cols-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-1 shadow-md border border-slate-200/50 dark:border-slate-700/50">
               <TabsTrigger
                 value="skills"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
               >
                 Skills
               </TabsTrigger>
               <TabsTrigger
                 value="experience"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
               >
                 Experience
               </TabsTrigger>
               <TabsTrigger
                 value="education"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
               >
                 Education
               </TabsTrigger>
               <TabsTrigger
                 value="interests"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
               >
                 Interests
               </TabsTrigger>
             </TabsList>
+
             {/* Skills Tab with simplified cards */}
             <TabsContent value="skills" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -482,7 +483,7 @@ export default function AboutPage() {
                     className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-5 border border-slate-200/50 dark:border-slate-700/50 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
                   >
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 rounded-lg bg-blue-100/50 dark:bg-blue-900/30">
+                      <div className="p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30">
                         {category.icon}
                       </div>
                       <h3 className="font-bold text-lg text-slate-900 dark:text-white">
@@ -506,11 +507,12 @@ export default function AboutPage() {
                 ))}
               </div>
             </TabsContent>
+
             {/* Experience Tab with simplified timeline */}
             <TabsContent value="experience" className="mt-6">
               <div className="relative">
                 {/* Timeline line */}
-                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 to-purple-500 dark:from-blue-600 dark:to-purple-700"></div>
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-blue-500 dark:from-teal-600 dark:to-blue-700"></div>
                 <div className="space-y-6">
                   {experienceItems.map((item, index) => (
                     <MotionDiv
@@ -522,7 +524,7 @@ export default function AboutPage() {
                       className="relative"
                     >
                       {/* Timeline dot */}
-                      <div className="absolute left-2 w-5 h-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-500 dark:to-indigo-600 z-10 border-4 border-white dark:border-slate-800"></div>
+                      <div className="absolute left-2 w-5 h-5 rounded-full bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-500 dark:to-blue-600 z-10 border-4 border-white dark:border-slate-800"></div>
                       {/* Timeline content */}
                       <MotionDiv
                         className="ml-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-5 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300"
@@ -539,9 +541,9 @@ export default function AboutPage() {
                               <span>{item.company}</span>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 bg-blue-100/50 dark:bg-blue-900/30 px-3 py-1 rounded-full">
-                            <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                          <div className="flex items-center gap-2 bg-teal-100/50 dark:bg-teal-900/30 px-3 py-1 rounded-full">
+                            <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+                            <span className="text-sm font-medium text-teal-600 dark:text-teal-400">
                               {item.period}
                             </span>
                           </div>
@@ -566,11 +568,12 @@ export default function AboutPage() {
                 </div>
               </div>
             </TabsContent>
+
             {/* Education Tab with simplified timeline */}
             <TabsContent value="education" className="mt-6">
               <div className="relative">
                 {/* Timeline line */}
-                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 to-purple-500 dark:from-blue-600 dark:to-purple-700"></div>
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-blue-500 dark:from-teal-600 dark:to-blue-700"></div>
                 <div className="space-y-6">
                   {educationTimeline.map((item, index) => (
                     <MotionDiv
@@ -610,7 +613,7 @@ export default function AboutPage() {
                       <MotionDiv
                         className={`ml-12 p-5 rounded-lg border transition-all duration-300 ${
                           activeTimelineItem === index
-                            ? "bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-900/30 dark:to-indigo-900/30 border-blue-200/50 dark:border-blue-700/50 shadow-lg"
+                            ? "bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 border-teal-200/50 dark:border-teal-700/50 shadow-lg"
                             : "bg-white/90 dark:bg-slate-800/90 border-slate-200/50 dark:border-slate-700/50 shadow-md"
                         }`}
                         whileHover={{ x: 3 }}
@@ -626,7 +629,7 @@ export default function AboutPage() {
                               <h4 className="font-bold text-slate-900 dark:text-white">
                                 {item.title}
                               </h4>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-blue-200 dark:border-blue-700 text-blue-600 dark:text-blue-400">
+                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-700 text-teal-600 dark:text-teal-400">
                                 {item.year}
                               </span>
                             </div>
@@ -641,6 +644,7 @@ export default function AboutPage() {
                 </div>
               </div>
             </TabsContent>
+
             {/* Interests Tab with simplified cards */}
             <TabsContent value="interests" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -671,6 +675,7 @@ export default function AboutPage() {
             </TabsContent>
           </Tabs>
         </MotionDiv>
+
         {/* Simplified goals section */}
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
@@ -679,14 +684,14 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <Card className="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-900/30 dark:to-indigo-900/30 p-6 rounded-xl border border-blue-100/50 dark:border-blue-900/30 backdrop-blur-sm shadow-md">
+          <Card className="bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 p-6 rounded-xl border border-teal-100/50 dark:border-teal-900/30 backdrop-blur-sm shadow-md">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <MotionDiv
                 animate={{ rotate: [0, 8, -8, 0] }}
                 transition={{ repeat: Infinity, duration: 6 }} // Slower animation
-                className="p-5 rounded-full bg-gradient-to-br from-blue-100/50 to-indigo-100/50 dark:from-blue-900/30 dark:to-indigo-900/30 shadow-sm"
+                className="p-5 rounded-full bg-gradient-to-br from-teal-100/50 to-blue-100/50 dark:from-teal-900/30 dark:to-blue-900/30 shadow-sm"
               >
-                <Target className="text-blue-600 dark:text-blue-400 w-14 h-14" />
+                <Target className="text-teal-600 dark:text-teal-400 w-14 h-14" />
               </MotionDiv>
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
@@ -704,7 +709,7 @@ export default function AboutPage() {
                     whileHover={{ y: -3 }}
                     className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
                   >
-                    <Zap className="text-blue-600 dark:text-blue-400" />
+                    <Zap className="text-teal-600 dark:text-teal-400" />
                     <span className="font-medium text-slate-900 dark:text-white">
                       Performance
                     </span>
@@ -713,7 +718,7 @@ export default function AboutPage() {
                     whileHover={{ y: -3 }}
                     className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
                   >
-                    <Users className="text-blue-600 dark:text-blue-400" />
+                    <Users className="text-teal-600 dark:text-teal-400" />
                     <span className="font-medium text-slate-900 dark:text-white">
                       User Experience
                     </span>
@@ -722,7 +727,7 @@ export default function AboutPage() {
                     whileHover={{ y: -3 }}
                     className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
                   >
-                    <BarChart className="text-blue-600 dark:text-blue-400" />
+                    <BarChart className="text-teal-600 dark:text-teal-400" />
                     <span className="font-medium text-slate-900 dark:text-white">
                       Scalability
                     </span>
@@ -732,6 +737,7 @@ export default function AboutPage() {
             </div>
           </Card>
         </MotionDiv>
+
         {/* Simplified contact CTA */}
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
@@ -751,7 +757,7 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md"
+              className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-md"
             >
               <Mail className="mr-2 h-5 w-5" />
               Send Message

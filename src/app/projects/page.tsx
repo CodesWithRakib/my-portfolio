@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/dialog";
 import { FileBarChart2 } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
+
 // TypeScript interfaces remain the same
 interface Project {
   id: number;
@@ -71,6 +72,7 @@ interface Project {
     year: string;
   }[];
 }
+
 interface ProjectDetailsModalProps {
   project: Project;
   isOpen: boolean;
@@ -250,15 +252,15 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
               </DialogTitle>
               <DialogDescription className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400 mt-2">
                 <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/50 px-3 py-1.5 rounded-full">
-                  <FiCalendar className="text-blue-500" />
+                  <FiCalendar className="text-teal-500" />
                   <span>{project.date}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/50 px-3 py-1.5 rounded-full">
-                  <FiUser className="text-blue-500" />
+                  <FiUser className="text-teal-500" />
                   <span>{project.client}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/50 px-3 py-1.5 rounded-full">
-                  <FiClock className="text-blue-500" />
+                  <FiClock className="text-teal-500" />
                   <span>{project.duration}</span>
                 </div>
               </DialogDescription>
@@ -305,7 +307,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                   >
                     {project.images.map((img, i) => (
                       <SwiperSlide key={i}>
-                        <div className="h-full w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all">
+                        <div className="h-full w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-teal-500 transition-all">
                           <Image
                             src={img}
                             alt={`${project.title} thumbnail ${i + 1}`}
@@ -320,8 +322,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 {/* Project Overview */}
                 <div className="space-y-3">
                   <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-3 text-lg">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                      <FiInfo className="text-blue-500" />
+                    <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                      <FiInfo className="text-teal-500" />
                     </div>
                     Project Overview
                   </h3>
@@ -332,15 +334,15 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 {/* Key Features */}
                 <div className="space-y-3">
                   <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-3 text-lg">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                      <FiTag className="text-blue-500" />
+                    <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                      <FiTag className="text-teal-500" />
                     </div>
                     Key Features
                   </h3>
                   <ul className="space-y-2">
                     {project.features.map((feature, i) => (
                       <li key={i} className="flex items-start">
-                        <span className="text-blue-500 dark:text-blue-400 mr-3 mt-1 text-lg">
+                        <span className="text-teal-500 dark:text-teal-400 mr-3 mt-1 text-lg">
                           ▹
                         </span>
                         <span className="text-slate-600 dark:text-slate-300">
@@ -363,12 +365,12 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                       {project.testimonials.map((testimonial, i) => (
                         <Card
                           key={i}
-                          className="bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-900/30 shadow-sm"
+                          className="bg-teal-50 dark:bg-teal-900/20 border-teal-100 dark:border-teal-900/30 shadow-sm"
                         >
                           <CardContent className="p-5">
                             <div className="flex gap-4">
-                              <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full h-fit">
-                                <FiUser className="text-blue-500 text-xl" />
+                              <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-full h-fit">
+                                <FiUser className="text-teal-500 text-xl" />
                               </div>
                               <div>
                                 <p className="text-slate-600 dark:text-slate-300 italic mb-3 text-base">
@@ -394,8 +396,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 {/* Technologies */}
                 <div className="space-y-3">
                   <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-3 text-lg">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                      <FiCode className="text-blue-500" />
+                    <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                      <FiCode className="text-teal-500" />
                     </div>
                     Technologies Used
                   </h3>
@@ -414,8 +416,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 {/* Project Statistics */}
                 <div className="space-y-3">
                   <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-3 text-lg">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                      <FileBarChart2 className="text-blue-500" />
+                    <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                      <FileBarChart2 className="text-teal-500" />
                     </div>
                     Project Statistics
                   </h3>
@@ -423,8 +425,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     <Card className="bg-slate-100 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 shadow-sm">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                            <FiClock className="text-blue-500" />
+                          <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                            <FiClock className="text-teal-500" />
                           </div>
                           <div>
                             <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -440,8 +442,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     <Card className="bg-slate-100 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 shadow-sm">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                            <FiUsers className="text-blue-500" />
+                          <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                            <FiUsers className="text-teal-500" />
                           </div>
                           <div>
                             <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -457,8 +459,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     <Card className="bg-slate-100 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 shadow-sm">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                            <FiUser className="text-blue-500" />
+                          <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                            <FiUser className="text-teal-500" />
                           </div>
                           <div>
                             <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -474,8 +476,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     <Card className="bg-slate-100 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 shadow-sm">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                            <FiTag className="text-blue-500" />
+                          <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                            <FiTag className="text-teal-500" />
                           </div>
                           <div>
                             <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -528,8 +530,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                 {/* Project Links */}
                 <div className="space-y-3">
                   <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-3 text-lg">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
-                      <FiExternalLink className="text-blue-500" />
+                    <div className="bg-teal-100 dark:bg-teal-900/30 p-2 rounded-lg">
+                      <FiExternalLink className="text-teal-500" />
                     </div>
                     Project Links
                   </h3>
@@ -568,7 +570,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({
                     )}
                     {project.liveLink && (
                       <Button
-                        className="w-full justify-start h-12 text-base gap-3 px-5 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md"
+                        className="w-full justify-start h-12 text-base gap-3 px-5 bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-md"
                         asChild
                       >
                         <a
@@ -662,7 +664,7 @@ const ProjectCard = ({
             >
               <Badge
                 variant="secondary"
-                className="bg-blue-100/80 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200"
+                className="bg-teal-100/80 dark:bg-teal-900/30 text-teal-800 dark:text-teal-200"
               >
                 {project.tags[0]}
               </Badge>
@@ -675,7 +677,7 @@ const ProjectCard = ({
           {/* Key Features */}
           <div className="mb-4">
             <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-              <FiCheckCircle className="text-blue-500 flex-shrink-0" />
+              <FiCheckCircle className="text-teal-500 flex-shrink-0" />
               <span>Key Features</span>
             </h4>
             <ul className="space-y-1.5">
@@ -684,7 +686,7 @@ const ProjectCard = ({
                   key={i}
                   className="flex items-start text-xs sm:text-sm text-slate-600 dark:text-slate-300"
                 >
-                  <span className="text-blue-500 dark:text-blue-400 mr-2 mt-0.5">
+                  <span className="text-teal-500 dark:text-teal-400 mr-2 mt-0.5">
                     <FiCheck className="size-3.5" />
                   </span>
                   <span className="flex-1">{feature}</span>
@@ -700,7 +702,7 @@ const ProjectCard = ({
           {/* Technologies */}
           <div className="mt-auto">
             <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-              <FiCpu className="text-blue-500 flex-shrink-0" />
+              <FiCpu className="text-teal-500 flex-shrink-0" />
               <span>Technologies</span>
             </h4>
             <div className="flex flex-wrap gap-1.5">
@@ -834,16 +836,16 @@ export default function ProjectsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
       {/* Simplified Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-teal-200/15 dark:bg-teal-800/10 blur-3xl"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-indigo-200/15 dark:bg-indigo-800/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl"
           animate={{ y: [0, 20, 0] }}
           transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -880,13 +882,14 @@ export default function ProjectsPage() {
               top: `${Math.random() * 100}%`,
               background:
                 i % 2 === 0
-                  ? "radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0) 70%)"
-                  : "radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0) 70%)",
+                  ? "radial-gradient(circle, rgba(20, 184, 166, 0.08) 0%, rgba(20, 184, 166, 0) 70%)"
+                  : "radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0) 70%)",
               filter: "blur(60px)",
             }}
           />
         ))}
       </div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-16">
         {/* Header */}
         <motion.div
@@ -897,7 +900,7 @@ export default function ProjectsPage() {
         >
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             My{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500">
               Projects
             </span>
           </h1>
@@ -905,12 +908,13 @@ export default function ProjectsPage() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 mx-auto mb-6 transform origin-left"
+            className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-6 transform origin-left"
           />
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Selected work showcasing my full-stack development capabilities
           </p>
         </motion.div>
+
         {/* Search and Filters */}
         <div className="max-w-4xl mx-auto mb-10">
           <div className="relative mb-6">
@@ -918,7 +922,7 @@ export default function ProjectsPage() {
             <Input
               type="text"
               placeholder="Search projects by name, technology, or description..."
-              className="w-full pl-12 pr-10 py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-transparent shadow-sm"
+              className="w-full pl-12 pr-10 py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-500 focus:border-transparent shadow-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -931,6 +935,7 @@ export default function ProjectsPage() {
               </button>
             )}
           </div>
+
           <Tabs
             value={activeFilter}
             onValueChange={setActiveFilter}
@@ -941,16 +946,17 @@ export default function ProjectsPage() {
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-sm"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
                 >
                   {category.label}
                 </TabsTrigger>
               ))}
             </TabsList>
           </Tabs>
+
           <div className="mt-6">
             <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center gap-1">
-              <FiFilter className="text-blue-500" />
+              <FiFilter className="text-teal-500" />
               Filter by tags
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -974,6 +980,7 @@ export default function ProjectsPage() {
             </div>
           </div>
         </div>
+
         {/* Results count */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -983,6 +990,7 @@ export default function ProjectsPage() {
         >
           Showing {filteredProjects.length} of {projects.length} projects
         </motion.div>
+
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.length > 0 ? (

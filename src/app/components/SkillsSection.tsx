@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import {
   Code,
   Smartphone,
@@ -42,6 +42,11 @@ interface ApproachItem {
 interface TechImage {
   name: string;
   image: string;
+}
+
+interface BackgroundElementsProps {
+  yBg: MotionValue<string>;
+  theme: string | undefined;
 }
 
 // Memoized skill data with updated colors
@@ -149,7 +154,10 @@ const techImages: TechImage[] = [
 ];
 
 // Memoized background element component with simplified animations
-const BackgroundElements = ({ yBg, theme }) => {
+const BackgroundElements: React.FC<BackgroundElementsProps> = ({
+  yBg,
+  theme,
+}) => {
   // Memoize background grid style
   const gridBackgroundStyle = useMemo(
     () => ({
@@ -243,7 +251,6 @@ const BackgroundElements = ({ yBg, theme }) => {
           y: yBg,
         }}
       />
-
       {/* Render orbs */}
       {elements.orbs.map((orb) => (
         <motion.div
@@ -265,7 +272,6 @@ const BackgroundElements = ({ yBg, theme }) => {
           }}
         />
       ))}
-
       {/* Render shapes */}
       {elements.shapes.map((shape) => (
         <motion.div
@@ -287,7 +293,6 @@ const BackgroundElements = ({ yBg, theme }) => {
           }}
         />
       ))}
-
       {/* Static spotlight effect */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -303,6 +308,11 @@ const SkillCard = ({
   index,
   hoveredCategory,
   setHoveredCategory,
+}: {
+  category: SkillCategory;
+  index: number;
+  hoveredCategory: string | null;
+  setHoveredCategory: (category: string | null) => void;
 }) => {
   const handleHoverStart = useCallback(() => {
     setHoveredCategory(category.category);
@@ -336,7 +346,6 @@ const SkillCard = ({
           category.bgColor
         )}
       ></div>
-
       <div className="flex items-center mb-6 relative z-10">
         <div className={cn("p-3 rounded-full mr-4", category.bgColor)}>
           <motion.div
@@ -351,7 +360,6 @@ const SkillCard = ({
           {category.category}
         </h3>
       </div>
-
       <div className="grid grid-cols-2 gap-4 relative z-10">
         {category.skills.map((skill, skillIndex) => (
           <motion.div
@@ -383,7 +391,13 @@ const SkillCard = ({
 };
 
 // Memoized approach card component
-const ApproachCard = ({ item, index }) => {
+const ApproachCard = ({
+  item,
+  index,
+}: {
+  item: ApproachItem;
+  index: number;
+}) => {
   return (
     <motion.div
       key={index}
@@ -399,7 +413,6 @@ const ApproachCard = ({ item, index }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-blue-500"></div>
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
       </div>
-
       <div className="flex items-center mb-4 gap-4 relative z-10">
         <div
           className={cn(
@@ -413,11 +426,9 @@ const ApproachCard = ({ item, index }) => {
           {item.title}
         </h4>
       </div>
-
       <p className="text-slate-600 dark:text-slate-300 text-sm relative z-10">
         {item.desc}
       </p>
-
       <div className="mt-4 flex items-center text-slate-600 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
         <CheckCircle className="w-4 h-4 mr-1" />
         <span className="text-xs font-medium">Best practice</span>
@@ -427,7 +438,7 @@ const ApproachCard = ({ item, index }) => {
 };
 
 // Memoized tech item component
-const TechItem = ({ tech }) => {
+const TechItem = ({ tech }: { tech: TechImage }) => {
   return (
     <div className="flex flex-col items-center justify-center mx-4 flex-shrink-0 group">
       <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-2 mb-2 transition-all duration-300 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/20 group-hover:scale-110 shadow-sm">
@@ -477,7 +488,6 @@ export default function SkillsSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-teal-50/50 to-blue-50/50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
         <BackgroundElements {...backgroundElementsProps} />
       </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header with teal/blue theme */}
         <motion.div
@@ -512,7 +522,6 @@ export default function SkillsSection() {
             </motion.h2>
             <Sparkles className="w-8 h-8 text-blue-500 ml-3" />
           </div>
-
           <motion.div
             className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 rounded-full"
             initial={{ scaleX: 0 }}
@@ -521,7 +530,6 @@ export default function SkillsSection() {
             viewport={{ once: true }}
             style={{ originX: 0.5 }}
           />
-
           <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">
             As a{" "}
             <span className="text-teal-600 dark:text-teal-400 font-semibold">
@@ -556,7 +564,6 @@ export default function SkillsSection() {
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
             My Development Approach
           </h3>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {developmentApproach.map((item, index) => (
               <ApproachCard key={item.title} item={item} index={index} />

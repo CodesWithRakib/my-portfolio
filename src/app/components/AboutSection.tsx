@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { useRef, useState, useMemo } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
@@ -41,12 +41,7 @@ export default function AboutSection() {
   const [activeTimelineItem, setActiveTimelineItem] = useState<number | null>(
     null
   );
-  const [isClient, setIsClient] = useState(false);
 
-  // Set isClient to true when component mounts on client
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   // Memoize personal interests with updated colors
   const personalInterests: PersonalInterest[] = useMemo(

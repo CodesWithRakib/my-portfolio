@@ -34,6 +34,7 @@ interface SkillItem {
   experience: string;
   description: string;
 }
+
 interface SkillCategory {
   id: string;
   category: string;
@@ -44,30 +45,36 @@ interface SkillCategory {
   description: string;
   skills: SkillItem[];
 }
+
 interface ApproachItem {
   title: string;
   desc: string;
   icon: React.ReactNode;
   color: string;
 }
+
 interface TechImage {
   name: string;
   image: string;
 }
+
 interface BackgroundElementsProps {
   mousePosition: { x: number; y: number };
   theme: string | undefined;
 }
+
 interface SkillCardProps {
   category: SkillCategory;
   index: number;
   hoveredCategory: string | null;
   setHoveredCategory: (category: string | null) => void;
 }
+
 interface ApproachCardProps {
   item: ApproachItem;
   index: number;
 }
+
 interface TechItemProps {
   tech: TechImage;
 }
@@ -78,9 +85,9 @@ const skills: SkillCategory[] = [
     id: "frontend",
     category: "Frontend Development",
     icon: <Code className="w-5 h-5" />,
-    color: "text-blue-600 dark:text-blue-400",
-    bgColor: "bg-blue-100/50 dark:bg-blue-900/30",
-    borderColor: "border-blue-200/50 dark:border-blue-800/30",
+    color: "text-teal-600 dark:text-teal-400",
+    bgColor: "bg-teal-100/50 dark:bg-teal-900/30",
+    borderColor: "border-teal-200/50 dark:border-teal-800/30",
     description:
       "Creating engaging, responsive user interfaces with modern frameworks and tools.",
     skills: [
@@ -137,9 +144,9 @@ const skills: SkillCategory[] = [
     id: "backend",
     category: "Backend Development",
     icon: <Server className="w-5 h-5" />,
-    color: "text-indigo-600 dark:text-indigo-400",
-    bgColor: "bg-indigo-100/50 dark:bg-indigo-900/30",
-    borderColor: "border-indigo-200/50 dark:border-indigo-800/30",
+    color: "text-cyan-600 dark:text-cyan-400",
+    bgColor: "bg-cyan-100/50 dark:bg-cyan-900/30",
+    borderColor: "border-cyan-200/50 dark:border-cyan-800/30",
     description:
       "Building robust server-side applications and APIs with scalable architecture.",
     skills: [
@@ -187,9 +194,9 @@ const skills: SkillCategory[] = [
     id: "database",
     category: "Database & Cloud",
     icon: <Database className="w-5 h-5" />,
-    color: "text-emerald-600 dark:text-emerald-400",
-    bgColor: "bg-emerald-100/50 dark:bg-emerald-900/30",
-    borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
+    color: "text-blue-600 dark:text-blue-400",
+    bgColor: "bg-blue-100/50 dark:bg-blue-900/30",
+    borderColor: "border-blue-200/50 dark:border-blue-800/30",
     description:
       "Managing data storage, retrieval, and cloud infrastructure for applications.",
     skills: [
@@ -220,9 +227,9 @@ const skills: SkillCategory[] = [
     id: "tools",
     category: "Tools & Productivity",
     icon: <Wrench className="w-5 h-5" />,
-    color: "text-amber-600 dark:text-amber-400",
-    bgColor: "bg-amber-100/50 dark:bg-amber-900/30",
-    borderColor: "border-amber-200/50 dark:border-amber-800/30",
+    color: "text-sky-600 dark:text-sky-400",
+    bgColor: "bg-sky-100/50 dark:bg-sky-900/30",
+    borderColor: "border-sky-200/50 dark:border-sky-800/30",
     description:
       "Development tools and workflows that enhance productivity and code quality.",
     skills: [
@@ -268,9 +275,9 @@ const skills: SkillCategory[] = [
     id: "design",
     category: "UI/UX Design",
     icon: <Palette className="w-5 h-5" />,
-    color: "text-pink-600 dark:text-pink-400",
-    bgColor: "bg-pink-100/50 dark:bg-pink-900/30",
-    borderColor: "border-pink-200/50 dark:border-pink-800/30",
+    color: "text-indigo-600 dark:text-indigo-400",
+    bgColor: "bg-indigo-100/50 dark:bg-indigo-900/30",
+    borderColor: "border-indigo-200/50 dark:border-indigo-800/30",
     description:
       "Creating intuitive and visually appealing user experiences with design principles.",
     skills: [
@@ -312,9 +319,9 @@ const skills: SkillCategory[] = [
     id: "testing",
     category: "Testing & QA",
     icon: <Shield className="w-5 h-5" />,
-    color: "text-cyan-600 dark:text-cyan-400",
-    bgColor: "bg-cyan-100/50 dark:bg-cyan-900/30",
-    borderColor: "border-cyan-200/50 dark:border-cyan-800/30",
+    color: "text-violet-600 dark:text-violet-400",
+    bgColor: "bg-violet-100/50 dark:bg-violet-900/30",
+    borderColor: "border-violet-200/50 dark:border-violet-800/30",
     description:
       "Ensuring code quality and application reliability through comprehensive testing.",
     skills: [
@@ -371,42 +378,40 @@ const developmentApproach: ApproachItem[] = [
   {
     title: "Clean Code",
     desc: "Emphasizing readability and maintainability",
-    icon: <Code className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
-    color: "bg-blue-100/50 dark:bg-blue-900/30",
+    icon: <Code className="w-5 h-5 text-teal-600 dark:text-teal-400" />,
+    color: "bg-teal-100/50 dark:bg-teal-900/30",
   },
   {
     title: "Performance",
     desc: "Optimized solutions for speed and efficiency",
-    icon: <Zap className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
-    color: "bg-indigo-100/50 dark:bg-indigo-900/30",
+    icon: <Zap className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
+    color: "bg-cyan-100/50 dark:bg-cyan-900/30",
   },
   {
     title: "Responsive Design",
     desc: "Flawless experience across all devices",
-    icon: (
-      <Smartphone className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-    ),
-    color: "bg-purple-100/50 dark:bg-purple-900/30",
+    icon: <Smartphone className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+    color: "bg-blue-100/50 dark:bg-blue-900/30",
   },
   {
     title: "Security",
     desc: "Built with data protection in mind",
-    icon: <Shield className="w-5 h-5 text-pink-600 dark:text-pink-400" />,
-    color: "bg-pink-100/50 dark:bg-pink-900/30",
+    icon: <Shield className="w-5 h-5 text-sky-600 dark:text-sky-400" />,
+    color: "bg-sky-100/50 dark:bg-sky-900/30",
   },
   {
     title: "Testing",
     desc: "Comprehensive test coverage",
-    icon: <Layers className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
-    color: "bg-cyan-100/50 dark:bg-cyan-900/30",
+    icon: <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
+    color: "bg-indigo-100/50 dark:bg-indigo-900/30",
   },
   {
     title: "DevOps",
     desc: "CI/CD and cloud deployment",
     icon: (
-      <GitBranch className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+      <GitBranch className="w-5 h-5 text-violet-600 dark:text-violet-400" />
     ),
-    color: "bg-emerald-100/50 dark:bg-emerald-900/30",
+    color: "bg-violet-100/50 dark:bg-violet-900/30",
   },
 ];
 
@@ -443,9 +448,9 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
         y: 10 + i * 20,
       };
       const colorClasses = [
+        "bg-teal-300/15 dark:bg-teal-700/15",
+        "bg-cyan-300/15 dark:bg-cyan-700/15",
         "bg-blue-300/15 dark:bg-blue-700/15",
-        "bg-indigo-300/15 dark:bg-indigo-700/15",
-        "bg-purple-300/15 dark:bg-purple-700/15",
       ];
       return {
         key: `orb-${i}`,
@@ -472,9 +477,9 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
       const shapeType = i % 3;
       const shapeClasses = ["rounded-full", "rounded-lg", "rounded-xl"];
       const colorClasses = [
+        "bg-teal-200/10 dark:bg-teal-800/10",
+        "bg-cyan-200/10 dark:bg-cyan-800/10",
         "bg-blue-200/10 dark:bg-blue-800/10",
-        "bg-indigo-200/10 dark:bg-indigo-800/10",
-        "bg-purple-200/10 dark:bg-purple-800/10",
       ];
       return {
         key: `shape-${i}`,
@@ -500,9 +505,9 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
         y: Math.random() * 100,
       };
       const colorClasses = [
+        "bg-teal-200/5 dark:bg-teal-800/5",
+        "bg-cyan-200/5 dark:bg-cyan-800/5",
         "bg-blue-200/5 dark:bg-blue-800/5",
-        "bg-indigo-200/5 dark:bg-indigo-800/5",
-        "bg-purple-200/5 dark:bg-purple-800/5",
       ];
       return {
         key: `particle-${i}`,
@@ -536,6 +541,7 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
           color: theme === "dark" ? "#4b5563" : "#d1d5db",
         }}
       />
+
       {/* Render orbs */}
       {elements.orbs.map((orb) => (
         <motion.div
@@ -557,6 +563,7 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
           }}
         />
       ))}
+
       {/* Render shapes */}
       {elements.shapes.map((shape) => (
         <motion.div
@@ -578,6 +585,7 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
           }}
         />
       ))}
+
       {/* Render particles */}
       {elements.particles.map((particle) => (
         <motion.div
@@ -600,6 +608,7 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
           }}
         />
       ))}
+
       {/* Simplified spotlight effect */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
@@ -608,8 +617,8 @@ const BackgroundElements: React.FC<BackgroundElementsProps> = ({
             mousePosition.y
           }px, ${
             theme === "dark"
-              ? "rgba(59, 130, 246, 0.1)"
-              : "rgba(59, 130, 246, 0.15)"
+              ? "rgba(20, 184, 166, 0.1)"
+              : "rgba(20, 184, 166, 0.15)"
           }, transparent 80%)`,
         }}
       />
@@ -637,7 +646,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
         category.borderColor
       } hover:shadow-lg transition-all duration-300 ${
         hoveredCategory === category.id
-          ? "ring-1 ring-blue-500/50 dark:ring-blue-400/50"
+          ? "ring-1 ring-teal-500/50 dark:ring-teal-400/50"
           : ""
       }`}
     >
@@ -724,8 +733,8 @@ const ApproachCard: React.FC<ApproachCardProps> = ({ item, index }) => {
       className="relative overflow-hidden bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-5 rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-md transition-all duration-300 group"
     >
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500"></div>
-        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-blue-500"></div>
+        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-teal-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
       </div>
       <div className="flex items-center mb-3 gap-3 relative z-10">
         <div
@@ -752,7 +761,7 @@ const ApproachCard: React.FC<ApproachCardProps> = ({ item, index }) => {
 const TechItem: React.FC<TechItemProps> = ({ tech }) => {
   return (
     <div className="flex flex-col items-center justify-center mx-4 flex-shrink-0 group">
-      <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-white dark:bg-slate-800/50 p-2 mb-2 transition-all duration-300 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:scale-105 shadow-sm">
+      <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-white dark:bg-slate-800/50 p-2 mb-2 transition-all duration-300 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/20 group-hover:scale-105 shadow-sm">
         <Image
           src={tech.image}
           alt={tech.name}
@@ -762,7 +771,7 @@ const TechItem: React.FC<TechItemProps> = ({ tech }) => {
           loading="lazy"
         />
       </div>
-      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
         {tech.name}
       </span>
     </div>
@@ -781,17 +790,26 @@ export default function SkillsPage() {
     setMounted(true);
   }, []);
 
-  // Simplified mouse move handler
+  // Simplified mouse move handler with throttling
   useEffect(() => {
     if (!mounted) return;
 
+    let throttleTimeout: NodeJS.Timeout | null = null;
+
     const handleMouseMove = (e: MouseEvent) => {
-      // Reduced frequency of updates for better performance
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (!throttleTimeout) {
+        throttleTimeout = setTimeout(() => {
+          setMousePosition({ x: e.clientX, y: e.clientY });
+          throttleTimeout = null;
+        }, 50); // Throttle to every 50ms for better performance
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
+    };
   }, [mounted]);
 
   // Filter skills based on active tab
@@ -802,9 +820,9 @@ export default function SkillsPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto"></div>
           <p className="mt-4 text-slate-600 dark:text-slate-300">Loading...</p>
         </div>
       </div>
@@ -812,7 +830,7 @@ export default function SkillsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <BackgroundElements mousePosition={mousePosition} theme={theme} />
@@ -827,7 +845,7 @@ export default function SkillsPage() {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center mb-4">
-            <Sparkles className="w-7 h-7 text-blue-500 mr-3" />
+            <Sparkles className="w-7 h-7 text-teal-500 mr-3" />
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white"
               initial={{ backgroundPosition: "0% 50%" }}
@@ -840,7 +858,7 @@ export default function SkillsPage() {
               }}
               style={{
                 backgroundImage:
-                  "linear-gradient(90deg, #1e40af, #3b82f6, #6366f1, #8b5cf6, #1e40af)",
+                  "linear-gradient(90deg, #0d9488, #14b8a6, #06b6d4, #0ea5e9, #3b82f6)",
                 backgroundSize: "300% 100%",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
@@ -849,17 +867,17 @@ export default function SkillsPage() {
             >
               Skills & Expertise
             </motion.h1>
-            <Sparkles className="w-7 h-7 text-purple-500 ml-3" />
+            <Sparkles className="w-7 h-7 text-blue-500 ml-3" />
           </div>
           <motion.div
-            className="w-20 h-1 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 mx-auto mb-5 rounded-full"
+            className="w-20 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-5 rounded-full"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }} // Reduced duration
           />
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">
             As a{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-semibold">
+            <span className="text-teal-600 dark:text-teal-400 font-semibold">
               MERN Stack Developer
             </span>
             , I continuously expand my technical toolkit to build better
@@ -882,7 +900,7 @@ export default function SkillsPage() {
             <TabsList className="grid w-full grid-cols-7 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-1 shadow-md">
               <TabsTrigger
                 value="all"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-xs"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs"
               >
                 All Skills
               </TabsTrigger>
@@ -890,7 +908,7 @@ export default function SkillsPage() {
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white text-xs"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs"
                 >
                   {category.category.split(" ")[0]}
                 </TabsTrigger>
@@ -942,7 +960,7 @@ export default function SkillsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }} // Reduced delay
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-white/90 to-blue-50/90 dark:from-slate-800/90 dark:to-blue-900/30 backdrop-blur-sm rounded-xl shadow-md p-6 border border-blue-100/50 dark:border-blue-900/30 overflow-hidden mb-16"
+          className="bg-gradient-to-br from-white/90 to-teal-50/90 dark:from-slate-800/90 dark:to-teal-900/30 backdrop-blur-sm rounded-xl shadow-md p-6 border border-teal-100/50 dark:border-teal-900/30 overflow-hidden mb-16"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -1024,11 +1042,12 @@ export default function SkillsPage() {
               }
             </p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-5">
             <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="text-blue-600 dark:text-blue-400" />
+                  <BookOpen className="text-teal-600 dark:text-teal-400" />
                   Currently Learning
                 </CardTitle>
               </CardHeader>
@@ -1049,10 +1068,11 @@ export default function SkillsPage() {
                 </div>
               </CardContent>
             </Card>
+
             <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Target className="text-indigo-600 dark:text-indigo-400" />
+                  <Target className="text-cyan-600 dark:text-cyan-400" />
                   Next Goals
                 </CardTitle>
               </CardHeader>
@@ -1073,10 +1093,11 @@ export default function SkillsPage() {
                 </div>
               </CardContent>
             </Card>
+
             <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Award className="text-purple-600 dark:text-purple-400" />
+                  <Award className="text-blue-600 dark:text-blue-400" />
                   Certifications
                 </CardTitle>
               </CardHeader>
@@ -1115,7 +1136,7 @@ export default function SkillsPage() {
               "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision"
             }
           </p>
-          <Button className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md hover:shadow-lg transition-shadow">
+          <Button className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-md hover:shadow-lg transition-shadow">
             Get In Touch
           </Button>
         </motion.div>
