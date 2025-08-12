@@ -1,18 +1,25 @@
+// app/layout.tsx
 import type { Metadata, Viewport } from "next";
-import { Fira_Code, Inter } from "next/font/google";
+import { Fira_Code, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./components/ToggleTheme";
-import Navbar from "./components/Navbar";
-import { Toaster } from "react-hot-toast";
-import { Footer } from "./components/Footer";
-import LoadingScreen from "./components/LoadingScreen";
-import CustomCursor from "./components/CustomCursor";
+import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/ToggleTheme";
+import Navbar from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 // Font for code elements and technical details
 const firaCode = Fira_Code({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-fira-code",
+  adjustFontFallback: false,
+});
+
+// Additional monospace font for code examples
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-jetbrains-mono",
   adjustFontFallback: false,
 });
 
@@ -78,7 +85,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable}  ${firaCode.variable} font-sans bg-background text-foreground`}
+        className={`${inter.variable} ${firaCode.variable} ${jetbrainsMono.variable} font-sans bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
@@ -86,14 +93,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LoadingScreen />
-          <CustomCursor />
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 w-full font-jetbrains-mono">
+              <div className="">{children}</div>
+            </main>
             <Footer />
           </div>
-          <Toaster position="bottom-center" />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

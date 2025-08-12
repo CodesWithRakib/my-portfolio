@@ -332,7 +332,7 @@ const SkillCard = ({
       onHoverStart={handleHoverStart}
       onHoverEnd={handleHoverEnd}
       className={cn(
-        "relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border",
+        "relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 border w-full h-full",
         category.borderColor,
         "hover:shadow-xl transition-all duration-300",
         hoveredCategory === category.category &&
@@ -346,8 +346,13 @@ const SkillCard = ({
           category.bgColor
         )}
       ></div>
-      <div className="flex items-center mb-6 relative z-10">
-        <div className={cn("p-3 rounded-full mr-4", category.bgColor)}>
+      <div className="flex items-center mb-4 md:mb-6 relative z-10">
+        <div
+          className={cn(
+            "p-2 md:p-3 rounded-full mr-3 md:mr-4",
+            category.bgColor
+          )}
+        >
           <motion.div
             whileHover={{ rotate: 15 }}
             transition={{ type: "spring" }}
@@ -356,11 +361,11 @@ const SkillCard = ({
             {category.icon}
           </motion.div>
         </div>
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+        <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
           {category.category}
         </h3>
       </div>
-      <div className="grid grid-cols-2 gap-4 relative z-10">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 relative z-10">
         {category.skills.map((skill, skillIndex) => (
           <motion.div
             key={skillIndex}
@@ -368,19 +373,19 @@ const SkillCard = ({
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 + skillIndex * 0.05 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 group"
+            className="flex flex-col items-center justify-center p-2 md:p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 group"
           >
-            <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center mb-2 bg-white dark:bg-slate-800 shadow-sm">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg overflow-hidden flex items-center justify-center mb-1 md:mb-2 bg-white dark:bg-slate-800 shadow-sm">
               <Image
                 src={skill.image}
                 alt={skill.name}
                 width={40}
                 height={40}
-                className="w-8 h-8 object-contain"
+                className="w-6 h-6 md:w-8 md:h-8 object-contain"
                 loading="lazy"
               />
             </div>
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300 text-center">
+            <span className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 text-center">
               {skill.name}
             </span>
           </motion.div>
@@ -406,32 +411,32 @@ const ApproachCard = ({
       transition={{ delay: 0.1 + index * 0.1 }}
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
-      className="relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300 group"
+      className="relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300 group w-full h-full"
     >
       {/* Decorative background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-blue-500"></div>
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
       </div>
-      <div className="flex items-center mb-4 gap-4 relative z-10">
+      <div className="flex items-center mb-3 md:mb-4 gap-3 md:gap-4 relative z-10">
         <div
           className={cn(
-            "p-3 rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-sm",
+            "p-2 md:p-3 rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-sm",
             item.color
           )}
         >
           {item.icon}
         </div>
-        <h4 className="font-bold text-slate-900 dark:text-white">
+        <h4 className="font-bold text-slate-900 dark:text-white text-base md:text-lg">
           {item.title}
         </h4>
       </div>
-      <p className="text-slate-600 dark:text-slate-300 text-sm relative z-10">
+      <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base relative z-10">
         {item.desc}
       </p>
-      <div className="mt-4 flex items-center text-slate-600 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
-        <CheckCircle className="w-4 h-4 mr-1" />
-        <span className="text-xs font-medium">Best practice</span>
+      <div className="mt-3 md:mt-4 flex items-center text-slate-600 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
+        <CheckCircle className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+        <span className="text-xs md:text-sm font-medium">Best practice</span>
       </div>
     </motion.div>
   );
@@ -440,8 +445,8 @@ const ApproachCard = ({
 // Memoized tech item component
 const TechItem = ({ tech }: { tech: TechImage }) => {
   return (
-    <div className="flex flex-col items-center justify-center mx-4 flex-shrink-0 group">
-      <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-2 mb-2 transition-all duration-300 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/20 group-hover:scale-110 shadow-sm">
+    <div className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-4 flex-shrink-0 group">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-1.5 sm:p-2 mb-1 sm:mb-2 transition-all duration-300 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/20 group-hover:scale-110 shadow-sm">
         <Image
           src={tech.image}
           alt={tech.name}
@@ -451,7 +456,7 @@ const TechItem = ({ tech }: { tech: TechImage }) => {
           loading="lazy"
         />
       </div>
-      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
+      <span className="text-xs sm:text-xs md:text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
         {tech.name}
       </span>
     </div>
@@ -482,25 +487,26 @@ export default function SkillsSection() {
     <section
       ref={ref}
       id="skills"
-      className="relative py-20 md:py-28 lg:py-36 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
     >
       {/* Background gradient with teal/blue theme */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-teal-50/50 to-blue-50/50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
         <BackgroundElements {...backgroundElementsProps} />
       </div>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section header with teal/blue theme */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="max-w-4xl mx-auto text-center mb-16"
+          className="max-w-4xl mx-auto text-center mb-12 md:mb-16"
         >
           <div className="flex items-center justify-center mb-4">
-            <Sparkles className="w-8 h-8 text-teal-500 mr-3" />
+            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-teal-500 mr-2 sm:mr-3" />
             <motion.h2
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white"
               initial={{ backgroundPosition: "0% 50%" }}
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{
@@ -520,17 +526,17 @@ export default function SkillsSection() {
             >
               Skills & Expertise
             </motion.h2>
-            <Sparkles className="w-8 h-8 text-blue-500 ml-3" />
+            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 ml-2 sm:ml-3" />
           </div>
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 rounded-full"
+            className="w-20 md:w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-4 md:mb-6 rounded-full"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
             style={{ originX: 0.5 }}
           />
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium px-4">
             As a{" "}
             <span className="text-teal-600 dark:text-teal-400 font-semibold">
               MERN Stack Developer
@@ -541,7 +547,7 @@ export default function SkillsSection() {
         </motion.div>
 
         {/* Skills grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
           {skills.map((category, index) => (
             <SkillCard
               key={category.category}
@@ -559,12 +565,12 @@ export default function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-20"
+          className="mt-16 md:mt-20 w-full"
         >
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
+          <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8 text-center">
             My Development Approach
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
             {developmentApproach.map((item, index) => (
               <ApproachCard key={item.title} item={item} index={index} />
             ))}
@@ -577,19 +583,19 @@ export default function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
           viewport={{ once: true }}
-          className="mt-20 bg-gradient-to-br from-white/80 to-teal-50/80 dark:from-slate-800/80 dark:to-teal-900/30 backdrop-blur-sm rounded-2xl shadow-lg p-8 border border-teal-100/50 dark:border-teal-900/30 overflow-hidden"
+          className="mt-16 md:mt-20 bg-gradient-to-br from-white/80 to-teal-50/80 dark:from-slate-800/80 dark:to-teal-900/30 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-8 border border-teal-100/50 dark:border-teal-900/30 overflow-hidden w-full"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
+          <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8 text-center">
             Technologies I Work With
           </h3>
 
           {/* Marquee container */}
           <div className="relative overflow-hidden py-4">
             {/* Gradient fade edges */}
-            <div className="absolute inset-y-0 left-0 w-16 z-10 bg-gradient-to-r from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
-            <div className="absolute inset-y-0 right-0 w-16 z-10 bg-gradient-to-l from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
+            <div className="absolute inset-y-0 left-0 w-8 md:w-16 z-10 bg-gradient-to-r from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
+            <div className="absolute inset-y-0 right-0 w-8 md:w-16 z-10 bg-gradient-to-l from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
 
             {/* Marquee track 1 */}
             <motion.div

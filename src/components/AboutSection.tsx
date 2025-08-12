@@ -42,7 +42,6 @@ export default function AboutSection() {
     null
   );
 
-
   // Memoize personal interests with updated colors
   const personalInterests: PersonalInterest[] = useMemo(
     () => [
@@ -103,7 +102,7 @@ export default function AboutSection() {
     []
   );
 
-  // Memoize background grid style - simplified without 3D transforms
+  // Memoize background grid style
   const gridBackgroundStyle = useMemo(
     () => ({
       backgroundImage: `
@@ -116,7 +115,7 @@ export default function AboutSection() {
     [theme]
   );
 
-  // Memoize static radial gradient style - removed mouse following for performance
+  // Memoize static radial gradient style
   const radialGradientStyle = useMemo(() => {
     return {
       background: `radial-gradient(600px at 50% 50%, ${
@@ -127,7 +126,7 @@ export default function AboutSection() {
     };
   }, [theme]);
 
-  // Memoize color classes for orbs with updated colors
+  // Memoize color classes for orbs
   const orbColorClasses = useMemo(
     () => [
       "bg-teal-300/20 dark:bg-teal-700/20",
@@ -138,7 +137,7 @@ export default function AboutSection() {
     []
   );
 
-  // Memoize color classes for shapes with updated colors
+  // Memoize color classes for shapes
   const shapeColorClasses = useMemo(
     () => [
       "bg-teal-200/15 dark:bg-teal-800/15",
@@ -148,7 +147,7 @@ export default function AboutSection() {
     []
   );
 
-  // Memoize color classes for particles with updated colors
+  // Memoize color classes for particles
   const particleColorClasses = useMemo(
     () => [
       "bg-teal-200/10 dark:bg-teal-800/10",
@@ -162,7 +161,7 @@ export default function AboutSection() {
     <section
       ref={ref}
       id="about"
-      className="relative py-20 md:py-28 lg:py-36 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
     >
       {/* Optimized background with teal/blue theme */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
@@ -321,17 +320,17 @@ export default function AboutSection() {
         );
       })}
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section header with teal/blue theme */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="max-w-4xl mx-auto text-center mb-16"
+          className="max-w-4xl mx-auto text-center mb-12 md:mb-16"
         >
           <motion.h2
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-4"
             initial={{ backgroundPosition: "0% 50%" }}
             animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
             transition={{
@@ -352,14 +351,14 @@ export default function AboutSection() {
             About Me
           </motion.h2>
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 rounded-full"
+            className="w-20 md:w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-6 rounded-full"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
             style={{ originX: 0.5 }}
           />
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium px-4">
             Developer &{" "}
             <span className="text-teal-600 dark:text-teal-400 font-semibold">
               Creative Problem Solver
@@ -369,14 +368,14 @@ export default function AboutSection() {
         </motion.div>
 
         {/* Content grid */}
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left column - Introduction */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="space-y-8"
+            className="space-y-6 md:space-y-8"
           >
             <motion.div
               whileHover={{
@@ -384,9 +383,9 @@ export default function AboutSection() {
                 boxShadow: "0 10px 30px -10px rgba(20, 184, 166, 0.2)",
               }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-8 border border-teal-100/50 dark:border-teal-900/30"
+              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-teal-100/50 dark:border-teal-900/30 w-full"
             >
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center">
                 <div className="p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30 mr-3">
                   <Code
                     className="text-teal-600 dark:text-teal-400"
@@ -395,8 +394,8 @@ export default function AboutSection() {
                 </div>
                 <span>My Journey</span>
               </h3>
-              <div className="space-y-6 text-slate-600 dark:text-slate-300">
-                <p>
+              <div className="space-y-4 md:space-y-6 text-slate-600 dark:text-slate-300">
+                <p className="text-base md:text-lg">
                   My coding journey started in 2021 when I first discovered the{" "}
                   <span className="font-medium text-teal-600 dark:text-teal-400">
                     &quot;100 Days of Python&quot;
@@ -405,7 +404,7 @@ export default function AboutSection() {
                   time, it planted a seed of curiosity that would eventually
                   blossom into a passion.
                 </p>
-                <p>
+                <p className="text-base md:text-lg">
                   Everything changed when I enrolled in the{" "}
                   <span className="font-medium text-teal-600 dark:text-teal-400">
                     Programming Hero
@@ -413,7 +412,7 @@ export default function AboutSection() {
                   course, where I discovered my love for building complete web
                   applications.
                 </p>
-                <p>
+                <p className="text-base md:text-lg">
                   I thrive on creating elegant solutions to complex problems,
                   combining technical skills with creative thinking to deliver
                   exceptional user experiences.
@@ -427,7 +426,7 @@ export default function AboutSection() {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 rounded-2xl shadow-md p-6 border border-teal-100/50 dark:border-teal-900/30"
+              className="bg-gradient-to-br from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 rounded-2xl shadow-md p-4 md:p-6 border border-teal-100/50 dark:border-teal-900/30 w-full"
             >
               <div className="flex items-start">
                 <motion.div
@@ -437,14 +436,14 @@ export default function AboutSection() {
                     repeatType: "mirror",
                     duration: 2,
                   }}
-                  className="p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30 mr-4"
+                  className="p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30 mr-4 flex-shrink-0"
                 >
                   <Lightbulb
                     className="text-teal-600 dark:text-teal-400"
                     size={24}
                   />
                 </motion.div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h4 className="font-bold text-slate-900 dark:text-white mb-2">
                     Current Focus
                   </h4>
@@ -463,7 +462,7 @@ export default function AboutSection() {
                       wrapper="span"
                       speed={50}
                       repeat={Infinity}
-                      className="text-teal-600 dark:text-teal-400 font-medium"
+                      className="text-teal-600 dark:text-teal-400 font-medium text-base md:text-lg"
                     />
                   </div>
                 </div>
@@ -477,7 +476,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true, margin: "-50px" }}
-            className="space-y-8"
+            className="space-y-6 md:space-y-8"
           >
             {/* Personal interests */}
             <motion.div
@@ -486,12 +485,12 @@ export default function AboutSection() {
                 boxShadow: "0 10px 30px -10px rgba(8, 145, 178, 0.2)",
               }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-8 border border-blue-100/50 dark:border-blue-900/30"
+              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-blue-100/50 dark:border-blue-900/30 w-full"
             >
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6">
                 Beyond Coding
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {personalInterests.map((item, index) => (
                   <motion.div
                     key={index}
@@ -499,27 +498,27 @@ export default function AboutSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + index * 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-start gap-4 p-4 rounded-xl hover:bg-teal-50/50 dark:hover:bg-teal-900/20 transition-colors cursor-pointer group"
+                    className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl hover:bg-teal-50/50 dark:hover:bg-teal-900/20 transition-colors cursor-pointer group"
                     whileHover={{ x: 5 }}
                   >
                     <motion.div
                       className={cn(
-                        "p-3 rounded-lg bg-gradient-to-br flex-shrink-0",
+                        "p-2 md:p-3 rounded-lg bg-gradient-to-br flex-shrink-0",
                         item.color
                       )}
                       whileHover={{ scale: 1.1, rotate: 5 }}
                     >
                       {item.icon}
                     </motion.div>
-                    <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white flex items-center">
-                        {item.title}
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-bold text-slate-900 dark:text-white flex items-center text-base md:text-lg">
+                        <span className="truncate">{item.title}</span>
                         <ChevronRight
-                          className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600 dark:text-teal-400"
+                          className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600 dark:text-teal-400 flex-shrink-0"
                           size={16}
                         />
                       </h4>
-                      <p className="text-slate-600 dark:text-slate-300">
+                      <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base">
                         {item.content}
                       </p>
                     </div>
@@ -535,9 +534,9 @@ export default function AboutSection() {
                 boxShadow: "0 10px 30px -10px rgba(6, 182, 212, 0.2)",
               }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-8 border border-cyan-100/50 dark:border-cyan-900/30"
+              className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-cyan-100/50 dark:border-cyan-900/30 w-full"
             >
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center">
                 <div className="p-2 rounded-lg bg-cyan-100/50 dark:bg-cyan-900/30 mr-3">
                   <School
                     className="text-cyan-600 dark:text-cyan-400"
@@ -549,7 +548,7 @@ export default function AboutSection() {
               <div className="relative">
                 {/* Timeline line */}
                 <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-cyan-500 dark:from-teal-600 dark:to-cyan-700"></div>
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8">
                   {educationTimeline.map((item, index) => (
                     <motion.div
                       key={index}
@@ -590,7 +589,7 @@ export default function AboutSection() {
                       {/* Timeline content */}
                       <motion.div
                         className={cn(
-                          "ml-12 p-5 rounded-xl border transition-all duration-300",
+                          "ml-12 p-4 md:p-5 rounded-xl border transition-all duration-300",
                           activeTimelineItem === index
                             ? "bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 border-teal-200/50 dark:border-teal-700/50 shadow-md"
                             : "bg-teal-50/30 dark:bg-teal-900/20 border-teal-100/50 dark:border-teal-800/30"
@@ -606,16 +605,16 @@ export default function AboutSection() {
                           >
                             {item.icon}
                           </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-bold text-slate-900 dark:text-white">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                              <h4 className="font-bold text-slate-900 dark:text-white text-base md:text-lg">
                                 {item.title}
                               </h4>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-700 text-teal-600 dark:text-teal-400">
+                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-700 text-teal-600 dark:text-teal-400 w-fit">
                                 {item.year}
                               </span>
                             </div>
-                            <p className="text-slate-600 dark:text-slate-300">
+                            <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base">
                               {item.content}
                             </p>
                           </div>
@@ -635,22 +634,22 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 max-w-4xl mx-auto bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 p-8 rounded-2xl border border-teal-100/50 dark:border-teal-900/30 backdrop-blur-sm"
+          className="mt-12 md:mt-16 max-w-4xl mx-auto bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 p-6 md:p-8 rounded-2xl border border-teal-100/50 dark:border-teal-900/30 backdrop-blur-sm w-full"
           whileHover={{ y: -5 }}
         >
-          <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4 }}
-              className="p-4 rounded-full bg-gradient-to-br from-teal-100/50 to-blue-100/50 dark:from-teal-900/30 dark:to-blue-900/30"
+              className="p-3 md:p-4 rounded-full bg-gradient-to-br from-teal-100/50 to-blue-100/50 dark:from-teal-900/30 dark:to-blue-900/30 flex-shrink-0"
             >
-              <BookOpen className="text-teal-600 dark:text-teal-400 w-12 h-12" />
+              <BookOpen className="text-teal-600 dark:text-teal-400 w-10 h-10 md:w-12 md:h-12" />
             </motion.div>
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+            <div className="text-center md:text-left">
+              <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">
                 My Goals as a Full-Stack Developer
               </h3>
-              <p className="text-slate-600 dark:text-slate-300">
+              <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base">
                 I&apos;m focused on mastering the complete development lifecycle
                 - from designing intuitive UIs to building scalable backends. My
                 aim is to create performant, accessible applications that solve

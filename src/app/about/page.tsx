@@ -1,5 +1,4 @@
 "use client";
-import { motion } from "framer-motion";
 import {
   Code,
   Gamepad2,
@@ -22,11 +21,12 @@ import {
   Calendar,
   Download,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "next/image";
 
 // TypeScript interfaces remain the same
 interface PersonalInterest {
@@ -35,7 +35,6 @@ interface PersonalInterest {
   content: string;
   color: string;
 }
-
 interface EducationTimeline {
   year: string;
   title: string;
@@ -43,14 +42,12 @@ interface EducationTimeline {
   color: string;
   icon: React.ReactNode;
 }
-
 interface SkillCategory {
   name: string;
   icon: React.ReactNode;
   skills: string[];
   color: string;
 }
-
 interface ExperienceItem {
   id: number;
   role: string;
@@ -60,37 +57,28 @@ interface ExperienceItem {
   technologies: string[];
 }
 
-// Client-only component for Framer Motion animations
-const MotionDiv = ({
-  children,
-  ...props
-}: {
-  children?: React.ReactNode;
-  [key: string]: unknown;
-}) => {
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return <div {...props}>{children}</div>;
-  }
-
-  return <motion.div {...props}>{children}</motion.div>;
-};
-
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false);
-  const [activeTimelineItem, setActiveTimelineItem] = useState<number | null>(
-    null
-  );
   const [activeTab, setActiveTab] = useState("skills");
+
+  // Resume file path - centralized for consistency
+  const resumePath = "/Md_Rakib_Islam_Resume.pdf";
+  const resumeFileName = "Md_Rakib_Islam_Resume.pdf";
 
   // Fix hydration issues
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Handle resume download
+  const handleResumeDownload = useCallback(() => {
+    const link = document.createElement("a");
+    link.href = resumePath;
+    link.download = resumeFileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, [resumePath, resumeFileName]);
 
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
@@ -234,23 +222,13 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
-      {/* Simplified animated background with fewer elements */}
+    <div className="font-inter min-h-screen bg-gradient-to-br py-10 from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 w-full">
+      {/* Simplified background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <MotionDiv
-          className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-teal-200/15 dark:bg-teal-800/10 blur-3xl"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {/* Empty child element to satisfy children requirement */}
-        </MotionDiv>
-        <MotionDiv
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 35, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {/* Empty child element to satisfy children requirement */}
-        </MotionDiv>
+        {/* Static gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-teal-200/15 dark:bg-teal-800/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl" />
+        {/* Grid pattern */}
         <div className="absolute inset-0 opacity-10 dark:opacity-20">
           <div
             className="w-full h-full"
@@ -264,128 +242,73 @@ export default function AboutPage() {
             }}
           />
         </div>
-        {/* Reduced number of floating elements */}
-        {[...Array(3)].map((_, i) => (
-          <MotionDiv
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.02, 0] }}
-            transition={{
-              duration: Math.random() * 30 + 30,
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: Math.random() * 5,
-            }}
-            className="absolute rounded-full"
-            style={{
-              width: `${Math.random() * 200 + 100}px`,
-              height: `${Math.random() * 200 + 100}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background:
-                i % 2 === 0
-                  ? "radial-gradient(circle, rgba(20, 184, 166, 0.05) 0%, rgba(20, 184, 166, 0) 70%)"
-                  : "radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0) 70%)",
-              filter: "blur(60px)",
-            }}
-          >
-            {/* Empty child element to satisfy children requirement */}
-          </MotionDiv>
-        ))}
       </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-16">
-        {/* Simplified hero section with reduced animations */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <MotionDiv
-            className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
-            initial={{ backgroundPosition: "0% 50%" }}
-            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-            transition={{
-              duration: 15, // Slower animation
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #0d9488, #14b8a6, #06b6d4, #0ea5e9, #3b82f6)",
-              backgroundSize: "300% 100%",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10 md:py-12 lg:py-16">
+        {/* Hero section */}
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent mb-4">
             About Me
-          </MotionDiv>
-          <MotionDiv
-            className="w-20 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-5 rounded-full"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          </h1>
+          <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-4 md:mb-5 rounded-full" />
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto px-4">
             Developer &{" "}
             <span className="text-teal-600 dark:text-teal-400 font-semibold">
               Creative Problem Solver
             </span>{" "}
             passionate about building impactful digital experiences
           </p>
-        </MotionDiv>
-
-        {/* Simplified personal introduction card */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-200/50 dark:border-slate-700/50 overflow-hidden hover:shadow-lg transition-all duration-300">
+        </div>
+        {/* Personal introduction card */}
+        <div className="mb-8 md:mb-12 w-full">
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-200/50 dark:border-slate-700/50 overflow-hidden hover:shadow-lg transition-all duration-300 w-full">
             <div className="md:flex">
               <div className="md:w-1/3 relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-700 opacity-90"></div>
-                <div className="relative p-6 h-full flex flex-col items-center justify-center text-white">
-                  <div className="w-28 h-28 rounded-full bg-white/20 backdrop-blur-sm mb-5 overflow-hidden border-4 border-white/30">
-                    <div className="w-full h-full bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center">
-                      <span className="text-4xl font-bold">CR</span>
-                    </div>
+                <div className="relative p-4 md:p-6 h-full flex flex-col items-center justify-center text-white">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-white/20 backdrop-blur-sm mb-3 md:mb-5 overflow-hidden border-4 border-white/30">
+                    {/* Profile image */}
+                    <Image
+                      src="/images/profile.png"
+                      alt="Profile"
+                      width={112}
+                      height={112}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <h2 className="text-xl font-bold mb-2">CodesWithRakib</h2>
-                  <p className="text-teal-100 mb-4">Full Stack Developer</p>
-                  <div className="flex gap-2 flex-wrap justify-center">
+                  <h2 className="text-lg sm:text-xl font-bold mb-2">
+                    CodesWithRakib
+                  </h2>
+                  <p className="text-teal-100 mb-3 md:mb-4 text-sm">
+                    Full Stack Developer
+                  </p>
+                  <div className="flex gap-1.5 md:gap-2 flex-wrap justify-center">
                     <Badge
                       variant="secondary"
-                      className="bg-white/20 text-white border-white/30"
+                      className="bg-white/20 text-white border-white/30 text-xs"
                     >
                       MERN Stack
                     </Badge>
                     <Badge
                       variant="secondary"
-                      className="bg-white/20 text-white border-white/30"
+                      className="bg-white/20 text-white border-white/30 text-xs"
                     >
                       TypeScript
                     </Badge>
                     <Badge
                       variant="secondary"
-                      className="bg-white/20 text-white border-white/30"
+                      className="bg-white/20 text-white border-white/30 text-xs"
                     >
                       UI/UX
                     </Badge>
                   </div>
                 </div>
               </div>
-              <div className="md:w-2/3 p-6">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+              <div className="md:w-2/3 p-4 md:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                   <span>Hello, I&apos;m Rakib</span>
-                  <span className="inline-block w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                 </h3>
-                <div className="space-y-3 text-slate-600 dark:text-slate-300 mb-5">
+                <div className="space-y-3 text-slate-600 dark:text-slate-300 mb-4 md:mb-5 text-sm sm:text-base">
                   <p className="leading-relaxed">
                     My coding journey started in 2021 when I first discovered
                     the{" "}
@@ -410,16 +333,20 @@ export default function AboutPage() {
                     exceptional user experiences.
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3">
-                  <Button className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800">
+                <div className="flex flex-wrap gap-2 md:gap-3">
+                  <Button className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-sm sm:text-base">
                     <Briefcase className="mr-2 h-4 w-4" />
                     Hire Me
                   </Button>
-                  <Button variant="outline">
+                  <Button variant="outline" className="text-sm sm:text-base">
                     <Mail className="mr-2 h-4 w-4" />
                     Contact Me
                   </Button>
-                  <Button variant="outline">
+                  <Button
+                    variant="outline"
+                    className="text-sm sm:text-base"
+                    onClick={handleResumeDownload}
+                  >
                     <Download className="mr-2 h-4 w-4" />
                     Download CV
                   </Button>
@@ -427,131 +354,109 @@ export default function AboutPage() {
               </div>
             </div>
           </Card>
-        </MotionDiv>
-
-        {/* Simplified tabs with reduced animations */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
+        </div>
+        {/* Tabs section */}
+        <div className="mb-8 md:mb-12 w-full">
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-1 shadow-md border border-slate-200/50 dark:border-slate-700/50">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-1 shadow-md border border-slate-200/50 dark:border-slate-700/50">
               <TabsTrigger
                 value="skills"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm"
               >
                 Skills
               </TabsTrigger>
               <TabsTrigger
                 value="experience"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm"
               >
                 Experience
               </TabsTrigger>
               <TabsTrigger
                 value="education"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm"
               >
                 Education
               </TabsTrigger>
               <TabsTrigger
                 value="interests"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-sm"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm"
               >
                 Interests
               </TabsTrigger>
             </TabsList>
-
-            {/* Skills Tab with simplified cards */}
+            {/* Skills Tab */}
             <TabsContent value="skills" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
                 {skillCategories.map((category, index) => (
-                  <MotionDiv
+                  <div
                     key={index}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                    className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-5 border border-slate-200/50 dark:border-slate-700/50 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
+                    className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-4 md:p-5 border border-slate-200/50 dark:border-slate-700/50 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30">
+                    <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                      <div className="p-1.5 md:p-2 rounded-lg bg-teal-100/50 dark:bg-teal-900/30">
                         {category.icon}
                       </div>
-                      <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+                      <h3 className="font-bold text-base md:text-lg text-slate-900 dark:text-white">
                         {category.name}
                       </h3>
                     </div>
-                    <div className="space-y-2 flex-grow">
+                    <div className="space-y-1.5 md:space-y-2 flex-grow">
                       {category.skills.map((skill, skillIndex) => (
                         <div
                           key={skillIndex}
                           className="flex items-center gap-2"
                         >
-                          <BadgeCheck className={`h-4 w-4 ${category.color}`} />
-                          <span className="text-slate-600 dark:text-slate-300">
+                          <BadgeCheck
+                            className={`h-3 w-3 md:h-4 md:w-4 ${category.color}`}
+                          />
+                          <span className="text-slate-600 dark:text-slate-300 text-sm">
                             {skill}
                           </span>
                         </div>
                       ))}
                     </div>
-                  </MotionDiv>
+                  </div>
                 ))}
               </div>
             </TabsContent>
-
-            {/* Experience Tab with simplified timeline */}
+            {/* Experience Tab */}
             <TabsContent value="experience" className="mt-6">
               <div className="relative">
                 {/* Timeline line */}
                 <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-blue-500 dark:from-teal-600 dark:to-blue-700"></div>
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {experienceItems.map((item, index) => (
-                    <MotionDiv
-                      key={item.id}
-                      initial={{ opacity: 0, x: -15 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      viewport={{ once: true }}
-                      className="relative"
-                    >
+                    <div key={item.id} className="relative">
                       {/* Timeline dot */}
                       <div className="absolute left-2 w-5 h-5 rounded-full bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-500 dark:to-blue-600 z-10 border-4 border-white dark:border-slate-800"></div>
                       {/* Timeline content */}
-                      <MotionDiv
-                        className="ml-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-5 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300"
-                        whileHover={{ x: 3 }}
-                      >
-                        <div className="flex flex-col md:flex-row md:items-center gap-3 mb-3">
+                      <div className="ml-10 md:ml-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-4 md:p-5 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 mb-2 md:mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                               {item.role}
                               <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             </h3>
-                            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mt-1">
-                              <MapPin className="h-4 w-4" />
+                            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mt-1 text-sm">
+                              <MapPin className="h-3 w-3 md:h-4 md:w-4" />
                               <span>{item.company}</span>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 bg-teal-100/50 dark:bg-teal-900/30 px-3 py-1 rounded-full">
-                            <Calendar className="h-4 w-4 text-teal-600 dark:text-teal-400" />
-                            <span className="text-sm font-medium text-teal-600 dark:text-teal-400">
+                          <div className="flex items-center gap-1.5 md:gap-2 bg-teal-100/50 dark:bg-teal-900/30 px-2 md:px-3 py-1 rounded-full">
+                            <Calendar className="h-3 w-3 md:h-4 md:w-4 text-teal-600 dark:text-teal-400" />
+                            <span className="text-xs md:text-sm font-medium text-teal-600 dark:text-teal-400">
                               {item.period}
                             </span>
                           </div>
                         </div>
-                        <p className="text-slate-600 dark:text-slate-300 mb-3 leading-relaxed">
+                        <p className="text-slate-600 dark:text-slate-300 mb-2 md:mb-3 leading-relaxed text-sm">
                           {item.description}
                         </p>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5 md:gap-2">
                           {item.technologies.map((tech, techIndex) => (
                             <Badge
                               key={techIndex}
@@ -562,212 +467,149 @@ export default function AboutPage() {
                             </Badge>
                           ))}
                         </div>
-                      </MotionDiv>
-                    </MotionDiv>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             </TabsContent>
-
-            {/* Education Tab with simplified timeline */}
+            {/* Education Tab */}
             <TabsContent value="education" className="mt-6">
               <div className="relative">
                 {/* Timeline line */}
                 <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-blue-500 dark:from-teal-600 dark:to-blue-700"></div>
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {educationTimeline.map((item, index) => (
-                    <MotionDiv
-                      key={index}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      viewport={{ once: true }}
-                      className="relative"
-                      onMouseEnter={() => setActiveTimelineItem(index)}
-                      onMouseLeave={() => setActiveTimelineItem(null)}
-                    >
+                    <div key={index} className="relative">
                       {/* Timeline dot */}
-                      <MotionDiv
+                      <div
                         className={`absolute left-2 w-5 h-5 rounded-full ${item.color} z-10 border-4 border-white dark:border-slate-800 flex items-center justify-center`}
-                        whileHover={{ scale: 1.1 }}
-                        animate={
-                          activeTimelineItem === index
-                            ? { scale: 1.1 }
-                            : { scale: 1 }
-                        }
                       >
-                        <MotionDiv
-                          className="w-1 h-1 rounded-full bg-white"
-                          animate={
-                            activeTimelineItem === index
-                              ? { scale: [1, 1.3, 1] }
-                              : {}
-                          }
-                          transition={{
-                            duration: 0.6,
-                            repeat: activeTimelineItem === index ? Infinity : 0,
-                          }}
-                        />
-                      </MotionDiv>
+                        <div className="w-1 h-1 rounded-full bg-white"></div>
+                      </div>
                       {/* Timeline content */}
-                      <MotionDiv
-                        className={`ml-12 p-5 rounded-lg border transition-all duration-300 ${
-                          activeTimelineItem === index
-                            ? "bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 border-teal-200/50 dark:border-teal-700/50 shadow-lg"
-                            : "bg-white/90 dark:bg-slate-800/90 border-slate-200/50 dark:border-slate-700/50 shadow-md"
-                        }`}
-                        whileHover={{ x: 3 }}
-                      >
-                        <div className="flex items-start gap-3">
+                      <div className="ml-10 md:ml-12 p-4 md:p-5 rounded-lg bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 border border-teal-200/50 dark:border-teal-700/50 shadow-md">
+                        <div className="flex items-start gap-2 md:gap-3">
                           <div
-                            className={`p-2 rounded-lg ${item.color} flex-shrink-0`}
+                            className={`p-1.5 md:p-2 rounded-lg ${item.color} flex-shrink-0`}
                           >
                             {item.icon}
                           </div>
                           <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-bold text-slate-900 dark:text-white">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                              <h4 className="font-bold text-slate-900 dark:text-white text-sm md:text-base">
                                 {item.title}
                               </h4>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-700 text-teal-600 dark:text-teal-400">
+                              <span className="text-xs px-2 py-1 rounded-full bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-700 text-teal-600 dark:text-teal-400 w-fit">
                                 {item.year}
                               </span>
                             </div>
-                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
                               {item.content}
                             </p>
                           </div>
                         </div>
-                      </MotionDiv>
-                    </MotionDiv>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             </TabsContent>
-
-            {/* Interests Tab with simplified cards */}
+            {/* Interests Tab */}
             <TabsContent value="interests" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                 {personalInterests.map((item, index) => (
-                  <MotionDiv
+                  <div
                     key={index}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                    className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-5 border border-slate-200/50 dark:border-slate-700/50 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
+                    className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-md p-4 md:p-5 border border-slate-200/50 dark:border-slate-700/50 h-full flex flex-col transition-all duration-300 hover:shadow-lg"
                   >
                     <div
-                      className={`p-3 rounded-lg bg-gradient-to-br ${item.color} mb-3 flex items-center justify-center`}
+                      className={`p-2 md:p-3 rounded-lg bg-gradient-to-br ${item.color} mb-2 md:mb-3 flex items-center justify-center`}
                     >
                       {item.icon}
                     </div>
-                    <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2">
+                    <h3 className="font-bold text-base md:text-lg text-slate-900 dark:text-white mb-1 md:mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-300 flex-grow leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-300 flex-grow leading-relaxed text-sm">
                       {item.content}
                     </p>
-                  </MotionDiv>
+                  </div>
                 ))}
               </div>
             </TabsContent>
           </Tabs>
-        </MotionDiv>
-
-        {/* Simplified goals section */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <Card className="bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 p-6 rounded-xl border border-teal-100/50 dark:border-teal-900/30 backdrop-blur-sm shadow-md">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <MotionDiv
-                animate={{ rotate: [0, 8, -8, 0] }}
-                transition={{ repeat: Infinity, duration: 6 }} // Slower animation
-                className="p-5 rounded-full bg-gradient-to-br from-teal-100/50 to-blue-100/50 dark:from-teal-900/30 dark:to-blue-900/30 shadow-sm"
-              >
-                <Target className="text-teal-600 dark:text-teal-400 w-14 h-14" />
-              </MotionDiv>
+        </div>
+        {/* Goals section */}
+        <div className="mb-8 md:mb-12 w-full">
+          <Card className="bg-gradient-to-r from-teal-50/50 to-blue-50/50 dark:from-teal-900/30 dark:to-blue-900/30 p-4 md:p-6 rounded-xl border border-teal-100/50 dark:border-teal-900/30 backdrop-blur-sm shadow-md">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              <div className="p-3 md:p-5 rounded-full bg-gradient-to-br from-teal-100/50 to-blue-100/50 dark:from-teal-900/30 dark:to-blue-900/30 shadow-sm">
+                <Target className="text-teal-600 dark:text-teal-400 w-10 h-10 md:w-14 md:h-14" />
+              </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">
                   My Goals as a Full-Stack Developer
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-5 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 mb-3 md:mb-5 leading-relaxed text-sm md:text-base">
                   I&apos;m focused on mastering the complete development
                   lifecycle - from designing intuitive UIs to building scalable
                   backends. My aim is to create performant, accessible
                   applications that solve real problems while following best
                   practices in code quality and architecture.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <MotionDiv
-                    whileHover={{ y: -3 }}
-                    className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
-                  >
-                    <Zap className="text-teal-600 dark:text-teal-400" />
-                    <span className="font-medium text-slate-900 dark:text-white">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
+                  <div className="flex items-center gap-2 md:gap-3 bg-white/80 dark:bg-slate-800/80 p-2 md:p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md">
+                    <Zap className="text-teal-600 dark:text-teal-400 w-4 h-4 md:w-5 md:h-5" />
+                    <span className="font-medium text-slate-900 dark:text-white text-sm">
                       Performance
                     </span>
-                  </MotionDiv>
-                  <MotionDiv
-                    whileHover={{ y: -3 }}
-                    className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
-                  >
-                    <Users className="text-teal-600 dark:text-teal-400" />
-                    <span className="font-medium text-slate-900 dark:text-white">
+                  </div>
+                  <div className="flex items-center gap-2 md:gap-3 bg-white/80 dark:bg-slate-800/80 p-2 md:p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md">
+                    <Users className="text-teal-600 dark:text-teal-400 w-4 h-4 md:w-5 md:h-5" />
+                    <span className="font-medium text-slate-900 dark:text-white text-sm">
                       User Experience
                     </span>
-                  </MotionDiv>
-                  <MotionDiv
-                    whileHover={{ y: -3 }}
-                    className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md"
-                  >
-                    <BarChart className="text-teal-600 dark:text-teal-400" />
-                    <span className="font-medium text-slate-900 dark:text-white">
+                  </div>
+                  <div className="flex items-center gap-2 md:gap-3 bg-white/80 dark:bg-slate-800/80 p-2 md:p-3 rounded-lg shadow transition-all duration-300 hover:shadow-md">
+                    <BarChart className="text-teal-600 dark:text-teal-400 w-4 h-4 md:w-5 md:h-5" />
+                    <span className="font-medium text-slate-900 dark:text-white text-sm">
                       Scalability
                     </span>
-                  </MotionDiv>
+                  </div>
                 </div>
               </div>
             </div>
           </Card>
-        </MotionDiv>
-
-        {/* Simplified contact CTA */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+        </div>
+        {/* Contact CTA */}
+        <div className="text-center">
+          <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">
             Let&apos;s Work Together
           </h3>
-          <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-5 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-4 md:mb-5 leading-relaxed text-sm md:text-base px-4">
             I&apos;m always interested in new opportunities and exciting
             projects. Whether you have a question or just want to say hi, feel
             free to reach out!
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-md"
+              className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-md text-sm md:text-base"
             >
-              <Mail className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-4 w-4 md:h-5 md:w-5" />
               Send Message
             </Button>
-            <Button size="lg" variant="outline" className="shadow-sm">
-              <Phone className="mr-2 h-5 w-5" />
+            <Button
+              size="lg"
+              variant="outline"
+              className="shadow-sm text-sm md:text-base"
+            >
+              <Phone className="mr-2 h-4 w-4 md:h-5 md:w-5" />
               Call Me
             </Button>
           </div>
-        </MotionDiv>
+        </div>
       </div>
     </div>
   );
