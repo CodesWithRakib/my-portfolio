@@ -48,11 +48,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 py-20 w-full">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20 py-20 w-full">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-teal-200/20 dark:bg-teal-800/15 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-blue-200/20 dark:bg-blue-800/15 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-green-200/20 dark:bg-green-800/15 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-emerald-200/20 dark:bg-emerald-800/15 blur-3xl" />
         <div className="absolute inset-0 opacity-10 dark:opacity-20">
           <div
             className="w-full h-full"
@@ -67,24 +67,26 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           />
         </div>
       </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Back button */}
         <div className="mb-6 md:mb-8">
           <Link
             href="/projects"
-            className="inline-flex items-center text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors group font-medium"
+            className="inline-flex items-center text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 transition-colors group font-medium"
           >
-            <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform text-teal-500" />
+            <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform text-green-500" />
             Back to Projects
           </Link>
         </div>
+
         {/* Project header */}
         <div className="mb-8 md:mb-12">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
               {project.title}
             </h1>
-            <div className="px-4 py-2 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 text-white text-sm font-semibold inline-flex items-center shadow-lg">
+            <div className="px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-semibold inline-flex items-center shadow-lg">
               {project.category}
             </div>
           </div>
@@ -115,6 +117,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             </div>
           </div>
         </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Column - Image Gallery */}
           <div className="space-y-6 md:space-y-8">
@@ -157,7 +160,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               >
                 {project.images.map((img, i) => (
                   <SwiperSlide key={i}>
-                    <div className="h-full w-full bg-slate-100 dark:bg-slate-700/50 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-teal-500 transition-all">
+                    <div className="h-full w-full bg-slate-100 dark:bg-slate-700/50 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-green-500 transition-all">
                       <Image
                         src={img}
                         alt={`${project.title} thumbnail ${i + 1}`}
@@ -169,6 +172,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 ))}
               </Swiper>
             </div>
+
             {/* Project Overview */}
             <div className="bg-white dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
@@ -181,10 +185,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 {project.description}
               </p>
             </div>
+
             {/* Key Features */}
             <div className="bg-white dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
-                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2.5 rounded-xl text-white shadow-md">
+                <div className="bg-gradient-to-r from-emerald-500 to-green-600 p-2.5 rounded-xl text-white shadow-md">
                   <FiTag className="text-lg" />
                 </div>
                 Key Features
@@ -202,6 +207,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 ))}
               </ul>
             </div>
+
             {/* Testimonials */}
             {project.testimonials.length > 0 && (
               <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-amber-200/50 dark:border-amber-700/50">
@@ -239,6 +245,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               </div>
             )}
           </div>
+
           {/* Right Column - Project Details */}
           <div className="space-y-6 md:space-y-8">
             {/* Technologies */}
@@ -260,10 +267,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 ))}
               </div>
             </div>
+
             {/* Project Statistics */}
-            <div className="bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-800/50 dark:to-teal-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
+            <div className="bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-800/50 dark:to-green-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
-                <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-2.5 rounded-xl text-white shadow-md">
+                <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2.5 rounded-xl text-white shadow-md">
                   <FileBarChart2 className="w-5 h-5" />
                 </div>
                 Project Statistics
@@ -331,6 +339,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
             </div>
+
             {/* Challenges */}
             <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-rose-200/50 dark:border-rose-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
@@ -352,6 +361,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 ))}
               </ul>
             </div>
+
             {/* Future Improvements */}
             <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-indigo-200/50 dark:border-indigo-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
@@ -373,6 +383,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 ))}
               </ul>
             </div>
+
             {/* Awards */}
             {project.awards.length > 0 && (
               <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-amber-200/50 dark:border-amber-700/50">
@@ -406,10 +417,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
             )}
+
             {/* Project Links */}
-            <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800/50 dark:to-blue-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
+            <div className="bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-800/50 dark:to-green-900/20 rounded-2xl p-5 md:p-6 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               <h3 className="font-bold text-lg md:text-xl text-slate-900 dark:text-white flex items-center gap-3 mb-4">
-                <div className="bg-gradient-to-r from-teal-500 to-blue-600 p-2.5 rounded-xl text-white shadow-md">
+                <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2.5 rounded-xl text-white shadow-md">
                   <FiExternalLink className="text-lg" />
                 </div>
                 Project Links
@@ -450,7 +462,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                     href={project.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 md:p-4 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    className="flex items-center gap-3 p-3 md:p-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
                     <div className="bg-white/20 p-2 rounded-lg">
                       <FiExternalLink className="text-lg md:text-xl" />

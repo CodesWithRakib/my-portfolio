@@ -90,16 +90,16 @@ export default function ProjectsSection() {
       id="projects"
       className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
     >
-      {/* Professional background with teal/blue theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
+      {/* Professional background with green theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20">
         {/* Simplified animated gradient orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-teal-200/20 dark:bg-teal-800/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-green-200/20 dark:bg-green-800/10 blur-3xl"
           animate={{ y: [0, -30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-emerald-200/20 dark:bg-emerald-800/10 blur-3xl"
           animate={{ y: [0, 30, 0] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -140,8 +140,8 @@ export default function ProjectsSection() {
               top: `${Math.random() * 100}%`,
               background:
                 i % 2 === 0
-                  ? "radial-gradient(circle, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0) 70%)"
-                  : "radial-gradient(circle, rgba(8, 145, 178, 0.1) 0%, rgba(8, 145, 178, 0) 70%)",
+                  ? "radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0) 70%)"
+                  : "radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%)",
               filter: "blur(70px)",
             }}
           />
@@ -149,11 +149,11 @@ export default function ProjectsSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Header with teal/blue theme */}
+        {/* Header with green theme */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-12 md:mb-16"
         >
@@ -165,16 +165,16 @@ export default function ProjectsSection() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
             My{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400">
               Projects
             </span>
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="w-20 md:w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 mx-auto mb-4 md:mb-6 transform origin-left"
+            className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mx-auto mb-4 md:mb-6 transform origin-left"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -200,7 +200,7 @@ export default function ProjectsSection() {
             <Input
               type="text"
               placeholder="Search projects by name, technology, or description..."
-              className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-teal-200/50 dark:border-teal-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-500 focus:border-transparent shadow-sm text-sm sm:text-base"
+              className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-green-200/50 dark:border-green-700/50 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-500 focus:border-transparent shadow-sm text-sm sm:text-base"
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -223,13 +223,13 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="flex justify-center mb-8 md:mb-12 w-full"
         >
-          <div className="inline-flex p-1 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-teal-200/50 dark:border-teal-700/50 shadow-sm max-w-full overflow-x-auto">
+          <div className="inline-flex p-1 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-green-200/50 dark:border-green-700/50 shadow-sm max-w-full overflow-x-auto">
             {categories.map((category) => (
               <button
                 key={category}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                   activeFilter === category
-                    ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-sm"
+                    ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-sm"
                     : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50"
                 }`}
                 onClick={() => handleFilterChange(category)}
@@ -255,8 +255,8 @@ export default function ProjectsSection() {
             <button
               className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                 selectedTag === null
-                  ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white"
-                  : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-teal-200/50 dark:border-teal-700/50"
+                  ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+                  : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-green-200/50 dark:border-green-700/50"
               }`}
               onClick={() => handleTagChange(null)}
             >
@@ -267,8 +267,8 @@ export default function ProjectsSection() {
                 key={tag}
                 className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                   selectedTag === tag
-                    ? "bg-gradient-to-r from-teal-600 to-blue-600 text-white"
-                    : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-teal-200/50 dark:border-teal-700/50"
+                    ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
+                    : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-green-200/50 dark:border-green-700/50"
                 }`}
                 onClick={() => handleTagChange(tag)}
               >
@@ -299,7 +299,7 @@ export default function ProjectsSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="col-span-full text-center py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-teal-200/50 dark:border-teal-700/50"
+              className="col-span-full text-center py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-green-200/50 dark:border-green-700/50"
             >
               <h3 className="text-lg md:text-xl font-medium text-slate-900 dark:text-white mb-2">
                 No projects found
@@ -322,28 +322,12 @@ export default function ProjectsSection() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white rounded-lg font-medium shadow-md transition-all text-sm sm:text-base"
+            className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-medium shadow-md transition-all text-sm sm:text-base"
           >
             <Link href="/projects">View All Projects</Link>
           </motion.button>
         </motion.div>
       </div>
-
-      {/* Custom CSS animations for performance */}
-      <style jsx global>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 }

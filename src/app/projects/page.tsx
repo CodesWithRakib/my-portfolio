@@ -77,12 +77,12 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen py-10 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 w-full">
+    <div className="min-h-screen py-10 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20 w-full">
       {/* Simplified Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Static gradient orbs instead of animated ones */}
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-teal-200/15 dark:bg-teal-800/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-blue-200/15 dark:bg-blue-800/10 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-green-200/15 dark:bg-green-800/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-emerald-200/15 dark:bg-emerald-800/10 blur-3xl" />
         {/* Grid pattern */}
         <div className="absolute inset-0 opacity-10 dark:opacity-20">
           <div
@@ -104,11 +104,11 @@ export default function ProjectsPage() {
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             My{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-400 dark:to-emerald-500">
               Projects
             </span>
           </h1>
-          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-4 md:mb-6" />
+          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-400 dark:to-emerald-500 mx-auto mb-4 md:mb-6" />
           <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto px-4">
             Selected work showcasing my full-stack development capabilities
           </p>
@@ -121,7 +121,7 @@ export default function ProjectsPage() {
             <Input
               type="text"
               placeholder="Search projects by name, technology, or description..."
-              className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-500 focus:border-transparent shadow-sm text-sm"
+              className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-white dark:bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-200/50 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-500 focus:border-transparent shadow-sm text-sm"
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-700 data-[state=active]:text-white text-xs sm:text-sm"
                 >
                   {category.label}
                 </TabsTrigger>
@@ -155,7 +155,7 @@ export default function ProjectsPage() {
 
           <div className="mt-4 md:mt-6">
             <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-2 md:mb-3 flex items-center gap-1">
-              <FiFilter className="text-teal-500 w-4 h-4" />
+              <FiFilter className="text-green-500 w-4 h-4" />
               Filter by tags
             </h3>
             <div className="flex flex-wrap gap-1.5 md:gap-2">
@@ -186,13 +186,13 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects grid */}
-        <div className="grid grid-cols-1  gap-4 md:gap-6 w-full">
+        <div className="grid grid-cols-1 gap-4 md:gap-6 w-full">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))
           ) : (
-            <div className="col-span-full text-center py-8 md:py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+            <div className="col-span-full text-center py-8 md:py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-green-200/50 dark:border-green-700/50">
               <h3 className="text-lg md:text-xl font-medium text-slate-900 dark:text-white mb-2">
                 No projects found
               </h3>

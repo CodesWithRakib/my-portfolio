@@ -70,14 +70,13 @@ interface ProjectCardProps {
 // Technology icon mapping
 const getTechIcon = (tech: string) => {
   const techLower = tech.toLowerCase();
-
   if (techLower.includes("react")) return <SiReact className="text-blue-500" />;
   if (techLower.includes("next"))
     return <SiNextdotjs className="text-black dark:text-white" />;
   if (techLower.includes("typescript"))
     return <SiTypescript className="text-blue-600" />;
   if (techLower.includes("tailwind"))
-    return <SiTailwindcss className="text-teal-500" />;
+    return <SiTailwindcss className="text-green-500" />;
   if (techLower.includes("node"))
     return <SiNodedotjs className="text-green-600" />;
   if (techLower.includes("mongodb"))
@@ -104,9 +103,8 @@ const getTechIcon = (tech: string) => {
   if (techLower.includes("vercel"))
     return <SiVercel className="text-black dark:text-white" />;
   if (techLower.includes("netlify"))
-    return <SiNetlify className="text-teal-600" />;
+    return <SiNetlify className="text-green-600" />;
   if (techLower.includes("git")) return <SiGit className="text-orange-600" />;
-
   // Default icon if no match
   return <FiCode className="text-slate-600 dark:text-slate-400" />;
 };
@@ -114,7 +112,6 @@ const getTechIcon = (tech: string) => {
 // Category color mapping
 const getCategoryColor = (category: string) => {
   const categoryLower = category.toLowerCase();
-
   if (
     categoryLower.includes("full stack") ||
     categoryLower.includes("fullstack")
@@ -128,8 +125,7 @@ const getCategoryColor = (category: string) => {
     return "from-orange-500 to-amber-500";
   if (categoryLower.includes("ui") || categoryLower.includes("design"))
     return "from-pink-500 to-rose-500";
-
-  return "from-teal-500 to-blue-500";
+  return "from-green-600 to-emerald-600";
 };
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
@@ -253,8 +249,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       <div
         className={cn(
           "relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 w-full",
-          "bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm",
-          "border border-teal-200/50 dark:border-teal-700/50",
+          "bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm",
+          "border border-green-200/50 dark:border-green-700/50",
           "transform hover:-translate-y-1 hover:scale-[1.005] transition-transform duration-300 ease-in-out"
         )}
         data-aos="fade-up"
@@ -263,7 +259,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Animated gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-blue-500/10 dark:from-teal-500/5 dark:to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/5 dark:to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Shimmer effect */}
         <div className="absolute inset-0 overflow-hidden">
@@ -321,13 +317,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               }}
             >
               {project.images.map((img, i) => (
-                <SwiperSlide key={i}>
-                  <div className="relative h-full w-full">
-                    <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800">
+                <SwiperSlide key={i} className="w-full h-full">
+                  <figure className="relative w-full h-full m-0">
+                    <div className="absolute inset-0 bg-slate-200 dark:bg-slate-800 h-full">
                       <Image
                         src={img}
                         alt={`${project.title} screenshot ${i + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className=" object-cover transition-transform duration-700 group-hover:scale-105"
                         loading={i === 0 ? "eager" : "lazy"}
                         width={1280}
                         height={720}
@@ -341,12 +337,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     </div>
                     <button
                       onClick={() => openLightbox(i)}
-                      className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/70 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/70 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-green-500"
                       aria-label="View full image"
                     >
                       <FiMaximize className="w-4 h-4" />
                     </button>
-                  </div>
+                  </figure>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -369,7 +365,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     key={i}
                     className="cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
                   >
-                    <div className="relative h-full w-full rounded overflow-hidden border-2 border-transparent hover:border-teal-400 transition-all">
+                    <figure className="relative h-full w-full rounded overflow-hidden border-2 border-transparent hover:border-green-400 transition-all m-0">
                       <Image
                         src={img}
                         alt={`Thumbnail ${i + 1}`}
@@ -377,7 +373,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                         className="object-cover"
                         sizes="100px"
                       />
-                    </div>
+                    </figure>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -390,19 +386,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 "absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full",
                 "bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center justify-center shadow-md",
                 "opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer",
-                "hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-teal-500"
+                "hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-green-500"
               )}
               aria-label="Previous slide"
             >
               <FiChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-300" />
             </button>
+
             <button
               className={cn(
                 `swiper-button-next-${project.id}`,
                 "absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full",
                 "bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center justify-center shadow-md",
                 "opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer",
-                "hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-teal-500"
+                "hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-green-500"
               )}
               aria-label="Next slide"
             >
@@ -431,7 +428,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 {project.category}
               </span>
               <div className="flex items-center gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                <FiCalendar className="w-3 h-3 sm:w-4 sm:h-4 text-teal-500" />
+                <FiCalendar className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
                 <span>{project.date}</span>
               </div>
               {project.awards.length > 0 && (
@@ -461,7 +458,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {/* Key features */}
             <div className="mb-4 sm:mb-6">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
-                <div className="p-1.5 rounded-lg bg-gradient-to-r from-teal-500 to-blue-500 text-white">
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white">
                   <FiInfo className="w-4 h-4" />
                 </div>
                 Key Features
@@ -469,7 +466,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               <ul className="space-y-1 sm:space-y-2">
                 {project.features.slice(0, 3).map((feature, i) => (
                   <li key={i} className="flex items-start">
-                    <div className="flex-shrink-0 mt-1 mr-2 text-teal-500 dark:text-teal-400">
+                    <div className="flex-shrink-0 mt-1 mr-2 text-green-500 dark:text-green-400">
                       ▹
                     </div>
                     <span className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm">
@@ -488,7 +485,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {/* Tags */}
             <div className="mb-4 sm:mb-6">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
-                <div className="p-1.5 rounded-lg bg-gradient-to-r from-teal-500 to-blue-500 text-white">
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white">
                   <FiTag className="w-4 h-4" />
                 </div>
                 Tags
@@ -497,7 +494,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 {project.tags.slice(0, 4).map((tag, i) => (
                   <span
                     key={i}
-                    className="px-2 sm:px-3 py-1 bg-gradient-to-r from-teal-100 to-blue-100 dark:from-teal-900/30 dark:to-blue-900/30 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium hover:from-teal-200/50 hover:to-blue-200/50 dark:hover:to-blue-900/50 transition-all cursor-pointer"
+                    className="px-2 sm:px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 text-green-800 dark:text-green-200 rounded-full text-xs font-medium hover:from-green-200/50 hover:to-emerald-200/50 dark:hover:to-emerald-900/50 transition-all cursor-pointer"
                   >
                     {tag}
                   </span>
@@ -513,7 +510,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             {/* Technologies */}
             <div className="mt-auto">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
-                <div className="p-1.5 rounded-lg bg-gradient-to-r from-teal-500 to-blue-500 text-white">
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white">
                   <FiCode className="w-4 h-4" />
                 </div>
                 Technologies
@@ -543,7 +540,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     href={project.githubClient}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 pointer-events-auto text-xs sm:text-sm"
+                    className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 pointer-events-auto text-xs sm:text-sm"
                   >
                     <FiGithub className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>Client</span>
@@ -554,7 +551,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     href={project.githubServer}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 pointer-events-auto text-xs sm:text-sm"
+                    className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 pointer-events-auto text-xs sm:text-sm"
                   >
                     <FiGithub className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>Server</span>
@@ -562,7 +559,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 )}
                 <Link
                   href={`/projects/${project.id}`}
-                  className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 pointer-events-auto text-xs sm:text-sm"
+                  className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 pointer-events-auto text-xs sm:text-sm"
                 >
                   <FiEye className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>Details</span>
@@ -573,10 +570,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 pointer-events-auto text-xs sm:text-sm",
+                      "flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 pointer-events-auto text-xs sm:text-sm",
                       isHovered
-                        ? "bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 text-white"
-                        : "bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white"
+                        ? "bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white"
+                        : "bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white"
                     )}
                   >
                     <FiExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -601,14 +598,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <div className="absolute top-4 right-4 z-20 flex gap-2">
               <button
                 onClick={handleZoomIn}
-                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
                 aria-label="Zoom in"
               >
                 <FiZoomIn className="w-5 h-5" />
               </button>
               <button
                 onClick={handleZoomOut}
-                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
                 aria-label="Zoom out"
                 disabled={zoomLevel <= 0.5}
               >
@@ -616,7 +613,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </button>
               <button
                 onClick={toggleFullscreen}
-                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
                 aria-label={
                   isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
                 }
@@ -629,7 +626,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </button>
               <button
                 onClick={closeLightbox}
-                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
                 aria-label="Close lightbox"
               >
                 <FiX className="w-5 h-5" />
@@ -713,7 +710,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                       className={cn(
                         "relative h-full w-full rounded overflow-hidden border-2 transition-all",
                         activeIndex === i
-                          ? "border-teal-400 opacity-100"
+                          ? "border-green-400 opacity-100"
                           : "border-transparent"
                       )}
                     >
@@ -736,18 +733,19 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 `lightbox-button-prev-${project.id}`,
                 "absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full",
                 "bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center justify-center shadow-md",
-                "cursor-pointer hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-teal-500"
+                "cursor-pointer hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-green-500"
               )}
               aria-label="Previous image"
             >
               <FiChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-700 dark:text-slate-300" />
             </button>
+
             <button
               className={cn(
                 `lightbox-button-next-${project.id}`,
                 "absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full",
                 "bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center justify-center shadow-md",
-                "cursor-pointer hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-teal-500"
+                "cursor-pointer hover:scale-110 transform transition-transform focus:outline-none focus:ring-2 focus:ring-green-500"
               )}
               aria-label="Next image"
             >
@@ -796,7 +794,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             background-color: rgba(30, 41, 59, 0.7);
           }
           .swiper-pagination-bullet-active-custom {
-            background-color: #0ea5e9;
+            background-color: #10b981;
           }
         }
         .swiper-slide-thumb-active {

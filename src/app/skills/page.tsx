@@ -34,6 +34,7 @@ interface SkillItem {
   image: string;
   description: string;
 }
+
 interface SkillCategory {
   id: string;
   category: string;
@@ -44,12 +45,14 @@ interface SkillCategory {
   description: string;
   skills: SkillItem[];
 }
+
 interface ApproachItem {
   title: string;
   desc: string;
   icon: React.ReactNode;
   color: string;
 }
+
 interface TechImage {
   name: string;
   image: string;
@@ -61,9 +64,9 @@ const skills: SkillCategory[] = [
     id: "frontend",
     category: "Frontend Development",
     icon: <Code className="w-5 h-5" />,
-    color: "text-teal-600 dark:text-teal-400",
-    bgColor: "bg-teal-100/50 dark:bg-teal-900/30",
-    borderColor: "border-teal-200/50 dark:border-teal-800/30",
+    color: "text-green-600 dark:text-green-400",
+    bgColor: "bg-green-100/50 dark:bg-green-900/30",
+    borderColor: "border-green-200/50 dark:border-green-800/30",
     description:
       "Creating engaging, responsive user interfaces with modern frameworks and tools.",
     skills: [
@@ -108,9 +111,9 @@ const skills: SkillCategory[] = [
     id: "backend",
     category: "Backend Development",
     icon: <Server className="w-5 h-5" />,
-    color: "text-cyan-600 dark:text-cyan-400",
-    bgColor: "bg-cyan-100/50 dark:bg-cyan-900/30",
-    borderColor: "border-cyan-200/50 dark:border-cyan-800/30",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bgColor: "bg-emerald-100/50 dark:bg-emerald-900/30",
+    borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
     description:
       "Building robust server-side applications and APIs with scalable architecture.",
     skills: [
@@ -148,9 +151,9 @@ const skills: SkillCategory[] = [
     id: "database",
     category: "Database & Cloud",
     icon: <Database className="w-5 h-5" />,
-    color: "text-blue-600 dark:text-blue-400",
-    bgColor: "bg-blue-100/50 dark:bg-blue-900/30",
-    borderColor: "border-blue-200/50 dark:border-blue-800/30",
+    color: "text-lime-600 dark:text-lime-400",
+    bgColor: "bg-lime-100/50 dark:bg-lime-900/30",
+    borderColor: "border-lime-200/50 dark:border-lime-800/30",
     description:
       "Managing data storage, retrieval, and cloud infrastructure for applications.",
     skills: [
@@ -175,9 +178,9 @@ const skills: SkillCategory[] = [
     id: "tools",
     category: "Tools & Productivity",
     icon: <Wrench className="w-5 h-5" />,
-    color: "text-sky-600 dark:text-sky-400",
-    bgColor: "bg-sky-100/50 dark:bg-sky-900/30",
-    borderColor: "border-sky-200/50 dark:border-sky-800/30",
+    color: "text-green-600 dark:text-green-400",
+    bgColor: "bg-green-100/50 dark:bg-green-900/30",
+    borderColor: "border-green-200/50 dark:border-green-800/30",
     description:
       "Development tools and workflows that enhance productivity and code quality.",
     skills: [
@@ -213,9 +216,9 @@ const skills: SkillCategory[] = [
     id: "design",
     category: "UI/UX Design",
     icon: <Palette className="w-5 h-5" />,
-    color: "text-indigo-600 dark:text-indigo-400",
-    bgColor: "bg-indigo-100/50 dark:bg-indigo-900/30",
-    borderColor: "border-indigo-200/50 dark:border-indigo-800/30",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bgColor: "bg-emerald-100/50 dark:bg-emerald-900/30",
+    borderColor: "border-emerald-200/50 dark:border-emerald-800/30",
     description:
       "Creating intuitive and visually appealing user experiences with design principles.",
     skills: [
@@ -249,9 +252,9 @@ const skills: SkillCategory[] = [
     id: "testing",
     category: "Testing & QA",
     icon: <Shield className="w-5 h-5" />,
-    color: "text-violet-600 dark:text-violet-400",
-    bgColor: "bg-violet-100/50 dark:bg-violet-900/30",
-    borderColor: "border-violet-200/50 dark:border-violet-800/30",
+    color: "text-lime-600 dark:text-lime-400",
+    bgColor: "bg-lime-100/50 dark:bg-lime-900/30",
+    borderColor: "border-lime-200/50 dark:border-lime-800/30",
     description:
       "Ensuring code quality and application reliability through comprehensive testing.",
     skills: [
@@ -296,40 +299,38 @@ const developmentApproach: ApproachItem[] = [
   {
     title: "Clean Code",
     desc: "Emphasizing readability and maintainability",
-    icon: <Code className="w-5 h-5 text-teal-600 dark:text-teal-400" />,
-    color: "bg-gradient-to-r from-teal-500 to-teal-600",
+    icon: <Code className="w-5 h-5 text-green-600 dark:text-green-400" />,
+    color: "bg-gradient-to-r from-green-500 to-green-600",
   },
   {
     title: "Performance",
     desc: "Optimized solutions for speed and efficiency",
-    icon: <Zap className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />,
-    color: "bg-gradient-to-r from-cyan-500 to-cyan-600",
+    icon: <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+    color: "bg-gradient-to-r from-emerald-500 to-emerald-600",
   },
   {
     title: "Responsive Design",
     desc: "Flawless experience across all devices",
-    icon: <Smartphone className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
-    color: "bg-gradient-to-r from-blue-500 to-blue-600",
+    icon: <Smartphone className="w-5 h-5 text-lime-600 dark:text-lime-400" />,
+    color: "bg-gradient-to-r from-lime-500 to-lime-600",
   },
   {
     title: "Security",
     desc: "Built with data protection in mind",
-    icon: <Shield className="w-5 h-5 text-sky-600 dark:text-sky-400" />,
-    color: "bg-gradient-to-r from-sky-500 to-sky-600",
+    icon: <Shield className="w-5 h-5 text-green-600 dark:text-green-400" />,
+    color: "bg-gradient-to-r from-green-500 to-green-600",
   },
   {
     title: "Testing",
     desc: "Comprehensive test coverage",
-    icon: <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
-    color: "bg-gradient-to-r from-indigo-500 to-indigo-600",
+    icon: <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+    color: "bg-gradient-to-r from-emerald-500 to-emerald-600",
   },
   {
     title: "DevOps",
     desc: "CI/CD and cloud deployment",
-    icon: (
-      <GitBranch className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-    ),
-    color: "bg-gradient-to-r from-violet-500 to-violet-600",
+    icon: <GitBranch className="w-5 h-5 text-lime-600 dark:text-lime-400" />,
+    color: "bg-gradient-to-r from-lime-500 to-lime-600",
   },
 ];
 
@@ -390,7 +391,7 @@ const SkillCard = ({
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="text-sm md:text-base font-semibold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300 truncate block">
+              <span className="text-sm md:text-base font-semibold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 truncate block">
                 {skill.name}
               </span>
               <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">
@@ -409,8 +410,8 @@ const ApproachCard = ({ item }: { item: ApproachItem; index: number }) => {
   return (
     <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden h-full">
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500 to-blue-500"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
       </div>
       <div className="flex flex-col items-center text-center md:items-start md:text-left mb-4 gap-3 relative z-10">
         <div
@@ -426,7 +427,7 @@ const ApproachCard = ({ item }: { item: ApproachItem; index: number }) => {
         {item.desc}
       </p>
       <div className="mt-3 md:mt-4 flex items-center justify-center md:justify-start text-slate-600 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
-        <CheckCircle className="w-4 h-4 md:w-5 md:h-5 mr-2 text-teal-500" />
+        <CheckCircle className="w-4 h-4 md:w-5 md:h-5 mr-2 text-green-500" />
         <span className="text-xs md:text-sm font-medium">
           Industry best practice
         </span>
@@ -439,7 +440,7 @@ const ApproachCard = ({ item }: { item: ApproachItem; index: number }) => {
 const TechItem = ({ tech }: { tech: TechImage }) => {
   return (
     <div className="flex flex-col items-center justify-center mx-1 sm:mx-2 md:mx-3 lg:mx-4 flex-shrink-0 group">
-      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-2 mb-2 md:mb-3 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-teal-50 group-hover:to-blue-50 dark:group-hover:from-teal-900/20 dark:group-hover:to-blue-900/20 group-hover:scale-110 shadow-md group-hover:shadow-lg border border-slate-200/50 dark:border-slate-700/50">
+      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-2 mb-2 md:mb-3 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-green-50 group-hover:to-emerald-50 dark:group-hover:from-green-900/20 dark:group-hover:to-emerald-900/20 group-hover:scale-110 shadow-md group-hover:shadow-lg border border-slate-200/50 dark:border-slate-700/50">
         <Image
           src={tech.image}
           alt={tech.name}
@@ -449,7 +450,7 @@ const TechItem = ({ tech }: { tech: TechImage }) => {
           loading="lazy"
         />
       </div>
-      <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
+      <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 whitespace-nowrap group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">
         {tech.name}
       </span>
     </div>
@@ -473,9 +474,9 @@ export default function SkillsPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
           <p className="mt-4 text-slate-600 dark:text-slate-300">Loading...</p>
         </div>
       </div>
@@ -483,7 +484,7 @@ export default function SkillsPage() {
   }
 
   return (
-    <div className="min-h-screen py-10 bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 dark:from-slate-900 dark:via-teal-900/20 dark:to-blue-900/20">
+    <div className="min-h-screen py-10 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10 dark:opacity-20">
         <div
@@ -501,29 +502,29 @@ export default function SkillsPage() {
 
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-teal-200/20 dark:bg-teal-800/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-blue-200/20 dark:bg-blue-800/10 blur-3xl" />
-        <div className="absolute top-1/3 right-1/3 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-purple-200/20 dark:bg-purple-800/10 blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-green-200/20 dark:bg-green-800/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-emerald-200/20 dark:bg-emerald-800/10 blur-3xl" />
+        <div className="absolute top-1/3 right-1/3 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-lime-200/20 dark:bg-lime-800/10 blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-16 lg:py-20">
         {/* Hero section */}
         <div className="text-center mb-10 md:mb-12 lg:mb-16">
           <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-            <div className="bg-gradient-to-r from-teal-500 to-blue-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-4">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-4">
               <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
               Skills & Expertise
             </h1>
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-4">
+            <div className="bg-gradient-to-r from-emerald-500 to-lime-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-4">
               <Cpu className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
           </div>
-          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-teal-600 to-blue-700 dark:from-teal-400 dark:to-blue-500 mx-auto mb-4 md:mb-6 rounded-full" />
+          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-400 dark:to-emerald-500 mx-auto mb-4 md:mb-6 rounded-full" />
           <p className="text-base md:text-lg lg:text-xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto font-medium px-4">
             As a{" "}
-            <span className="text-teal-600 dark:text-teal-400 font-semibold">
+            <span className="text-green-600 dark:text-green-400 font-semibold">
               Full Stack Developer
             </span>
             , I continuously expand my technical toolkit to build better
@@ -541,7 +542,7 @@ export default function SkillsPage() {
             <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 w-full gap-1.5 sm:gap-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-1.5 md:p-2 shadow-lg border border-slate-200/50 dark:border-slate-700/50">
               <TabsTrigger
                 value="all"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm font-medium py-2 px-2 sm:px-3 rounded-lg transition-all duration-300 w-full"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-700 data-[state=active]:text-white text-xs sm:text-sm font-medium py-2 px-2 sm:px-3 rounded-lg transition-all duration-300 w-full"
               >
                 All Skills
               </TabsTrigger>
@@ -549,7 +550,7 @@ export default function SkillsPage() {
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-600 data-[state=active]:to-blue-700 data-[state=active]:text-white text-xs sm:text-sm font-medium py-2 px-2 sm:px-3 rounded-lg transition-all duration-300 w-full"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-700 data-[state=active]:text-white text-xs sm:text-sm font-medium py-2 px-2 sm:px-3 rounded-lg transition-all duration-300 w-full"
                 >
                   {category.category.split(" ")[0]}
                 </TabsTrigger>
@@ -557,6 +558,7 @@ export default function SkillsPage() {
             </TabsList>
           </Tabs>
         </div>
+
         {/* Skills grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-20">
           {filteredSkills.map((category, index) => (
@@ -568,13 +570,13 @@ export default function SkillsPage() {
         <div className="mb-16 md:mb-20">
           <div className="text-center mb-8 md:mb-12">
             <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-              <div className="bg-gradient-to-r from-teal-500 to-blue-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
                 <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                 My Development Approach
               </h2>
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
+              <div className="bg-gradient-to-r from-emerald-500 to-lime-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
                 <Rocket className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
@@ -591,16 +593,16 @@ export default function SkillsPage() {
         </div>
 
         {/* Technology stack showcase */}
-        <div className="bg-gradient-to-br from-white/90 to-teal-50/90 dark:from-slate-800/90 dark:to-teal-900/30 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-teal-100/50 dark:border-teal-900/30 overflow-hidden mb-16 md:mb-20">
+        <div className="bg-gradient-to-br from-white/90 to-green-50/90 dark:from-slate-800/90 dark:to-green-900/30 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-green-100/50 dark:border-green-900/30 overflow-hidden mb-16 md:mb-20">
           <div className="text-center mb-6 md:mb-8">
             <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-              <div className="bg-gradient-to-r from-teal-500 to-blue-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
                 <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                 Technologies I Work With
               </h2>
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
+              <div className="bg-gradient-to-r from-emerald-500 to-lime-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
                 <Code className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
@@ -619,13 +621,13 @@ export default function SkillsPage() {
         <div className="mb-16 md:mb-20">
           <div className="text-center mb-8 md:mb-12">
             <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-              <div className="bg-gradient-to-r from-teal-500 to-blue-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-1.5 sm:p-2 rounded-full mb-3 sm:mb-0 sm:mr-3">
                 <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                 My Learning Journey
               </h2>
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
+              <div className="bg-gradient-to-r from-emerald-500 to-lime-500 p-1.5 sm:p-2 rounded-full mt-3 sm:mt-0 sm:ml-3">
                 <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
@@ -635,10 +637,10 @@ export default function SkillsPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <Card className="bg-gradient-to-br from-white/90 to-teal-50/90 dark:from-slate-800/90 dark:to-teal-900/30 backdrop-blur-sm border border-teal-100/50 dark:border-teal-900/30 shadow-lg overflow-hidden">
+            <Card className="bg-gradient-to-br from-white/90 to-green-50/90 dark:from-slate-800/90 dark:to-green-900/30 backdrop-blur-sm border border-green-100/50 dark:border-green-900/30 shadow-lg overflow-hidden">
               <CardHeader className="pb-4">
                 <CardTitle className="flex flex-col sm:flex-row items-center gap-3 text-lg md:text-xl">
-                  <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-2 rounded-lg flex-shrink-0">
+                  <div className="bg-gradient-to-r from-green-500 to-green-600 p-2 rounded-lg flex-shrink-0">
                     <BookOpen className="text-white" />
                   </div>
                   <span>Currently Learning</span>
@@ -647,36 +649,36 @@ export default function SkillsPage() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       Next.js 14
                     </Badge>
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       Advanced TypeScript
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       GraphQL
                     </Badge>
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       AWS Services
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       Docker
                     </Badge>
-                    <Badge className="bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 hover:bg-teal-200 dark:hover:bg-teal-900/70 text-xs">
+                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-900/70 text-xs">
                       Kubernetes
                     </Badge>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-white/90 to-blue-50/90 dark:from-slate-800/90 dark:to-blue-900/30 backdrop-blur-sm border border-blue-100/50 dark:border-blue-900/30 shadow-lg overflow-hidden">
+            <Card className="bg-gradient-to-br from-white/90 to-emerald-50/90 dark:from-slate-800/90 dark:to-emerald-900/30 backdrop-blur-sm border border-emerald-100/50 dark:border-emerald-900/30 shadow-lg overflow-hidden">
               <CardHeader className="pb-4">
                 <CardTitle className="flex flex-col sm:flex-row items-center gap-3 text-lg md:text-xl">
-                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2 rounded-lg flex-shrink-0">
+                  <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 p-2 rounded-lg flex-shrink-0">
                     <Target className="text-white" />
                   </div>
                   <span>Next Goals</span>
@@ -685,32 +687,32 @@ export default function SkillsPage() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-900/70 text-xs">
+                    <Badge className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-200 dark:hover:bg-emerald-900/70 text-xs">
                       Rust Programming
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-900/70 text-xs">
+                    <Badge className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-200 dark:hover:bg-emerald-900/70 text-xs">
                       Web3 Development
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-900/70 text-xs">
+                    <Badge className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-200 dark:hover:bg-emerald-900/70 text-xs">
                       Machine Learning
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-900/70 text-xs">
+                    <Badge className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-200 dark:hover:bg-emerald-900/70 text-xs">
                       Mobile Development
                     </Badge>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-white/90 to-purple-50/90 dark:from-slate-800/90 dark:to-purple-900/30 backdrop-blur-sm border border-purple-100/50 dark:border-purple-900/30 shadow-lg overflow-hidden">
+            <Card className="bg-gradient-to-br from-white/90 to-lime-50/90 dark:from-slate-800/90 dark:to-lime-900/30 backdrop-blur-sm border border-lime-100/50 dark:border-lime-900/30 shadow-lg overflow-hidden">
               <CardHeader className="pb-4">
                 <CardTitle className="flex flex-col sm:flex-row items-center gap-3 text-lg md:text-xl">
-                  <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-2 rounded-lg flex-shrink-0">
+                  <div className="bg-gradient-to-r from-lime-500 to-lime-600 p-2 rounded-lg flex-shrink-0">
                     <Award className="text-white" />
                   </div>
                   <span>Certifications</span>
@@ -719,17 +721,17 @@ export default function SkillsPage() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 hover:bg-purple-200 dark:hover:bg-purple-900/70 text-xs">
+                    <Badge className="bg-lime-100 dark:bg-lime-900/50 text-lime-800 dark:text-lime-200 hover:bg-lime-200 dark:hover:bg-lime-900/70 text-xs">
                       AWS Certified Developer
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 hover:bg-purple-200 dark:hover:bg-purple-900/70 text-xs">
+                    <Badge className="bg-lime-100 dark:bg-lime-900/50 text-lime-800 dark:text-lime-200 hover:bg-lime-200 dark:hover:bg-lime-900/70 text-xs">
                       MongoDB Certified Developer
                     </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                    <Badge className="bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 hover:bg-purple-200 dark:hover:bg-purple-900/70 text-xs">
+                    <Badge className="bg-lime-100 dark:bg-lime-900/50 text-lime-800 dark:text-lime-200 hover:bg-lime-200 dark:hover:bg-lime-900/70 text-xs">
                       Google Cloud Professional
                     </Badge>
                   </div>
@@ -740,15 +742,15 @@ export default function SkillsPage() {
         </div>
 
         {/* Call to action */}
-        <div className="text-center bg-gradient-to-br from-white/90 to-teal-50/90 dark:from-slate-800/90 dark:to-teal-900/30 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 border border-teal-100/50 dark:border-teal-900/30">
+        <div className="text-center bg-gradient-to-br from-white/90 to-green-50/90 dark:from-slate-800/90 dark:to-green-900/30 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 border border-green-100/50 dark:border-green-900/30">
           <div className="flex flex-col sm:flex-row items-center justify-center mb-4 md:mb-6">
-            <div className="bg-gradient-to-r from-teal-500 to-blue-500 p-2 md:p-3 rounded-full mb-3 sm:mb-0 sm:mr-4">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-2 md:p-3 rounded-full mb-3 sm:mb-0 sm:mr-4">
               <Users className="w-6 h-6 md:w-8 md:h-8 text-white" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
               Let&apos;s Build Something Together
             </h2>
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 md:p-3 rounded-full mt-3 sm:mt-0 sm:ml-4">
+            <div className="bg-gradient-to-r from-emerald-500 to-lime-500 p-2 md:p-3 rounded-full mt-3 sm:mt-0 sm:ml-4">
               <Rocket className="w-6 h-6 md:w-8 md:h-8 text-white" />
             </div>
           </div>
@@ -756,7 +758,7 @@ export default function SkillsPage() {
             I&apos;m always open to discussing new projects, creative ideas, or
             opportunities to be part of your vision
           </p>
-          <Button className="bg-gradient-to-r from-teal-600 to-blue-700 hover:from-teal-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-300 text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full">
+          <Button className="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 shadow-lg hover:shadow-xl transition-all duration-300 text-base md:text-lg px-6 md:px-8 py-2.5 md:py-3 rounded-full">
             Get In Touch
           </Button>
         </div>

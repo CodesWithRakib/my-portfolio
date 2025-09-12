@@ -1,6 +1,4 @@
-// app/components/ContactSection.tsx
 "use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -25,7 +23,6 @@ export default function ContactSection() {
     subject: "",
     message: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -50,19 +47,15 @@ export default function ContactSection() {
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       toast.error("Please fill in all fields");
       return;
     }
-
     if (!isValidEmail(formData.email)) {
       toast.error("Please enter a valid email address");
       return;
     }
-
     setIsSubmitting(true);
-
     try {
       const response = await fetch("/api/email", {
         method: "POST",
@@ -74,7 +67,7 @@ export default function ContactSection() {
           subject: `New Contact: ${formData.subject}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
-              <h2 style="color: #0d9488; margin-bottom: 20px;">New Contact Form Submission</h2>
+              <h2 style="color: #16a34a; margin-bottom: 20px;">New Contact Form Submission</h2>
               <p><strong>Name:</strong> ${formData.name}</p>
               <p><strong>Email:</strong> ${formData.email}</p>
               <p><strong>Subject:</strong> ${formData.subject}</p>
@@ -84,7 +77,6 @@ export default function ContactSection() {
           `,
         }),
       });
-
       if (response.ok) {
         setIsSubmitted(true);
         setFormData({
@@ -93,7 +85,6 @@ export default function ContactSection() {
           subject: "",
           message: "",
         });
-
         // Send confirmation email to user
         await fetch("/api/email", {
           method: "POST",
@@ -105,7 +96,7 @@ export default function ContactSection() {
             subject: "Thank you for contacting me",
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
-                <h2 style="color: #0d9488; margin-bottom: 20px;">Thank You!</h2>
+                <h2 style="color: #16a34a; margin-bottom: 20px;">Thank You!</h2>
                 <p>Hello ${formData.name},</p>
                 <p>I've received your message and will get back to you within 24-48 hours.</p>
                 <p>Best regards,<br>Rakib Islam</p>
@@ -113,7 +104,6 @@ export default function ContactSection() {
             `,
           }),
         });
-
         toast.success("Message sent successfully!");
       } else {
         throw new Error("Failed to send message");
@@ -131,7 +121,6 @@ export default function ContactSection() {
       toast.error("Please fill in all fields");
       return;
     }
-
     const message = `Hello, I'm ${formData.name}%0A%0AEmail: ${formData.email}%0A%0ASubject: ${formData.subject}%0A%0AMessage: ${formData.message}`;
     const whatsappUrl = `https://wa.me/8801767476724?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
@@ -145,7 +134,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-900 dark:to-slate-800"
+      className="py-20 bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-900 dark:to-slate-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -156,7 +145,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Get In Touch
             </span>
           </motion.h2>
@@ -171,16 +160,15 @@ export default function ContactSection() {
             Feel free to reach out to me.
           </motion.p>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-teal-100 dark:border-teal-900">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-green-100 dark:border-green-900">
               {isSubmitted ? (
                 <div className="text-center py-12">
                   <div className="flex justify-center mb-6">
@@ -197,7 +185,7 @@ export default function ContactSection() {
                   <Button
                     onClick={() => setIsSubmitted(false)}
                     variant="outline"
-                    className="mt-4 border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                    className="mt-4 border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                   >
                     Send Another Message
                   </Button>
@@ -218,10 +206,9 @@ export default function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="bg-white dark:bg-slate-700/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                      className="bg-white dark:bg-slate-700/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                     />
                   </div>
-
                   <div>
                     <label
                       htmlFor="email"
@@ -236,10 +223,9 @@ export default function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your.email@example.com"
-                      className="bg-white dark:bg-slate-700/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                      className="bg-white dark:bg-slate-700/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                     />
                   </div>
-
                   <div>
                     <label
                       htmlFor="subject"
@@ -254,10 +240,9 @@ export default function ContactSection() {
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="What's this about?"
-                      className="bg-white dark:bg-slate-700/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                      className="bg-white dark:bg-slate-700/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                     />
                   </div>
-
                   <div>
                     <label
                       htmlFor="message"
@@ -272,15 +257,14 @@ export default function ContactSection() {
                       onChange={handleChange}
                       placeholder="Your message here..."
                       rows={5}
-                      className="bg-white dark:bg-slate-700/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500 resize-none"
+                      className="bg-white dark:bg-slate-700/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500 resize-none"
                     />
                   </div>
-
                   <div className="flex flex-wrap gap-4 pt-2">
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-medium py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
@@ -294,11 +278,10 @@ export default function ContactSection() {
                         </>
                       )}
                     </Button>
-
                     <Button
                       type="button"
                       onClick={sendWhatsApp}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-lime-500 to-green-600 hover:from-lime-600 hover:to-green-700 text-white font-medium py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-4 h-4" />
                       WhatsApp
@@ -308,23 +291,21 @@ export default function ContactSection() {
               )}
             </div>
           </motion.div>
-
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
             <div>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
                 Contact Information
               </h3>
-
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                  <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
@@ -336,9 +317,8 @@ export default function ContactSection() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                  <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
@@ -348,16 +328,15 @@ export default function ContactSection() {
                     <p className="text-slate-600 dark:text-slate-300">
                       <a
                         href="tel:+8801767476724"
-                        className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                        className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
                       >
                         +880 176 747 6724
                       </a>
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                  <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -369,9 +348,8 @@ export default function ContactSection() {
                     </p>
                   </div>
                 </div>
-
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                  <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
@@ -385,8 +363,7 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-
-            <div className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20 p-6 rounded-2xl border border-teal-100 dark:border-teal-900/30">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-2xl border border-green-100 dark:border-green-900/30">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                 Let&apos;s Connect
               </h3>

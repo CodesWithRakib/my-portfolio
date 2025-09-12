@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
@@ -107,12 +106,10 @@ const formSchema = z.object({
 // Helper function to generate ICS file
 const generateICSFile = (meeting: MeetingData) => {
   const { date, time, type, name, email, subject, message } = meeting;
-
   // Parse date and time
   const [year, month, day] = date.split("-").map(Number);
   const [timePart, period] = time.split(" ");
   const [originalHours, minutes] = timePart.split(":").map(Number);
-  console.log(timePart.split(":"));
 
   // Convert to 24-hour format in one step
   const hours =
@@ -121,6 +118,7 @@ const generateICSFile = (meeting: MeetingData) => {
       : period === "AM" && originalHours === 12
         ? 0
         : originalHours;
+
   // Create Date objects
   const startDate = new Date(year, month - 1, day, hours, minutes);
   const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour meeting
@@ -588,17 +586,13 @@ export default function ContactPage() {
       toast.error("You're offline. Please check your internet connection.");
       return;
     }
-
     const values = form.getValues();
     const isValid = await form.trigger(["name", "email"]);
-
     if (!isValid) {
       toast.error("Please fill in your name and email");
       return;
     }
-
     setIsScheduling(true);
-
     try {
       // Prepare meeting data
       const meetingData: MeetingData = {
@@ -636,12 +630,12 @@ export default function ContactPage() {
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
               <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="color: #0d9488; margin: 0;">Meeting Confirmation</h2>
+                <h2 style="color: #059669; margin: 0;">Meeting Confirmation</h2>
                 <p style="color: #64748b; margin: 10px 0 0 0;">Your meeting has been successfully scheduled</p>
               </div>
               
-              <div style="background-color: #f0fdfa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <h3 style="color: #0f766e; margin-top: 0; margin-bottom: 15px;">Meeting Details</h3>
+              <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <h3 style="color: #047857; margin-top: 0; margin-bottom: 15px;">Meeting Details</h3>
                 <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(meetingDate).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
                 <p style="margin: 5px 0;"><strong>Time:</strong> ${meetingTime}</p>
                 <p style="margin: 5px 0;"><strong>Type:</strong> ${meetingType}</p>
@@ -649,7 +643,7 @@ export default function ContactPage() {
               </div>
               
               <div style="margin-bottom: 20px;">
-                <h3 style="color: #0f766e; margin-top: 0; margin-bottom: 10px;">What's Next?</h3>
+                <h3 style="color: #047857; margin-top: 0; margin-bottom: 10px;">What's Next?</h3>
                 <ol style="padding-left: 20px; color: #334155;">
                   <li style="margin-bottom: 8px;">Download the calendar invite attached to this email</li>
                   <li style="margin-bottom: 8px;">Add it to your calendar</li>
@@ -671,7 +665,7 @@ export default function ContactPage() {
               
               <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                 <p style="margin: 0; color: #64748b; font-size: 14px;">Looking forward to our conversation!</p>
-                <p style="margin: 5px 0 0 0; color: #0d9488; font-weight: bold;">Rakib Islam</p>
+                <p style="margin: 5px 0 0 0; color: #059669; font-weight: bold;">Rakib Islam</p>
               </div>
             </div>
           `,
@@ -694,7 +688,7 @@ export default function ContactPage() {
           subject: `New Meeting Scheduled: ${values.name}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h2 style="color: #0d9488;">New Meeting Scheduled</h2>
+              <h2 style="color: #059669;">New Meeting Scheduled</h2>
               <p><strong>Name:</strong> ${values.name}</p>
               <p><strong>Email:</strong> ${values.email}</p>
               ${values.phone ? `<p><strong>Phone:</strong> ${values.phone}</p>` : ""}
@@ -727,7 +721,6 @@ export default function ContactPage() {
       toast.error("Please fill in all required fields");
       return;
     }
-
     const values = form.getValues();
     const message = `Hello, I'm ${values.name}%0A%0AEmail: ${values.email}%0APhone: ${values.phone || "Not provided"}%0A%0ASubject: ${values.subject}%0A%0AMessage: ${values.message}`;
     const whatsappUrl = `https://wa.me/8801767476724?text=${encodeURIComponent(message)}`;
@@ -741,7 +734,6 @@ export default function ContactPage() {
       toast.error("Please fill in all required fields");
       return;
     }
-
     const values = form.getValues();
     const subject = encodeURIComponent(values.subject);
     const body = encodeURIComponent(
@@ -766,9 +758,9 @@ export default function ContactPage() {
       case "fast":
         return "text-green-500";
       case "stable":
-        return "text-teal-500";
+        return "text-emerald-500";
       default:
-        return "text-teal-500";
+        return "text-emerald-500";
     }
   }, [connectionStatus]);
 
@@ -810,7 +802,7 @@ export default function ContactPage() {
   }, [locationLoading, locationError, locationPermission, userLocation]);
 
   const getLocationStatusColor = useCallback(() => {
-    if (locationLoading) return "text-teal-500";
+    if (locationLoading) return "text-emerald-500";
     if (locationError) return "text-red-500";
     if (locationPermission === "denied") return "text-amber-500";
     return "text-slate-600 dark:text-slate-300";
@@ -835,7 +827,7 @@ export default function ContactPage() {
             subject: `New Contact Form Submission: ${values.subject}`,
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <h2 style="color: #0d9488;">New Contact Form Submission</h2>
+                <h2 style="color: #059669;">New Contact Form Submission</h2>
                 <p><strong>Name:</strong> ${values.name}</p>
                 <p><strong>Email:</strong> ${values.email}</p>
                 ${values.phone ? `<p><strong>Phone:</strong> ${values.phone}</p>` : ""}
@@ -862,12 +854,12 @@ export default function ContactPage() {
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
                 <div style="text-align: center; margin-bottom: 30px;">
-                  <h2 style="color: #0d9488; margin: 0;">Thank You!</h2>
+                  <h2 style="color: #059669; margin: 0;">Thank You!</h2>
                   <p style="color: #64748b; margin: 10px 0 0 0;">I've received your message and will get back to you soon</p>
                 </div>
                 
-                <div style="background-color: #f0fdfa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                  <h3 style="color: #0f766e; margin-top: 0; margin-bottom: 15px;">Your Message</h3>
+                <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                  <h3 style="color: #047857; margin-top: 0; margin-bottom: 15px;">Your Message</h3>
                   <p style="margin: 5px 0;"><strong>Name:</strong> ${values.name}</p>
                   <p style="margin: 5px 0;"><strong>Email:</strong> ${values.email}</p>
                   ${values.phone ? `<p style="margin: 5px 0;"><strong>Phone:</strong> ${values.phone}</p>` : ""}
@@ -877,7 +869,7 @@ export default function ContactPage() {
                 </div>
                 
                 <div style="margin-bottom: 20px;">
-                  <h3 style="color: #0f766e; margin-top: 0; margin-bottom: 10px;">What's Next?</h3>
+                  <h3 style="color: #047857; margin-top: 0; margin-bottom: 10px;">What's Next?</h3>
                   <ol style="padding-left: 20px; color: #334155;">
                     <li style="margin-bottom: 8px;">I'll review your message and get back to you within 24-48 hours</li>
                     <li style="margin-bottom: 8px;">If you prefer a different contact method, feel free to reach out directly</li>
@@ -887,7 +879,7 @@ export default function ContactPage() {
                 
                 <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                   <p style="margin: 0; color: #64748b; font-size: 14px;">Best regards,</p>
-                  <p style="margin: 5px 0 0 0; color: #0d9488; font-weight: bold;">Rakib Islam</p>
+                  <p style="margin: 5px 0 0 0; color: #059669; font-weight: bold;">Rakib Islam</p>
                   <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Full Stack Developer</p>
                 </div>
               </div>
@@ -927,10 +919,10 @@ export default function ContactPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 py-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-950 dark:to-slate-900 py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
             Contact Me
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
@@ -944,7 +936,7 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   Get In Touch
                 </h2>
                 <p className="text-lg text-slate-600 dark:text-slate-300 mb-2">
@@ -965,9 +957,10 @@ export default function ContactPage() {
                 )}
               </div>
             </div>
+
             <div className="space-y-6">
               <div className="flex items-start gap-4 group">
-                <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -995,8 +988,9 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
+
               <div className="flex items-start gap-4 group">
-                <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -1020,15 +1014,16 @@ export default function ContactPage() {
                   <p className="text-slate-600 dark:text-slate-300">
                     <a
                       href="tel:+8801767476724"
-                      className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                      className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
                     >
                       +880 176 747 6724
                     </a>
                   </p>
                 </div>
               </div>
+
               <div className="flex items-start gap-4 group">
-                <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -1054,15 +1049,16 @@ export default function ContactPage() {
                       href="https://wa.me/8801767476724"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                      className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
                     >
                       +880 176 747 6724
                     </a>
                   </p>
                 </div>
               </div>
+
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
@@ -1071,7 +1067,7 @@ export default function ContactPage() {
                       Location
                     </h3>
                     {locationLoading && (
-                      <Loader className="w-4 h-4 animate-spin text-teal-500" />
+                      <Loader className="w-4 h-4 animate-spin text-green-500" />
                     )}
                   </div>
                   <p className={getLocationStatusColor()}>
@@ -1079,8 +1075,9 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
+
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
+                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <Calendar className="w-5 h-5" />
                 </div>
                 <div>
@@ -1093,7 +1090,8 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-            <div className="pt-6 border-t border-teal-200 dark:border-teal-700 space-y-4">
+
+            <div className="pt-6 border-t border-green-200 dark:border-green-700 space-y-4">
               <h3 className="font-semibold text-slate-900 dark:text-white">
                 Quick Actions
               </h3>
@@ -1104,7 +1102,7 @@ export default function ContactPage() {
                   onClick={handleSchedulerOpen}
                   className={cn(
                     "flex items-center gap-2",
-                    "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                   )}
                 >
                   <Calendar className="w-4 h-4" />
@@ -1116,7 +1114,7 @@ export default function ContactPage() {
                   onClick={handleChatOpen}
                   className={cn(
                     "flex items-center gap-2",
-                    "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                   )}
                 >
                   <MessageSquareCode className="w-4 h-4" />
@@ -1130,7 +1128,7 @@ export default function ContactPage() {
                   }
                   className={cn(
                     "flex items-center gap-2",
-                    "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                   )}
                 >
                   <MessageCircle className="w-4 h-4" />
@@ -1142,7 +1140,7 @@ export default function ContactPage() {
                   onClick={makeDirectCall}
                   className={cn(
                     "flex items-center gap-2",
-                    "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                   )}
                 >
                   <Phone className="w-4 h-4" />
@@ -1150,7 +1148,8 @@ export default function ContactPage() {
                 </Button>
               </div>
             </div>
-            <div className="pt-6 border-t border-teal-200 dark:border-teal-700/80">
+
+            <div className="pt-6 border-t border-green-200 dark:border-green-700/80">
               <h3 className="font-medium text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
                 Connect with me
               </h3>
@@ -1192,7 +1191,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className={cn(
                       "p-2.5 rounded-full transition-colors duration-200",
-                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:focus:ring-offset-slate-800",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-slate-800",
                       platform.className
                     )}
                     aria-label={`Connect on ${platform.name}`}
@@ -1202,12 +1201,13 @@ export default function ContactPage() {
                 ))}
               </div>
             </div>
-            <div className="pt-6 border-t border-teal-200 dark:border-teal-700">
+
+            <div className="pt-6 border-t border-green-200 dark:border-green-700">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Star className="w-4 h-4 text-amber-500" />
                 Client Reviews
               </h3>
-              <div className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20 p-4 rounded-lg border border-teal-100 dark:border-teal-900/30">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-lg border border-green-100 dark:border-green-900/30">
                 <div className="flex items-center mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -1226,8 +1226,9 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
+
           {/* Contact Form */}
-          <div className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-teal-100 dark:border-teal-900/30 p-8">
+          <div className="bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-green-100 dark:border-green-900/30 p-8">
             {isSubmitted ? (
               <div className="text-center py-12">
                 <div className="flex justify-center mb-6">
@@ -1244,7 +1245,7 @@ export default function ContactPage() {
                 <Button
                   onClick={() => setIsSubmitted(false)}
                   variant="outline"
-                  className="mt-4 border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                  className="mt-4 border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                 >
                   Send Another Message
                 </Button>
@@ -1277,6 +1278,7 @@ export default function ContactPage() {
                       )}
                     </div>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -1284,34 +1286,35 @@ export default function ContactPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                            <User className="w-4 h-4 text-teal-500" />
+                            <User className="w-4 h-4 text-green-500" />
                             Name
                           </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="Your name"
                               {...field}
-                              className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                              className="bg-white dark:bg-slate-800/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                             />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="email"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                            <Mail className="w-4 h-4 text-teal-500" />
+                            <Mail className="w-4 h-4 text-green-500" />
                             Email
                           </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="your.email@example.com"
                               {...field}
-                              className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                              className="bg-white dark:bg-slate-800/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                             />
                           </FormControl>
                           <FormMessage />
@@ -1319,6 +1322,7 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -1326,34 +1330,35 @@ export default function ContactPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                            <Phone className="w-4 h-4 text-teal-500" />
+                            <Phone className="w-4 h-4 text-green-500" />
                             Phone (Optional)
                           </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="+880 176 747 6724"
                               {...field}
-                              className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                              className="bg-white dark:bg-slate-800/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                             />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                            <FileText className="w-4 h-4 text-teal-500" />
+                            <FileText className="w-4 h-4 text-green-500" />
                             Subject
                           </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="What's this about?"
                               {...field}
-                              className="bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500"
+                              className="bg-white dark:bg-slate-800/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500"
                             />
                           </FormControl>
                           <FormMessage />
@@ -1361,13 +1366,14 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
+
                   <FormField
                     control={form.control}
                     name="preferredContact"
                     render={({}) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <Clock className="w-4 h-4 text-teal-500" />
+                          <Clock className="w-4 h-4 text-green-500" />
                           Preferred Contact Method
                         </FormLabel>
                         <FormControl>
@@ -1388,8 +1394,8 @@ export default function ContactPage() {
                                     className={cn(
                                       "w-full",
                                       field.value === option.value
-                                        ? "bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white shadow-md"
-                                        : "border-teal-200 dark:border-teal-800 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                                        ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md"
+                                        : "border-green-200 dark:border-green-800 hover:bg-green-50 dark:hover:bg-green-900/20"
                                     )}
                                     onClick={() => field.onChange(option.value)}
                                   >
@@ -1404,6 +1410,7 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={form.control}
                     name="hearAbout"
@@ -1415,7 +1422,7 @@ export default function ContactPage() {
                         <FormControl>
                           <select
                             {...field}
-                            className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
+                            className="w-full p-3 bg-white dark:bg-slate-800/50 border border-green-200 dark:border-green-800 rounded-md focus:border-green-500 dark:focus:border-green-500 focus:outline-none focus:ring-green-500 dark:focus:ring-green-500"
                           >
                             {hearAboutOptions.map((option) => (
                               <option key={option.value} value={option.value}>
@@ -1428,19 +1435,20 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={form.control}
                     name="message"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                          <MessageSquare className="w-4 h-4 text-teal-500" />
+                          <MessageSquare className="w-4 h-4 text-green-500" />
                           Message
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Your message here..."
-                            className="min-h-[150px] bg-white dark:bg-slate-800/50 border-teal-200 dark:border-teal-800 focus:border-teal-500 dark:focus:border-teal-500 focus:ring-teal-500 dark:focus:ring-teal-500 resize-none"
+                            className="min-h-[150px] bg-white dark:bg-slate-800/50 border-green-200 dark:border-green-800 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 dark:focus:ring-green-500 resize-none"
                             {...field}
                             onChange={(e) => {
                               field.onChange(e);
@@ -1466,10 +1474,11 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
+
                   {/* File Upload */}
                   <div>
                     <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                      <Paperclip className="w-4 h-4 text-teal-500" />
+                      <Paperclip className="w-4 h-4 text-green-500" />
                       Attachments (Optional)
                     </FormLabel>
                     <div className="mt-2">
@@ -1487,7 +1496,7 @@ export default function ContactPage() {
                         onClick={() => fileInputRef.current?.click()}
                         className={cn(
                           "w-full flex items-center gap-2",
-                          "border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                          "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                         )}
                       >
                         <Upload className="w-4 h-4" />
@@ -1498,7 +1507,7 @@ export default function ContactPage() {
                           {files.map((file, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-between bg-teal-50 dark:bg-teal-900/20 p-2 rounded-md border border-teal-100 dark:border-teal-900/30"
+                              className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 p-2 rounded-md border border-green-100 dark:border-green-900/30"
                             >
                               <span className="text-sm truncate max-w-[200px] text-slate-700 dark:text-slate-300">
                                 {file.name}
@@ -1522,6 +1531,7 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </div>
+
                   {/* Checkboxes */}
                   <div className="space-y-3">
                     <FormField
@@ -1534,7 +1544,7 @@ export default function ContactPage() {
                               type="checkbox"
                               checked={field.value ?? false}
                               onChange={field.onChange}
-                              className="mt-1 accent-teal-600 dark:accent-teal-500"
+                              className="mt-1 accent-green-600 dark:accent-green-500"
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1545,6 +1555,7 @@ export default function ContactPage() {
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="saveInfo"
@@ -1555,12 +1566,12 @@ export default function ContactPage() {
                               type="checkbox"
                               checked={field.value ?? false}
                               onChange={field.onChange}
-                              className="mt-1 accent-teal-600 dark:accent-teal-500"
+                              className="mt-1 accent-green-600 dark:accent-green-500"
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
                             <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
-                              <Save className="w-4 h-4 text-teal-500" />
+                              <Save className="w-4 h-4 text-green-500" />
                               Save my information for next time
                             </FormLabel>
                           </div>
@@ -1568,13 +1579,14 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
+
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3">
                     <Button
                       type="submit"
                       disabled={isSubmitting || !isOnline}
                       className={cn(
-                        "flex-1 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                        "flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
                       )}
                     >
                       {isSubmitting ? (
@@ -1589,33 +1601,37 @@ export default function ContactPage() {
                         </>
                       )}
                     </Button>
+
                     <Button
                       type="button"
                       variant="outline"
                       onClick={sendViaWhatsApp}
-                      className="border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 flex items-center gap-2"
+                      className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                     >
                       <MessageCircle className="w-4 h-4" />
                       WhatsApp
                     </Button>
+
                     <Button
                       type="button"
                       variant="outline"
                       onClick={sendViaEmail}
-                      className="border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 flex items-center gap-2"
+                      className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                     >
                       <MailIcon className="w-4 h-4" />
                       Email
                     </Button>
+
                     <Button
                       type="button"
                       variant="outline"
                       onClick={clearDraft}
-                      className="border-teal-200 dark:border-teal-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                      className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                     >
                       Clear Draft
                     </Button>
                   </div>
+
                   <p className="text-xs text-center text-slate-500 dark:text-slate-400">
                     By submitting this form, you agree to our privacy policy.
                     We&apos;ll never share your information with third parties.
@@ -1634,6 +1650,7 @@ export default function ContactPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={handleSchedulerClose}
           >
@@ -1641,7 +1658,8 @@ export default function ContactPage() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-teal-100 dark:border-teal-900/30"
+              transition={{ duration: 0.3 }}
+              className="bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-green-100 dark:border-green-900/30"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
@@ -1671,7 +1689,7 @@ export default function ContactPage() {
                     value={meetingDate}
                     onChange={(e) => setMeetingDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
-                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
+                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-green-200 dark:border-green-800 rounded-md focus:border-green-500 dark:focus:border-green-500 focus:outline-none focus:ring-green-500 dark:focus:ring-green-500"
                   />
                 </div>
                 <div>
@@ -1681,7 +1699,7 @@ export default function ContactPage() {
                   <select
                     value={meetingTime}
                     onChange={(e) => setMeetingTime(e.target.value)}
-                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
+                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-green-200 dark:border-green-800 rounded-md focus:border-green-500 dark:focus:border-green-500 focus:outline-none focus:ring-green-500 dark:focus:ring-green-500"
                   >
                     {timeOptions.map((time) => (
                       <option key={time} value={time}>
@@ -1697,7 +1715,7 @@ export default function ContactPage() {
                   <select
                     value={meetingType}
                     onChange={(e) => setMeetingType(e.target.value)}
-                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500"
+                    className="w-full p-3 bg-white dark:bg-slate-800/50 border border-green-200 dark:border-green-800 rounded-md focus:border-green-500 dark:focus:border-green-500 focus:outline-none focus:ring-green-500 dark:focus:ring-green-500"
                   >
                     {meetingTypeOptions.map((type) => (
                       <option key={type} value={type}>
@@ -1709,7 +1727,7 @@ export default function ContactPage() {
               </div>
               <div className="mt-6">
                 <Button
-                  className="w-full bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white flex items-center gap-2"
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center gap-2"
                   onClick={handleScheduleMeeting}
                   disabled={isScheduling || !meetingDate}
                 >
@@ -1738,10 +1756,11 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
             className="fixed bottom-6 right-6 z-50"
           >
-            <div className="bg-gradient-to-br from-white to-teal-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-2xl border border-teal-100 dark:border-teal-900/30 w-80 h-96 flex flex-col">
-              <div className="p-4 border-b border-teal-100 dark:border-teal-900/30 flex justify-between items-center">
+            <div className="bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-2xl border border-green-100 dark:border-green-900/30 w-80 h-96 flex flex-col">
+              <div className="p-4 border-b border-green-100 dark:border-green-900/30 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="relative">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -1750,7 +1769,7 @@ export default function ContactPage() {
                   <h3 className="font-bold text-slate-900 dark:text-white">
                     Live Chat
                   </h3>
-                  <div className="flex items-center gap-1 bg-teal-100 dark:bg-teal-900/30 px-2 py-1 rounded-full">
+                  <div className="flex items-center gap-1 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     <span className="text-xs text-green-600 dark:text-green-400">
                       Online
@@ -1785,8 +1804,8 @@ export default function ContactPage() {
                         className={cn(
                           "max-w-[80%] p-3 rounded-lg",
                           message.sender === "user"
-                            ? "bg-teal-500 text-white"
-                            : "bg-teal-100 dark:bg-teal-900/30 text-slate-700 dark:text-slate-300"
+                            ? "bg-green-500 text-white"
+                            : "bg-green-100 dark:bg-green-900/30 text-slate-700 dark:text-slate-300"
                         )}
                       >
                         <p className="text-sm">{message.text}</p>
@@ -1801,7 +1820,7 @@ export default function ContactPage() {
                   ))}
                   {isTyping && (
                     <div className="flex justify-start">
-                      <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-lg max-w-[80%]">
+                      <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg max-w-[80%]">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"></div>
                           <div
@@ -1818,14 +1837,14 @@ export default function ContactPage() {
                   )}
                 </div>
               </div>
-              <div className="p-4 border-t border-teal-100 dark:border-teal-900/30">
+              <div className="p-4 border-t border-green-100 dark:border-green-900/30">
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={newChatMessage}
                     onChange={handleChatInputChange}
                     placeholder="Type a message..."
-                    className="flex-1 p-2 bg-white dark:bg-slate-800/50 border border-teal-200 dark:border-teal-800 rounded-md focus:border-teal-500 dark:focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:ring-teal-500 text-sm"
+                    className="flex-1 p-2 bg-white dark:bg-slate-800/50 border border-green-200 dark:border-green-800 rounded-md focus:border-green-500 dark:focus:border-green-500 focus:outline-none focus:ring-green-500 dark:focus:ring-green-500 text-sm"
                     onKeyPress={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
@@ -1837,7 +1856,7 @@ export default function ContactPage() {
                     size="sm"
                     onClick={sendChatMessage}
                     disabled={!newChatMessage.trim()}
-                    className="bg-teal-500 hover:bg-teal-600 text-white disabled:opacity-50"
+                    className="bg-green-500 hover:bg-green-600 text-white disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                   </Button>

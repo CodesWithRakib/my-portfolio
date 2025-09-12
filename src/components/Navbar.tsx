@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Moon,
   Sun,
@@ -15,7 +14,6 @@ import {
   Wrench,
   FolderOpen,
   MessageSquare,
-  ChevronRight,
   Download,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -37,7 +35,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Resume file path - centralized for consistency
+  // Resume file path
   const resumePath = "/Md_Rakib_Islam_Resume.pdf";
   const resumeFileName = "Md_Rakib_Islam_Resume.pdf";
 
@@ -83,13 +81,12 @@ export default function Navbar() {
     []
   );
 
-  // Check if link is active - Fixed to properly handle nested routes
+  // Check if link is active
   const isActive = useCallback(
     (path: string) => {
       if (path === "/") {
         return pathname === "/";
       }
-      // Check if pathname exactly matches the path or starts with path + "/"
       return pathname === path || pathname.startsWith(`${path}/`);
     },
     [pathname]
@@ -100,24 +97,17 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Scroll detection with throttling
+  // Scroll detection
   useEffect(() => {
     setMounted(true);
-    let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 10);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Theme icon memoization
+  // Theme icon
   const themeIcon = useMemo(() => {
     if (!mounted) return <div className="w-5 h-5" />;
     return theme === "dark" ? (
@@ -158,27 +148,27 @@ export default function Navbar() {
       {/* Skip to content link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-4 py-2 rounded-md z-50 transition-all duration-300"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 rounded-md z-50"
       >
         Skip to content
       </a>
 
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out w-full",
+          "fixed top-0 left-0 right-0 z-50 w-full",
           scrolled
-            ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md py-2 sm:py-3 border-b border-teal-500/20 dark:border-teal-400/20 shadow-lg"
-            : "bg-transparent py-3 sm:py-5"
+            ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md py-2 sm:py-3 border-b border-green-500/20 dark:border-green-400/20 shadow-lg"
+            : "lg:bg-transparent bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm py-3 sm:py-5 border-b border-green-500/10 dark:border-green-400/10"
         )}
       >
         <nav
-          className="font-jetbrains-mono flex items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+          className="flex items-center justify-between px-4 max-w-7xl mx-auto w-full"
           aria-label="Main navigation"
         >
           {/* Logo */}
           <Link
             href="/"
-            className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md px-3 py-1 transition-all duration-300"
+            className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-green-500 rounded-md px-3 py-1"
             aria-label="Home page"
           >
             CodesWithRakib
@@ -196,18 +186,15 @@ export default function Navbar() {
                     href={item.path}
                     role="menuitem"
                     className={cn(
-                      "relative px-3 md:px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 overflow-hidden flex items-center gap-2",
+                      "relative px-3 md:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-green-500",
                       isActive(item.path)
-                        ? "text-white bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 shadow-lg"
-                        : "text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400"
+                        ? "text-white bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400 shadow-md"
+                        : "text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400"
                     )}
                     aria-current={isActive(item.path) ? "page" : undefined}
                   >
                     {item.icon}
-                    <span className="relative z-10">{item.name}</span>
-                    {!isActive(item.path) && (
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-teal-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
-                    )}
+                    <span>{item.name}</span>
                   </Link>
                 </li>
               ))}
@@ -220,7 +207,7 @@ export default function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+              className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
               onClick={toggleTheme}
               aria-label="Toggle theme"
             >
@@ -230,10 +217,10 @@ export default function Navbar() {
             {/* Resume Button */}
             <div className="hidden sm:block">
               <Button
-                className="rounded-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 text-sm w-full"
+                className="rounded-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                 onClick={handleResumeDownload}
               >
-                <FileText className="w-4 h-4 mr-0.5" />
+                <FileText className="w-4 h-4 mr-1" />
                 Resume
               </Button>
             </div>
@@ -242,7 +229,7 @@ export default function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+              className="lg:hidden rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
               onClick={toggleMobileMenu}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
@@ -257,152 +244,124 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile Sidebar with Animation */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            {/* Backdrop with animation */}
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              onClick={closeMobileMenu}
-              aria-hidden="true"
-            />
+      {/* Mobile Sidebar */}
+      {mobileOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
 
-            {/* Sidebar with animation */}
-            <motion.div
-              className="fixed top-0 right-0 z-50 h-full w-full max-w-xs sm:max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            >
-              {/* Header section */}
-              <div className="px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-                <Link
-                  href="/"
-                  className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 rounded-md"
-                  onClick={closeMobileMenu}
-                  aria-label="Home page"
-                >
-                  CodesWithRakib
-                </Link>
-                <button
-                  onClick={closeMobileMenu}
-                  aria-label="Close menu"
-                  className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
-                >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-slate-700 dark:text-slate-300" />
-                </button>
-              </div>
+          {/* Sidebar with simple slide-in animation */}
+          <div
+            className="fixed top-0 right-0 z-50 h-full w-full max-w-xs sm:max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-transform duration-300"
+            style={{
+              transform: mobileOpen ? "translateX(0)" : "translateX(100%)",
+              transition: "transform 0.3s ease-in-out",
+            }}
+          >
+            {/* Header section */}
+            <div className="px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+              <Link
+                href="/"
+                className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-green-500 rounded-md"
+                onClick={closeMobileMenu}
+                aria-label="Home page"
+              >
+                CodesWithRakib
+              </Link>
+              <button
+                onClick={closeMobileMenu}
+                aria-label="Close menu"
+                className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5 sm:w-6 sm:h-6 text-slate-700 dark:text-slate-300" />
+              </button>
+            </div>
 
-              {/* Main navigation */}
-              <nav className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
-                <ul className="space-y-2 sm:space-y-3" role="menu">
-                  {navItems.map((item, index) => (
-                    <motion.li
-                      key={item.path}
-                      role="none"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.3 }}
+            {/* Main navigation */}
+            <nav className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
+              <ul className="space-y-2 sm:space-y-3" role="menu">
+                {navItems.map((item) => (
+                  <li key={item.path} role="none">
+                    <Link
+                      href={item.path}
+                      role="menuitem"
+                      className={cn(
+                        "flex items-center px-3 sm:px-4 py-3 sm:py-4 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-green-500",
+                        isActive(item.path)
+                          ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50"
+                      )}
+                      onClick={closeMobileMenu}
+                      aria-current={isActive(item.path) ? "page" : undefined}
                     >
-                      <Link
-                        href={item.path}
-                        role="menuitem"
+                      <div
                         className={cn(
-                          "flex items-center px-3 sm:px-4 py-3 sm:py-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500",
+                          "p-2 rounded-lg mr-3",
                           isActive(item.path)
-                            ? "bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20"
-                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50"
+                            ? "bg-green-500/20 text-green-600 dark:text-green-400"
+                            : "bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300"
                         )}
-                        onClick={closeMobileMenu}
-                        aria-current={isActive(item.path) ? "page" : undefined}
                       >
-                        <div
-                          className={cn(
-                            "p-2 rounded-lg mr-3",
-                            isActive(item.path)
-                              ? "bg-teal-500/20 text-teal-600 dark:text-teal-400"
-                              : "bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300"
-                          )}
-                        >
-                          {item.icon}
-                        </div>
-                        <span className="text-base sm:text-lg font-semibold">
-                          {item.name}
-                        </span>
-                        {!isActive(item.path) && (
-                          <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                          </span>
-                        )}
-                      </Link>
-                    </motion.li>
+                        {item.icon}
+                      </div>
+                      <span className="text-base sm:text-lg font-semibold">
+                        {item.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Social links */}
+              <div className="mt-8 sm:mt-12">
+                <h3 className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4">
+                  Connect With Me
+                </h3>
+                <div className="flex justify-center space-x-3 sm:space-x-4">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                      aria-label={link.name}
+                    >
+                      {link.icon}
+                    </a>
                   ))}
-                </ul>
-
-                {/* Social links with animation */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                  className="mt-8 sm:mt-12"
-                >
-                  <h3 className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4">
-                    Connect With Me
-                  </h3>
-                  <div className="flex justify-center space-x-3 sm:space-x-4">
-                    {socialLinks.map((link, index) => (
-                      <motion.a
-                        key={link.name}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                        aria-label={link.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
-                        whileHover={{ y: -5 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {link.icon}
-                      </motion.a>
-                    ))}
-                  </div>
-                </motion.div>
-              </nav>
-
-              {/* Footer section */}
-              <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
-                <Button
-                  className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
-                  onClick={handleResumeDownload}
-                >
-                  <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Download Resume
-                </Button>
-
-                <div className="flex justify-center mt-4 sm:mt-6">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    onClick={toggleTheme}
-                    aria-label="Toggle theme"
-                  >
-                    {themeIcon}
-                  </Button>
                 </div>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </nav>
+
+            {/* Footer section */}
+            <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
+              <Button
+                className="w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
+                onClick={handleResumeDownload}
+              >
+                <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Download Resume
+              </Button>
+              <div className="flex justify-center mt-4 sm:mt-6">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                  onClick={toggleTheme}
+                  aria-label="Toggle theme"
+                >
+                  {themeIcon}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

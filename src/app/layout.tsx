@@ -71,8 +71,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#020817" },
+    { media: "(prefers-color-scheme: light)", color: "#f0fdf4" }, // Light green background
+    { media: "(prefers-color-scheme: dark)", color: "#022c22" }, // Dark green background
   ],
 };
 
@@ -95,7 +95,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 w-full font-jetbrains-mono">
+            <main className="flex-1 w-full font-jetbrains-mono pt-16 sm:pt-20">
               <div className="">{children}</div>
             </main>
             <Footer />

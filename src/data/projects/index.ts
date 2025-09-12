@@ -85,6 +85,8 @@ export const projects: Project[] = [
       "Vercel",
     ],
     images: [
+      "/projects/globira/home.png",
+      "/projects/globira/home-2.png",
       "/projects/globira/home_banner.png",
       "/projects/globira/all_products.png",
       "/projects/globira/my_products.png",
