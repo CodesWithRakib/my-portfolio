@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Code,
   Smartphone,
@@ -22,7 +22,6 @@ interface SkillItem {
   name: string;
   image: string;
 }
-
 interface SkillCategory {
   category: string;
   icon: React.ReactNode;
@@ -31,22 +30,15 @@ interface SkillCategory {
   borderColor: string;
   skills: SkillItem[];
 }
-
 interface ApproachItem {
   title: string;
   desc: string;
   icon: React.ReactNode;
   color: string;
 }
-
 interface TechImage {
   name: string;
   image: string;
-}
-
-interface BackgroundElementsProps {
-  yBg: MotionValue<string>;
-  theme: string | undefined;
 }
 
 // Memoized skill data with updated green colors
@@ -153,156 +145,6 @@ const techImages: TechImage[] = [
   { name: "Vite", image: "./tech/vite-original.svg" },
 ];
 
-// Memoized background element component with simplified animations
-const BackgroundElements: React.FC<BackgroundElementsProps> = ({
-  yBg,
-  theme,
-}) => {
-  // Memoize background grid style
-  const gridBackgroundStyle = useMemo(
-    () => ({
-      backgroundImage: `
-        linear-gradient(to right, currentColor 1px, transparent 1px),
-        linear-gradient(to bottom, currentColor 1px, transparent 1px)
-      `,
-      backgroundSize: "40px 40px",
-      color: theme === "dark" ? "#4b5563" : "#d1d5db",
-    }),
-    [theme]
-  );
-
-  // Memoize static radial gradient style
-  const radialGradientStyle = useMemo(() => {
-    return {
-      background: `radial-gradient(600px at 50% 50%, ${
-        theme === "dark" ? "rgba(34, 197, 94, 0.15)" : "rgba(34, 197, 94, 0.2)"
-      }, transparent 70%)`,
-    };
-  }, [theme]);
-
-  // Generate simplified background elements
-  const elements = useMemo(() => {
-    const orbs = [...Array(2)].map((_, i) => {
-      const size = 300 + i * 100;
-      const position = {
-        x: 20 + i * 20,
-        y: 10 + i * 15,
-      };
-      const colorClasses = [
-        "bg-green-300/20 dark:bg-green-700/20",
-        "bg-emerald-300/20 dark:bg-emerald-700/20",
-      ];
-      return {
-        key: `orb-${i}`,
-        size,
-        position,
-        color: colorClasses[i],
-        animation: {
-          x: [0, Math.random() * 20 - 10, 0],
-          y: [0, Math.random() * 20 - 10, 0],
-          scale: [1, 1.05, 1],
-        },
-        duration: 20 + i * 5,
-        zIndex: 1,
-      };
-    });
-
-    const shapes = [...Array(3)].map((_, i) => {
-      const size = 150 + i * 30;
-      const position = {
-        x: 10 + i * 15,
-        y: 20 + i * 10,
-      };
-      const shapeType = i % 3;
-      const shapeClasses = ["rounded-full", "rounded-lg", "rounded-xl"];
-      const colorClasses = [
-        "bg-green-200/15 dark:bg-green-800/15",
-        "bg-emerald-200/15 dark:bg-emerald-800/15",
-        "bg-lime-200/15 dark:bg-lime-800/15",
-      ];
-      return {
-        key: `shape-${i}`,
-        size,
-        position,
-        shape: shapeClasses[shapeType],
-        color: colorClasses[shapeType],
-        animation: {
-          x: [0, Math.random() * 30 - 15, 0],
-          y: [0, Math.random() * 30 - 15, 0],
-          rotate: [0, Math.random() * 360, 0],
-        },
-        duration: 15 + i * 3,
-        zIndex: 2,
-      };
-    });
-
-    return { orbs, shapes };
-  }, []);
-
-  return (
-    <>
-      {/* Animated grid pattern */}
-      <motion.div
-        className="absolute inset-0 opacity-20 dark:opacity-30"
-        style={{
-          ...gridBackgroundStyle,
-          y: yBg,
-        }}
-      />
-
-      {/* Render orbs */}
-      {elements.orbs.map((orb) => (
-        <motion.div
-          key={orb.key}
-          className={cn("absolute rounded-full blur-3xl", orb.color)}
-          style={{
-            width: `${orb.size}px`,
-            height: `${orb.size}px`,
-            left: `${orb.position.x}%`,
-            top: `${orb.position.y}%`,
-            zIndex: orb.zIndex,
-          }}
-          animate={orb.animation}
-          transition={{
-            duration: orb.duration,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* Render shapes */}
-      {elements.shapes.map((shape) => (
-        <motion.div
-          key={shape.key}
-          className={cn("absolute blur-2xl", shape.shape, shape.color)}
-          style={{
-            width: `${shape.size}px`,
-            height: `${shape.size}px`,
-            left: `${shape.position.x}%`,
-            top: `${shape.position.y}%`,
-            zIndex: shape.zIndex,
-          }}
-          animate={shape.animation}
-          transition={{
-            duration: shape.duration,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* Static spotlight effect */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={radialGradientStyle}
-      />
-    </>
-  );
-};
-
 // Memoized skill card component
 const SkillCard = ({
   category,
@@ -318,11 +160,9 @@ const SkillCard = ({
   const handleHoverStart = useCallback(() => {
     setHoveredCategory(category.category);
   }, [category.category, setHoveredCategory]);
-
   const handleHoverEnd = useCallback(() => {
     setHoveredCategory(null);
   }, [setHoveredCategory]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -333,21 +173,13 @@ const SkillCard = ({
       onHoverStart={handleHoverStart}
       onHoverEnd={handleHoverEnd}
       className={cn(
-        "relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 border w-full h-full",
+        "relative overflow-hidden bg-white dark:bg-slate-800 rounded-xl shadow-md p-4 md:p-6 border w-full h-full",
         category.borderColor,
-        "hover:shadow-xl transition-all duration-300",
+        "hover:shadow-lg transition-all duration-300",
         hoveredCategory === category.category &&
-          "ring-2 ring-green-500/50 dark:ring-green-400/50"
+          "ring-1 ring-green-500/50 dark:ring-green-400/50"
       )}
     >
-      {/* Decorative corner element */}
-      <div
-        className={cn(
-          "absolute top-0 right-0 w-16 h-16 rounded-bl-full opacity-50",
-          category.bgColor
-        )}
-      ></div>
-
       <div className="flex items-center mb-4 md:mb-6 relative z-10">
         <div
           className={cn(
@@ -355,19 +187,14 @@ const SkillCard = ({
             category.bgColor
           )}
         >
-          <motion.div
-            whileHover={{ rotate: 15 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className={category.color}
-          >
+          <div className={category.color}>
             {category.icon}
-          </motion.div>
+          </div>
         </div>
         <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
           {category.category}
         </h3>
       </div>
-
       <div className="grid grid-cols-2 gap-3 md:gap-4 relative z-10">
         {category.skills.map((skill, skillIndex) => (
           <motion.div
@@ -376,7 +203,7 @@ const SkillCard = ({
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.05 + skillIndex * 0.03 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center justify-center p-2 md:p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 group"
+            className="flex flex-col items-center justify-center p-2 md:p-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300"
           >
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg overflow-hidden flex items-center justify-center mb-1 md:mb-2 bg-white dark:bg-slate-800 shadow-sm">
               <Image
@@ -414,18 +241,12 @@ const ApproachCard = ({
       transition={{ delay: 0.05 + index * 0.05 }}
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
-      className="relative overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300 group w-full h-full"
+      className="relative overflow-hidden bg-white dark:bg-slate-800 p-4 md:p-6 rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:shadow-md transition-all duration-300 w-full h-full"
     >
-      {/* Decorative background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400 to-transparent rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
-      </div>
-
       <div className="flex items-center mb-3 md:mb-4 gap-3 md:gap-4 relative z-10">
         <div
           className={cn(
-            "p-2 md:p-3 rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-sm",
+            "p-2 md:p-3 rounded-lg transition-transform duration-300 shadow-sm",
             item.color
           )}
         >
@@ -435,15 +256,9 @@ const ApproachCard = ({
           {item.title}
         </h4>
       </div>
-
       <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base relative z-10">
         {item.desc}
       </p>
-
-      <div className="mt-3 md:mt-4 flex items-center text-slate-600 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
-        <CheckCircle className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-        <span className="text-xs md:text-sm font-medium">Best practice</span>
-      </div>
     </motion.div>
   );
 };
@@ -452,7 +267,7 @@ const ApproachCard = ({
 const TechItem = ({ tech }: { tech: TechImage }) => {
   return (
     <div className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-4 flex-shrink-0 group">
-      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800/50 p-1.5 sm:p-2 mb-1 sm:mb-2 transition-all duration-300 group-hover:bg-green-50 dark:group-hover:bg-green-900/20 group-hover:scale-110 shadow-sm">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-lg bg-white dark:bg-slate-800 p-1.5 sm:p-2 mb-1 sm:mb-2 transition-all duration-300 group-hover:bg-green-50 dark:group-hover:bg-green-900/20 group-hover:scale-105 shadow-sm">
         <Image
           src={tech.image}
           alt={tech.name}
@@ -469,39 +284,83 @@ const TechItem = ({ tech }: { tech: TechImage }) => {
   );
 };
 
+// Simplified Marquee Component
+const TechMarquee = ({ 
+  techImages, 
+  isPaused 
+}: { 
+  techImages: TechImage[]; 
+  isPaused: boolean;
+}) => {
+  return (
+    <div className="relative overflow-hidden py-4">
+      {/* Gradient fade edges */}
+      <div className="absolute inset-y-0 left-0 w-8 md:w-16 z-10 bg-gradient-to-r from-white to-transparent dark:from-slate-800 dark:to-transparent"></div>
+      <div className="absolute inset-y-0 right-0 w-8 md:w-16 z-10 bg-gradient-to-l from-white to-transparent dark:from-slate-800 dark:to-transparent"></div>
+      
+      {/* Marquee track */}
+      <motion.div
+        className="flex"
+        animate={{ x: isPaused ? 0 : ["0%", "-50%"] }}
+        transition={{
+          x: {
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          },
+        }}
+      >
+        {/* Double the items for seamless loop */}
+        {[...techImages, ...techImages].map((tech, index) => (
+          <TechItem key={`tech-${index}`} tech={tech} />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
 export default function SkillsSection() {
   const { theme } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Memoized background elements props
-  const backgroundElementsProps = useMemo(
-    () => ({
-      yBg,
-      theme,
-    }),
-    [yBg, theme]
-  );
+  // Background style based on theme
+  const backgroundStyle = useMemo(() => {
+    return {
+      background: theme === "dark" 
+        ? "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" 
+        : "linear-gradient(135deg, #f5f7fa 0%, #e4f1f5 100%)",
+    };
+  }, [theme]);
 
   return (
     <section
       ref={ref}
       id="skills"
       className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
+      style={backgroundStyle}
     >
-      {/* Background gradient with green theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-green-50/50 to-emerald-50/50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20">
-        <BackgroundElements {...backgroundElementsProps} />
+      {/* Simple background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5NGEzYjgiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZD0iTTQwIDBIMHY0MCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
       </div>
-
+      
+      {/* Single subtle animated orb */}
+      <motion.div
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-green-200/20 dark:bg-green-800/20 blur-3xl"
+      />
+      
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Section header with green theme */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -511,49 +370,20 @@ export default function SkillsSection() {
         >
           <div className="flex items-center justify-center mb-4">
             <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mr-2 sm:mr-3" />
-            <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white"
-              initial={{ backgroundPosition: "0% 50%" }}
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear",
-              }}
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, #16a34a, #059669, #10b981, #16a34a)",
-                backgroundSize: "300% 100%",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-            >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
               Skills & Expertise
-            </motion.h2>
+            </h2>
             <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-500 ml-2 sm:ml-3" />
           </div>
-
-          <motion.div
-            className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mx-auto mb-4 md:mb-6 rounded-full"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            style={{ originX: 0.5 }}
-          />
-
+          <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mx-auto mb-4 md:mb-6 rounded-full"></div>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium px-4">
             As a{" "}
             <span className="text-green-600 dark:text-green-400 font-semibold">
               MERN Stack Developer
             </span>
-            , I continuously expand my technical toolkit to build better
-            solutions
+            , I continuously expand my technical toolkit to build better solutions
           </p>
         </motion.div>
-
         {/* Skills grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
           {skills.map((category, index) => (
@@ -566,7 +396,6 @@ export default function SkillsSection() {
             />
           ))}
         </div>
-
         {/* Development approach */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -578,71 +407,29 @@ export default function SkillsSection() {
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8 text-center">
             My Development Approach
           </h3>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
             {developmentApproach.map((item, index) => (
               <ApproachCard key={item.title} item={item} index={index} />
             ))}
           </div>
         </motion.div>
-
         {/* Technology Images Marquee */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 md:mt-20 bg-gradient-to-br from-white/80 to-green-50/80 dark:from-slate-800/80 dark:to-green-900/30 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-8 border border-green-100/50 dark:border-green-900/30 overflow-hidden w-full"
+          className="mt-16 md:mt-20 bg-white dark:bg-slate-800 rounded-xl shadow-md p-4 md:p-8 border border-green-100/50 dark:border-green-900/30 overflow-hidden w-full"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8 text-center">
             Technologies I Work With
           </h3>
-
-          {/* Marquee container */}
-          <div className="relative overflow-hidden py-4">
-            {/* Gradient fade edges */}
-            <div className="absolute inset-y-0 left-0 w-8 md:w-16 z-10 bg-gradient-to-r from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
-            <div className="absolute inset-y-0 right-0 w-8 md:w-16 z-10 bg-gradient-to-l from-white/80 to-transparent dark:from-slate-800/80 dark:to-transparent"></div>
-
-            {/* Marquee track 1 */}
-            <motion.div
-              className="flex"
-              animate={{ x: isPaused ? 0 : ["0%", "-100%"] }}
-              transition={{
-                x: {
-                  duration: 40,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatType: "loop",
-                },
-              }}
-            >
-              {techImages.map((tech) => (
-                <TechItem key={`tech1-${tech.name}`} tech={tech} />
-              ))}
-            </motion.div>
-
-            {/* Marquee track 2 - duplicates for seamless loop */}
-            <motion.div
-              className="flex absolute top-0 left-full"
-              animate={{ x: isPaused ? 0 : ["0%", "-100%"] }}
-              transition={{
-                x: {
-                  duration: 40,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatType: "loop",
-                },
-              }}
-            >
-              {techImages.map((tech) => (
-                <TechItem key={`tech2-${tech.name}`} tech={tech} />
-              ))}
-            </motion.div>
-          </div>
-
+          
+          {/* Simplified Marquee */}
+          <TechMarquee techImages={techImages} isPaused={isPaused} />
+          
           {/* Pause indicator */}
           <div className="flex justify-center mt-4">
             <span className="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">

@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Code,
   Gamepad2,
@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,6 @@ interface PersonalInterest {
   content: string;
   color: string;
 }
-
 interface EducationTimeline {
   year: string;
   title: string;
@@ -33,16 +32,14 @@ interface EducationTimeline {
 export default function AboutSection() {
   const { theme } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const [activeTimelineItem, setActiveTimelineItem] = useState<number | null>(
-    null
-  );
+  const [activeTimelineItem, setActiveTimelineItem] = useState<number | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  // Memoize personal interests with green colors
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Memoize personal interests
   const personalInterests: PersonalInterest[] = useMemo(
     () => [
       {
@@ -50,30 +47,27 @@ export default function AboutSection() {
         title: "Passionate Gamer",
         content:
           "Love playing strategy games like Clash of Clans & Free Fire - they sharpen my problem-solving skills!",
-        color:
-          "from-emerald-100/50 to-green-100/50 dark:from-emerald-900/30 dark:to-green-800/30",
+        color: "bg-emerald-100/50 dark:bg-emerald-900/30",
       },
       {
         icon: <Headphones className="text-green-600 dark:text-green-400" />,
         title: "Music Enthusiast",
         content:
           "Always listening to music while coding - it helps me focus and get into the flow state.",
-        color:
-          "from-green-100/50 to-lime-100/50 dark:from-green-900/30 dark:to-lime-800/30",
+        color: "bg-green-100/50 dark:bg-green-900/30",
       },
       {
         icon: <Code className="text-lime-600 dark:text-lime-400" />,
         title: "Creator at Heart",
         content:
           "Enjoy turning ideas into real applications - the process from concept to deployment excites me.",
-        color:
-          "from-lime-100/50 to-yellow-100/50 dark:from-lime-900/30 dark:to-yellow-800/30",
+        color: "bg-lime-100/50 dark:bg-lime-900/30",
       },
     ],
     []
   );
 
-  // Memoize education timeline with green colors
+  // Memoize education timeline
   const educationTimeline: EducationTimeline[] = useMemo(
     () => [
       {
@@ -102,39 +96,25 @@ export default function AboutSection() {
     []
   );
 
-  // Memoize background grid style
-  const gridBackgroundStyle = useMemo(
-    () => ({
-      backgroundImage: `
-        linear-gradient(to right, currentColor 1px, transparent 1px),
-        linear-gradient(to bottom, currentColor 1px, transparent 1px)
-      `,
-      backgroundSize: "40px 40px",
-      color: theme === "dark" ? "#4b5563" : "#d1d5db",
-    }),
-    [theme]
-  );
-
-  // Memoize static radial gradient style with green colors
-  const radialGradientStyle = useMemo(() => {
-    return {
-      background: `radial-gradient(600px at 50% 50%, ${
-        theme === "dark"
-          ? "rgba(16, 185, 129, 0.15)"
-          : "rgba(16, 185, 129, 0.2)"
-      }, transparent 70%)`,
-    };
-  }, [theme]);
-
-  // Memoize color classes for orbs with green colors
-  const orbColorClasses = useMemo(
-    () => [
-      "bg-emerald-300/20 dark:bg-emerald-700/20",
-      "bg-green-300/20 dark:bg-green-700/20",
-      "bg-lime-300/20 dark:bg-lime-700/20",
-    ],
-    []
-  );
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 },
+    viewport: { once: true, margin: "-50px" }
+  };
+  const fadeIn = {
+    initial: { opacity: 0 },
+    whileInView: { opacity: 1 },
+    transition: { duration: 0.8 },
+    viewport: { once: true }
+  };
+  const scaleIn = {
+    initial: { scaleX: 0 },
+    whileInView: { scaleX: 1 },
+    transition: { duration: 0.8 },
+    viewport: { once: true }
+  };
 
   return (
     <section
@@ -142,85 +122,59 @@ export default function AboutSection() {
       id="about"
       className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
     >
-      {/* Simplified background with green theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-emerald-50 to-green-50 dark:from-slate-900 dark:via-emerald-900/20 dark:to-green-900/20">
-        {/* Animated grid pattern */}
-        <motion.div
-          style={{ y: yBg }}
-          className="absolute inset-0 opacity-20 dark:opacity-30"
-        >
-          <div style={gridBackgroundStyle} className="w-full h-full" />
-        </motion.div>
-
-        {/* Simplified floating orbs */}
-        {[...Array(2)].map((_, i) => {
-          const size = 300 + i * 100;
-          const position = {
-            x: 20 + i * 20,
-            y: 10 + i * 15,
-          };
-          return (
-            <motion.div
-              key={i}
-              className={cn(
-                "absolute rounded-full blur-3xl",
-                orbColorClasses[i]
-              )}
+      {/* Simplified background with subtle green theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-emerald-50/30 to-green-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-800">
+        {/* Subtle grid pattern - no animation */}
+        {isClient && (
+          <div className="absolute inset-0 opacity-10 dark:opacity-20">
+            <div 
+              className="w-full h-full"
               style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                left: `${position.x}%`,
-                top: `${position.y}%`,
-              }}
-              animate={{
-                x: [0, Math.random() * 20 - 10, 0],
-                y: [0, Math.random() * 20 - 10, 0],
-              }}
-              transition={{
-                duration: 20 + i * 5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
+                backgroundImage: `
+                  linear-gradient(to right, currentColor 1px, transparent 1px),
+                  linear-gradient(to bottom, currentColor 1px, transparent 1px)
+                `,
+                backgroundSize: "40px 40px",
+                color: theme === "dark" ? "#4b5563" : "#d1d5db",
               }}
             />
-          );
-        })}
-
-        {/* Static spotlight effect */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={radialGradientStyle}
+          </div>
+        )}
+        
+        {/* Single subtle animated orb */}
+        <motion.div
+          className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-emerald-200/20 dark:bg-emerald-800/20 blur-3xl"
+          animate={{
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
         />
       </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Section header with green theme */}
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeIn}
+          initial="initial"
+          whileInView="whileInView"
           className="max-w-4xl mx-auto text-center mb-12 md:mb-16"
         >
           <motion.h2
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="whileInView"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-4"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, #059669, #10b981, #84cc16, #059669)",
-              backgroundSize: "300% 100%",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
           >
             About Me
           </motion.h2>
           <motion.div
+            variants={scaleIn}
+            initial="initial"
+            whileInView="whileInView"
             className="w-20 md:w-24 h-1 bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-400 dark:to-green-400 mx-auto mb-6 rounded-full"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
             style={{ originX: 0.5 }}
           />
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium px-4">
@@ -231,18 +185,16 @@ export default function AboutSection() {
             passionate about building impactful digital experiences
           </p>
         </motion.div>
-
         {/* Content grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left column - Introduction */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="whileInView"
             className="space-y-6 md:space-y-8"
           >
-            <motion.div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-emerald-100/50 dark:border-emerald-900/30 w-full">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-emerald-100/50 dark:border-emerald-900/30 w-full">
               <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center">
                 <div className="p-2 rounded-lg bg-emerald-100/50 dark:bg-emerald-900/30 mr-3">
                   <Code
@@ -276,14 +228,12 @@ export default function AboutSection() {
                   exceptional user experiences.
                 </p>
               </div>
-            </motion.div>
-
+            </div>
             {/* Current focus */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              viewport={{ once: true }}
+              variants={fadeIn}
+              initial="initial"
+              whileInView="whileInView"
               className="bg-gradient-to-br from-emerald-50/50 to-green-50/50 dark:from-emerald-900/30 dark:to-green-900/30 rounded-2xl shadow-md p-4 md:p-6 border border-emerald-100/50 dark:border-emerald-900/30 w-full"
             >
               <div className="flex items-start">
@@ -319,17 +269,15 @@ export default function AboutSection() {
               </div>
             </motion.div>
           </motion.div>
-
           {/* Right column - Personal & Education */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="whileInView"
             className="space-y-6 md:space-y-8"
           >
             {/* Personal interests */}
-            <motion.div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-green-100/50 dark:border-green-900/30 w-full">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-green-100/50 dark:border-green-900/30 w-full">
               <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6">
                 Beyond Coding
               </h3>
@@ -341,7 +289,7 @@ export default function AboutSection() {
                   >
                     <div
                       className={cn(
-                        "p-2 md:p-3 rounded-lg bg-gradient-to-br flex-shrink-0",
+                        "p-2 md:p-3 rounded-lg flex-shrink-0",
                         item.color
                       )}
                     >
@@ -362,10 +310,9 @@ export default function AboutSection() {
                   </div>
                 ))}
               </div>
-            </motion.div>
-
+            </div>
             {/* Education timeline */}
-            <motion.div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-lime-100/50 dark:border-lime-900/30 w-full">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-md p-6 md:p-8 border border-lime-100/50 dark:border-lime-900/30 w-full">
               <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center">
                 <div className="p-2 rounded-lg bg-lime-100/50 dark:bg-lime-900/30 mr-3">
                   <School
@@ -432,16 +379,14 @@ export default function AboutSection() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
-
         {/* Tech goals */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          viewport={{ once: true }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="whileInView"
           className="mt-12 md:mt-16 max-w-4xl mx-auto bg-gradient-to-r from-emerald-50/50 to-green-50/50 dark:from-emerald-900/30 dark:to-green-900/30 p-6 md:p-8 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30 backdrop-blur-sm w-full"
         >
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">

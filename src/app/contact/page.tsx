@@ -59,14 +59,12 @@ interface FormValues {
   subscribe?: boolean;
   saveInfo?: boolean;
 }
-
 interface ChatMessage {
   id: string;
   text: string;
   sender: "user" | "support";
   timestamp: Date;
 }
-
 interface MeetingData {
   date: string;
   time: string;
@@ -110,7 +108,6 @@ const generateICSFile = (meeting: MeetingData) => {
   const [year, month, day] = date.split("-").map(Number);
   const [timePart, period] = time.split(" ");
   const [originalHours, minutes] = timePart.split(":").map(Number);
-
   // Convert to 24-hour format in one step
   const hours =
     period === "PM" && originalHours < 12
@@ -118,16 +115,13 @@ const generateICSFile = (meeting: MeetingData) => {
       : period === "AM" && originalHours === 12
         ? 0
         : originalHours;
-
   // Create Date objects
   const startDate = new Date(year, month - 1, day, hours, minutes);
   const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour meeting
-
   // Format dates for ICS
   const formatDate = (date: Date) => {
     return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   };
-
   return `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//CodesWithRakib//Meeting//EN
@@ -174,20 +168,20 @@ export default function ContactPage() {
     "granted" | "denied" | "pending"
   >("pending");
   const [ablyClient, setAblyClient] = useState<Ably.Realtime | null>(null);
-
+  
   // Meeting scheduler state
   const [meetingDate, setMeetingDate] = useState("");
   const [meetingTime, setMeetingTime] = useState("10:00 AM");
   const [meetingType, setMeetingType] = useState("Video Call");
   const [isScheduling, setIsScheduling] = useState(false);
-
+  
   // Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const draftTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const locationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+  
   // Form initialization
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -203,7 +197,7 @@ export default function ContactPage() {
       saveInfo: false,
     },
   });
-
+  
   // Get memoized options
   const contactOptions = useMemo(
     () => [
@@ -213,7 +207,6 @@ export default function ContactPage() {
     ],
     []
   );
-
   const hearAboutOptions = useMemo(
     () => [
       { value: "", label: "Select an option" },
@@ -224,7 +217,6 @@ export default function ContactPage() {
     ],
     []
   );
-
   const timeOptions = useMemo(
     () => [
       "9:00 AM",
@@ -237,12 +229,11 @@ export default function ContactPage() {
     ],
     []
   );
-
   const meetingTypeOptions = useMemo(
     () => ["Video Call", "Phone Call", "In-Person"],
     []
   );
-
+  
   // Fetch chat messages
   const fetchChatMessages = useCallback(async () => {
     try {
@@ -276,7 +267,7 @@ export default function ContactPage() {
       console.error("Error fetching chat messages:", error);
     }
   }, []);
-
+  
   // Load saved information from localStorage
   useEffect(() => {
     const loadSavedInfo = () => {
@@ -308,7 +299,7 @@ export default function ContactPage() {
     };
     loadSavedInfo();
   }, [form]);
-
+  
   // Auto-save draft with debouncing
   useEffect(() => {
     const subscription = form.watch((value, { type }) => {
@@ -333,7 +324,7 @@ export default function ContactPage() {
       }
     };
   }, [form]);
-
+  
   // Get user location
   useEffect(() => {
     const fetchLocation = async () => {
@@ -388,7 +379,6 @@ export default function ContactPage() {
         setLocationLoading(false);
       }
     };
-
     const fetchIPLocation = async () => {
       try {
         const response = await fetch("https://ipapi.co/json/");
@@ -400,10 +390,9 @@ export default function ContactPage() {
         setUserLocation("Unknown location");
       }
     };
-
     fetchLocation();
   }, []);
-
+  
   // Monitor online status
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -415,7 +404,7 @@ export default function ContactPage() {
       window.removeEventListener("offline", handleOffline);
     };
   }, []);
-
+  
   // Initialize Ably when chat is opened
   useEffect(() => {
     if (showChat) {
@@ -451,14 +440,14 @@ export default function ContactPage() {
       }
     };
   }, [showChat, ablyClient]);
-
+  
   // Fetch chat messages when chat is opened
   useEffect(() => {
     if (showChat) {
       fetchChatMessages();
     }
   }, [showChat, fetchChatMessages]);
-
+  
   // Scroll to bottom of chat when new messages are added
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -466,7 +455,7 @@ export default function ContactPage() {
         chatContainerRef.current.scrollHeight;
     }
   }, [chatMessages, isTyping]);
-
+  
   // Cleanup timeouts on unmount
   useEffect(() => {
     const currentLocationTimeout = locationTimeoutRef.current;
@@ -482,7 +471,7 @@ export default function ContactPage() {
       }
     };
   }, []);
-
+  
   // Memoized handlers
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -493,28 +482,24 @@ export default function ContactPage() {
     },
     []
   );
-
   const removeFile = useCallback(
     (index: number) => {
       setFiles(files.filter((_, i) => i !== index));
     },
     [files]
   );
-
   const copyToClipboard = useCallback((text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     toast.success("Copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
   }, []);
-
   const clearDraft = useCallback(() => {
     localStorage.removeItem("contactFormDraft");
     form.reset();
     setMessageLength(0);
     toast.success("Draft cleared!");
   }, [form]);
-
   const handleChatInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setNewChatMessage(e.target.value);
@@ -528,7 +513,6 @@ export default function ContactPage() {
     },
     []
   );
-
   const sendChatMessage = useCallback(async () => {
     if (newChatMessage.trim() === "") return;
     const userMessage: ChatMessage = {
@@ -559,7 +543,6 @@ export default function ContactPage() {
       toast.error("Failed to send message");
     }
   }, [newChatMessage]);
-
   const handleSchedulerOpen = useCallback(() => {
     setShowScheduler(true);
     // Set default date to tomorrow
@@ -567,19 +550,16 @@ export default function ContactPage() {
     tomorrow.setDate(tomorrow.getDate() + 1);
     setMeetingDate(tomorrow.toISOString().split("T")[0]);
   }, []);
-
   const handleChatOpen = useCallback(() => {
     setShowChat(true);
   }, []);
-
   const handleSchedulerClose = useCallback(() => {
     setShowScheduler(false);
   }, []);
-
   const handleChatClose = useCallback(() => {
     setShowChat(false);
   }, []);
-
+  
   // Meeting scheduler without database
   const handleScheduleMeeting = useCallback(async () => {
     if (!isOnline) {
@@ -605,10 +585,8 @@ export default function ContactPage() {
         subject: values.subject,
         message: values.message,
       };
-
       // Generate ICS file
       const icsContent = generateICSFile(meetingData);
-
       // Create download link for ICS file
       const blob = new Blob([icsContent], { type: "text/calendar" });
       const url = URL.createObjectURL(blob);
@@ -619,7 +597,6 @@ export default function ContactPage() {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-
       // Send email notification
       await fetch("/api/email", {
         method: "POST",
@@ -678,7 +655,6 @@ export default function ContactPage() {
           ],
         }),
       });
-
       // Also send a notification to myself
       await fetch("/api/email", {
         method: "POST",
@@ -701,7 +677,6 @@ export default function ContactPage() {
           `,
         }),
       });
-
       toast.success(
         "Meeting scheduled successfully! Check your email for details."
       );
@@ -713,7 +688,7 @@ export default function ContactPage() {
       setIsScheduling(false);
     }
   }, [form, meetingDate, meetingTime, meetingType, isOnline]);
-
+  
   // WhatsApp integration
   const sendViaWhatsApp = useCallback(async () => {
     const isValid = await form.trigger();
@@ -726,7 +701,7 @@ export default function ContactPage() {
     const whatsappUrl = `https://wa.me/8801767476724?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   }, [form]);
-
+  
   // Direct email integration
   const sendViaEmail = useCallback(async () => {
     const isValid = await form.trigger();
@@ -742,12 +717,12 @@ export default function ContactPage() {
     const emailUrl = `mailto:codeswithrakib@gmail.com?subject=${subject}&body=${body}`;
     window.open(emailUrl, "_blank");
   }, [form]);
-
+  
   // Direct call integration
   const makeDirectCall = useCallback(() => {
     window.open("tel:+8801767476724", "_self");
   }, []);
-
+  
   // Memoized status functions
   const getStatusColor = useCallback(() => {
     switch (connectionStatus) {
@@ -763,7 +738,6 @@ export default function ContactPage() {
         return "text-emerald-500";
     }
   }, [connectionStatus]);
-
   const getStatusText = useCallback(() => {
     switch (connectionStatus) {
       case "sending":
@@ -778,7 +752,6 @@ export default function ContactPage() {
         return "Connected";
     }
   }, [connectionStatus]);
-
   const getStatusIcon = useCallback(() => {
     switch (connectionStatus) {
       case "sending":
@@ -793,21 +766,19 @@ export default function ContactPage() {
         return <Wifi className="w-4 h-4" />;
     }
   }, [connectionStatus]);
-
   const getLocationStatusText = useCallback(() => {
     if (locationLoading) return "Detecting your location...";
     if (locationError) return locationError;
     if (locationPermission === "denied") return "Location access denied";
     return userLocation || "Dhaka, Bangladesh";
   }, [locationLoading, locationError, locationPermission, userLocation]);
-
   const getLocationStatusColor = useCallback(() => {
     if (locationLoading) return "text-emerald-500";
     if (locationError) return "text-red-500";
     if (locationPermission === "denied") return "text-amber-500";
     return "text-slate-600 dark:text-slate-300";
   }, [locationLoading, locationError, locationPermission]);
-
+  
   // Form submission handler
   const onSubmit = useCallback(
     async (values: FormValues) => {
@@ -843,7 +814,6 @@ export default function ContactPage() {
             `,
           }),
         });
-
         // Send confirmation email to user
         await fetch("/api/email", {
           method: "POST",
@@ -886,7 +856,6 @@ export default function ContactPage() {
             `,
           }),
         });
-
         toast.success("Message sent successfully!");
         if (values.saveInfo) {
           localStorage.setItem(
@@ -917,11 +886,34 @@ export default function ContactPage() {
     },
     [form, files, isOnline, userLocation]
   );
-
+  
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+  const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.6 }
+  };
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-950 dark:to-slate-900 py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <div className="text-center mb-12">
+      {/* Simplified background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Single subtle gradient orb */}
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-green-200/10 dark:bg-green-800/10 blur-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+        <motion.div 
+          variants={fadeInUp}
+          initial="initial"
+          animate="animate"
+          className="text-center mb-12"
+        >
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
             Contact Me
           </h1>
@@ -929,11 +921,16 @@ export default function ContactPage() {
             Have a question or want to work together? Send me a message and
             I&apos;ll get back to you as soon as possible.
           </p>
-        </div>
-
+        </motion.div>
+        
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Contact Information */}
-          <div className="space-y-8">
+          <motion.div 
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
+            className="space-y-8"
+          >
             <div className="flex justify-between items-start">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -946,7 +943,7 @@ export default function ContactPage() {
               <div className="flex items-center gap-2">
                 {isOnline ? (
                   <div className="flex items-center gap-1 text-green-500">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     <span className="text-sm">Online</span>
                   </div>
                 ) : (
@@ -957,7 +954,7 @@ export default function ContactPage() {
                 )}
               </div>
             </div>
-
+            
             <div className="space-y-6">
               <div className="flex items-start gap-4 group">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
@@ -988,7 +985,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
-
+              
               <div className="flex items-start gap-4 group">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <Phone className="w-5 h-5" />
@@ -1021,7 +1018,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
-
+              
               <div className="flex items-start gap-4 group">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <MessageCircle className="w-5 h-5" />
@@ -1056,7 +1053,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
-
+              
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <MapPin className="w-5 h-5" />
@@ -1075,7 +1072,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               </div>
-
+              
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                   <Calendar className="w-5 h-5" />
@@ -1090,7 +1087,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
+            
             <div className="pt-6 border-t border-green-200 dark:border-green-700 space-y-4">
               <h3 className="font-semibold text-slate-900 dark:text-white">
                 Quick Actions
@@ -1100,10 +1097,7 @@ export default function ContactPage() {
                   variant="outline"
                   size="sm"
                   onClick={handleSchedulerOpen}
-                  className={cn(
-                    "flex items-center gap-2",
-                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  )}
+                  className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   Schedule Meeting
@@ -1112,10 +1106,7 @@ export default function ContactPage() {
                   variant="outline"
                   size="sm"
                   onClick={handleChatOpen}
-                  className={cn(
-                    "flex items-center gap-2",
-                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  )}
+                  className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                 >
                   <MessageSquareCode className="w-4 h-4" />
                   Live Chat
@@ -1126,10 +1117,7 @@ export default function ContactPage() {
                   onClick={() =>
                     window.open("https://wa.me/8801767476724", "_blank")
                   }
-                  className={cn(
-                    "flex items-center gap-2",
-                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  )}
+                  className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
                   WhatsApp
@@ -1138,17 +1126,14 @@ export default function ContactPage() {
                   variant="outline"
                   size="sm"
                   onClick={makeDirectCall}
-                  className={cn(
-                    "flex items-center gap-2",
-                    "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  )}
+                  className="border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 flex items-center gap-2"
                 >
                   <Phone className="w-4 h-4" />
                   Call Now
                 </Button>
               </div>
             </div>
-
+            
             <div className="pt-6 border-t border-green-200 dark:border-green-700/80">
               <h3 className="font-medium text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
                 Connect with me
@@ -1201,13 +1186,13 @@ export default function ContactPage() {
                 ))}
               </div>
             </div>
-
+            
             <div className="pt-6 border-t border-green-200 dark:border-green-700">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Star className="w-4 h-4 text-amber-500" />
                 Client Reviews
               </h3>
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-lg border border-green-100 dark:border-green-900/30">
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-100 dark:border-green-900/30">
                 <div className="flex items-center mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -1225,14 +1210,19 @@ export default function ContactPage() {
                 </p>
               </div>
             </div>
-          </div>
-
+          </motion.div>
+          
           {/* Contact Form */}
-          <div className="bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-green-100 dark:border-green-900/30 p-8">
+          <motion.div 
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
+            className="bg-gradient-to-br from-white to-green-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm rounded-2xl shadow-lg border border-green-100 dark:border-green-900/30 p-8"
+          >
             {isSubmitted ? (
               <div className="text-center py-12">
                 <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                     <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
@@ -1278,7 +1268,7 @@ export default function ContactPage() {
                       )}
                     </div>
                   </div>
-
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -1300,7 +1290,6 @@ export default function ContactPage() {
                         </FormItem>
                       )}
                     />
-
                     <FormField
                       control={form.control}
                       name="email"
@@ -1322,7 +1311,7 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
-
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -1344,7 +1333,6 @@ export default function ContactPage() {
                         </FormItem>
                       )}
                     />
-
                     <FormField
                       control={form.control}
                       name="subject"
@@ -1366,7 +1354,7 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
-
+                  
                   <FormField
                     control={form.control}
                     name="preferredContact"
@@ -1394,7 +1382,7 @@ export default function ContactPage() {
                                     className={cn(
                                       "w-full",
                                       field.value === option.value
-                                        ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md"
+                                        ? "bg-green-600 hover:bg-green-700 text-white"
                                         : "border-green-200 dark:border-green-800 hover:bg-green-50 dark:hover:bg-green-900/20"
                                     )}
                                     onClick={() => field.onChange(option.value)}
@@ -1410,7 +1398,7 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
-
+                  
                   <FormField
                     control={form.control}
                     name="hearAbout"
@@ -1435,7 +1423,7 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
-
+                  
                   <FormField
                     control={form.control}
                     name="message"
@@ -1474,7 +1462,7 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
-
+                  
                   {/* File Upload */}
                   <div>
                     <FormLabel className="flex items-center gap-2 text-slate-900 dark:text-white">
@@ -1494,10 +1482,7 @@ export default function ContactPage() {
                         type="button"
                         variant="outline"
                         onClick={() => fileInputRef.current?.click()}
-                        className={cn(
-                          "w-full flex items-center gap-2",
-                          "border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
-                        )}
+                        className="w-full flex items-center gap-2 border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                       >
                         <Upload className="w-4 h-4" />
                         Choose Files
@@ -1531,7 +1516,7 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </div>
-
+                  
                   {/* Checkboxes */}
                   <div className="space-y-3">
                     <FormField
@@ -1555,7 +1540,6 @@ export default function ContactPage() {
                         </FormItem>
                       )}
                     />
-
                     <FormField
                       control={form.control}
                       name="saveInfo"
@@ -1579,15 +1563,13 @@ export default function ContactPage() {
                       )}
                     />
                   </div>
-
+                  
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3">
                     <Button
                       type="submit"
                       disabled={isSubmitting || !isOnline}
-                      className={cn(
-                        "flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
-                      )}
+                      className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
@@ -1601,7 +1583,6 @@ export default function ContactPage() {
                         </>
                       )}
                     </Button>
-
                     <Button
                       type="button"
                       variant="outline"
@@ -1611,7 +1592,6 @@ export default function ContactPage() {
                       <MessageCircle className="w-4 h-4" />
                       WhatsApp
                     </Button>
-
                     <Button
                       type="button"
                       variant="outline"
@@ -1621,7 +1601,6 @@ export default function ContactPage() {
                       <MailIcon className="w-4 h-4" />
                       Email
                     </Button>
-
                     <Button
                       type="button"
                       variant="outline"
@@ -1631,7 +1610,7 @@ export default function ContactPage() {
                       Clear Draft
                     </Button>
                   </div>
-
+                  
                   <p className="text-xs text-center text-slate-500 dark:text-slate-400">
                     By submitting this form, you agree to our privacy policy.
                     We&apos;ll never share your information with third parties.
@@ -1639,10 +1618,10 @@ export default function ContactPage() {
                 </form>
               </Form>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
-
+      
       {/* Meeting Scheduler Modal */}
       <AnimatePresence>
         {showScheduler && (
@@ -1727,7 +1706,7 @@ export default function ContactPage() {
               </div>
               <div className="mt-6">
                 <Button
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex items-center gap-2"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
                   onClick={handleScheduleMeeting}
                   disabled={isScheduling || !meetingDate}
                 >
@@ -1748,7 +1727,7 @@ export default function ContactPage() {
           </motion.div>
         )}
       </AnimatePresence>
-
+      
       {/* Live Chat Modal */}
       <AnimatePresence>
         {showChat && (
@@ -1822,13 +1801,13 @@ export default function ContactPage() {
                     <div className="flex justify-start">
                       <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg max-w-[80%]">
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"></div>
+                          <div className="w-2 h-2 rounded-full bg-slate-400"></div>
                           <div
-                            className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"
+                            className="w-2 h-2 rounded-full bg-slate-400"
                             style={{ animationDelay: "0.2s" }}
                           ></div>
                           <div
-                            className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"
+                            className="w-2 h-2 rounded-full bg-slate-400"
                             style={{ animationDelay: "0.4s" }}
                           ></div>
                         </div>

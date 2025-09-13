@@ -38,6 +38,7 @@ export default function ProjectsSection() {
       ) {
         return false;
       }
+      
       // Filter by search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -52,23 +53,20 @@ export default function ProjectsSection() {
           return false;
         }
       }
+      
       // Filter by selected tag
       if (selectedTag && !project.tags.includes(selectedTag)) {
         return false;
       }
+      
       return true;
     });
   }, [activeFilter, searchQuery, selectedTag]);
 
-  // Throttled search handler
+  // Debounced search handler for better performance
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const now = performance.now();
-      if (now - lastUpdateRef.current > 300) {
-        // Throttle to ~3 updates per second
-        setSearchQuery(e.target.value);
-        lastUpdateRef.current = now;
-      }
+      setSearchQuery(e.target.value);
     },
     []
   );
@@ -85,26 +83,29 @@ export default function ProjectsSection() {
     setSelectedTag(tag);
   }, []);
 
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+
   return (
     <section
       id="projects"
       className="relative py-16 md:py-24 lg:py-32 overflow-hidden w-full"
     >
-      {/* Professional background with green theme */}
+      {/* Simplified professional background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20">
-        {/* Simplified animated gradient orbs */}
+        {/* Single subtle animated gradient orb */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-green-200/20 dark:bg-green-800/10 blur-3xl"
-          animate={{ y: [0, -30, 0] }}
+          animate={{ y: [0, -20, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full bg-emerald-200/20 dark:bg-emerald-800/10 blur-3xl"
-          animate={{ y: [0, 30, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-30">
+        
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-10 dark:opacity-20">
           <div
             className="w-full h-full"
             style={{
@@ -118,80 +119,31 @@ export default function ProjectsSection() {
           />
         </div>
       </div>
-
-      {/* Simplified floating shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.03, 0] }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: Math.random() * 5,
-            }}
-            className="absolute rounded-full"
-            style={{
-              width: `${Math.random() * 150 + 50}px`,
-              height: `${Math.random() * 150 + 50}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background:
-                i % 2 === 0
-                  ? "radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0) 70%)"
-                  : "radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%)",
-              filter: "blur(70px)",
-            }}
-          />
-        ))}
-      </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Header with green theme */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-12 md:mb-16"
         >
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             My{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400">
               Projects
             </span>
-          </motion.h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mx-auto mb-4 md:mb-6 transform origin-left"
-          />
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto px-4"
-          >
+          </h2>
+          <div className="w-20 md:w-24 h-1 bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mx-auto mb-4 md:mb-6" />
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto px-4">
             Selected work showcasing my full-stack development capabilities
-          </motion.p>
+          </p>
         </motion.div>
-
         {/* Search bar */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
           className="max-w-2xl mx-auto mb-6 md:mb-8 w-full"
         >
@@ -214,12 +166,11 @@ export default function ProjectsSection() {
             )}
           </div>
         </motion.div>
-
         {/* Filter tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
           className="flex justify-center mb-8 md:mb-12 w-full"
         >
@@ -239,12 +190,11 @@ export default function ProjectsSection() {
             ))}
           </div>
         </motion.div>
-
         {/* Tags filter */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
           className="mb-8 md:mb-12 w-full"
         >
@@ -277,18 +227,16 @@ export default function ProjectsSection() {
             ))}
           </div>
         </motion.div>
-
         {/* Results count */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
           className="text-center mb-6 md:mb-8 text-slate-600 dark:text-slate-400 text-sm"
         >
           Showing {filteredProjects.length} of {projects.length} projects
         </motion.div>
-
         {/* Projects grid */}
         <div className="grid grid-cols-1 gap-6 md:gap-8 w-full">
           {filteredProjects.length > 0 ? (
@@ -297,8 +245,9 @@ export default function ProjectsSection() {
             ))
           ) : (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
               className="col-span-full text-center py-12 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl border border-green-200/50 dark:border-green-700/50"
             >
               <h3 className="text-lg md:text-xl font-medium text-slate-900 dark:text-white mb-2">
@@ -310,22 +259,23 @@ export default function ProjectsSection() {
             </motion.div>
           )}
         </div>
-
         {/* View more button */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
           className="text-center mt-12 md:mt-16"
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-medium shadow-md transition-all text-sm sm:text-base"
-          >
-            <Link href="/projects">View All Projects</Link>
-          </motion.button>
+          <Link href="/projects">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-medium shadow-md transition-all text-sm sm:text-base"
+            >
+              View All Projects
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

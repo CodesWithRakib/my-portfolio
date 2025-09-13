@@ -28,6 +28,12 @@ interface NavItem {
   icon: React.ReactNode;
 }
 
+interface SocialLink {
+  name: string;
+  url: string;
+  icon: React.ReactNode;
+}
+
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
@@ -39,43 +45,35 @@ export default function Navbar() {
   const resumePath = "/Md_Rakib_Islam_Resume.pdf";
   const resumeFileName = "Md_Rakib_Islam_Resume.pdf";
 
-  // Navigation items with icons
+  // Navigation items
   const navItems: NavItem[] = useMemo(
     () => [
-      { name: "Home", path: "/", icon: <Home className="w-4 h-4" /> },
-      { name: "About", path: "/about", icon: <User className="w-4 h-4" /> },
-      { name: "Skills", path: "/skills", icon: <Wrench className="w-4 h-4" /> },
-      {
-        name: "Projects",
-        path: "/projects",
-        icon: <FolderOpen className="w-4 h-4" />,
-      },
-      {
-        name: "Contact",
-        path: "/contact",
-        icon: <MessageSquare className="w-4 h-4" />,
-      },
+      { name: "Home", path: "/", icon: <Home className="w-5 h-5" /> },
+      { name: "About", path: "/about", icon: <User className="w-5 h-5" /> },
+      { name: "Skills", path: "/skills", icon: <Wrench className="w-5 h-5" /> },
+      { name: "Projects", path: "/projects", icon: <FolderOpen className="w-5 h-5" /> },
+      { name: "Contact", path: "/contact", icon: <MessageSquare className="w-5 h-5" /> },
     ],
     []
   );
 
   // Social links
-  const socialLinks = useMemo(
+  const socialLinks: SocialLink[] = useMemo(
     () => [
       {
         name: "LinkedIn",
         url: "https://linkedin.com/in/codeswithrakib",
-        icon: <Linkedin className="w-5 h-5" />,
+        icon: <Linkedin className="w-6 h-6" />,
       },
       {
         name: "GitHub",
         url: "https://github.com/codeswithrakib",
-        icon: <Github className="w-5 h-5" />,
+        icon: <Github className="w-6 h-6" />,
       },
       {
         name: "Email",
         url: "mailto:codeswithrakib@gmail.com",
-        icon: <Mail className="w-5 h-5" />,
+        icon: <Mail className="w-6 h-6" />,
       },
     ],
     []
@@ -84,45 +82,43 @@ export default function Navbar() {
   // Check if link is active
   const isActive = useCallback(
     (path: string) => {
-      if (path === "/") {
-        return pathname === "/";
-      }
+      if (path === "/") return pathname === "/";
       return pathname === path || pathname.startsWith(`${path}/`);
     },
     [pathname]
   );
+
+  // Handle scroll for sticky navbar effect
+  useEffect(() => {
+    setMounted(true);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Scroll detection
-  useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Theme icon
+  // Theme icon with loading state
   const themeIcon = useMemo(() => {
-    if (!mounted) return <div className="w-5 h-5" />;
+    if (!mounted) return <div className="w-6 h-6" />;
     return theme === "dark" ? (
-      <Sun className="w-5 h-5" />
+      <Sun className="w-6 h-6 transition-transform hover:scale-110" />
     ) : (
-      <Moon className="w-5 h-5" />
+      <Moon className="w-6 h-6 transition-transform hover:scale-110" />
     );
   }, [theme, mounted]);
 
-  // Toggle theme handler
+  // Toggle theme
   const toggleTheme = useCallback(() => {
     setTheme(theme === "dark" ? "light" : "dark");
   }, [theme, setTheme]);
 
-  // Mobile menu toggle
+  // Toggle mobile menu
   const toggleMobileMenu = useCallback(() => {
     setMobileOpen((prev) => !prev);
   }, []);
@@ -141,55 +137,52 @@ export default function Navbar() {
     link.click();
     document.body.removeChild(link);
     closeMobileMenu();
-  }, [closeMobileMenu, resumePath, resumeFileName]);
+  }, [resumePath, resumeFileName, closeMobileMenu]);
 
   return (
     <>
-      {/* Skip to content link */}
+      {/* Skip to content link for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 rounded-md z-50"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-2 rounded-lg z-50 transition-all duration-200"
       >
         Skip to content
       </a>
 
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 w-full",
+          "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
           scrolled
-            ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md py-2 sm:py-3 border-b border-green-500/20 dark:border-green-400/20 shadow-lg"
-            : "lg:bg-transparent bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm py-3 sm:py-5 border-b border-green-500/10 dark:border-green-400/10"
+            ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg shadow-md border-b border-green-500/20"
+            : "bg-transparent"
         )}
       >
         <nav
-          className="flex items-center justify-between px-4 max-w-7xl mx-auto w-full"
+          className="flex items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-4"
           aria-label="Main navigation"
         >
           {/* Logo */}
           <Link
             href="/"
-            className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-green-500 rounded-md px-3 py-1"
+            className="text-2xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-lg"
             aria-label="Home page"
           >
             CodesWithRakib
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:block">
-            <ul
-              className="flex items-center space-x-1 md:space-x-2"
-              role="menubar"
-            >
+          <div className="hidden lg:flex items-center gap-2">
+            <ul className="flex items-center gap-2" role="menubar">
               {navItems.map((item) => (
                 <li key={item.path} role="none">
                   <Link
                     href={item.path}
                     role="menuitem"
                     className={cn(
-                      "relative px-3 md:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-green-500",
+                      "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200",
                       isActive(item.path)
-                        ? "text-white bg-gradient-to-r from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400 shadow-md"
-                        : "text-slate-700 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400"
+                        ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-sm"
+                        : "text-slate-700 dark:text-slate-200 hover:bg-green-50 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400"
                     )}
                     aria-current={isActive(item.path) ? "page" : undefined}
                   >
@@ -201,44 +194,54 @@ export default function Navbar() {
             </ul>
           </div>
 
-          {/* Right controls */}
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-            {/* Theme toggle */}
+          {/* Right Controls */}
+          <div className="flex items-center gap-3">
+            {/* Social Links (Desktop) */}
+            <div className="hidden lg:flex items-center gap-2">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-green-100 dark:hover:bg-green-900/50 transition-all duration-200"
+                  aria-label={link.name}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+
+            {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="rounded-full text-slate-600 dark:text-slate-300 hover:bg-green-100 dark:hover:bg-green-900/50 transition-all duration-200"
               onClick={toggleTheme}
-              aria-label="Toggle theme"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
               {themeIcon}
             </Button>
 
             {/* Resume Button */}
-            <div className="hidden sm:block">
-              <Button
-                className="rounded-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-                onClick={handleResumeDownload}
-              >
-                <FileText className="w-4 h-4 mr-1" />
-                Resume
-              </Button>
-            </div>
+            <Button
+              className="hidden sm:flex items-center gap-2 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+              onClick={handleResumeDownload}
+            >
+              <FileText className="w-5 h-5" />
+              Resume
+            </Button>
 
-            {/* Mobile menu toggle */}
+            {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="lg:hidden rounded-full text-slate-600 dark:text-slate-300 hover:bg-green-100 dark:hover:bg-green-900/50 transition-all duration-200"
               onClick={toggleMobileMenu}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
             >
-              {mobileOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
           </div>
         </nav>
@@ -249,86 +252,76 @@ export default function Navbar() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
             onClick={closeMobileMenu}
             aria-hidden="true"
           />
 
-          {/* Sidebar with simple slide-in animation */}
+          {/* Sidebar */}
           <div
-            className="fixed top-0 right-0 z-50 h-full w-full max-w-xs sm:max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-transform duration-300"
-            style={{
-              transform: mobileOpen ? "translateX(0)" : "translateX(100%)",
-              transition: "transform 0.3s ease-in-out",
-            }}
+            className={cn(
+              "fixed top-0 right-0 z-50 h-full w-80 bg-white dark:bg-slate-950 shadow-2xl border-l border-slate-200 dark:border-slate-800 overflow-y-auto transition-transform duration-300 ease-in-out",
+              mobileOpen ? "translate-x-0" : "translate-x-full"
+            )}
           >
-            {/* Header section */}
-            <div className="px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-800">
               <Link
                 href="/"
-                className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent focus:outline-none focus:ring-2 focus:ring-green-500 rounded-md"
+                className="text-2xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-500 dark:to-emerald-500 bg-clip-text text-transparent"
                 onClick={closeMobileMenu}
                 aria-label="Home page"
               >
                 CodesWithRakib
               </Link>
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={closeMobileMenu}
                 aria-label="Close menu"
-                className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="text-slate-600 dark:text-slate-300 hover:bg-green-100 dark:hover:bg-green-900/50"
               >
-                <X className="w-5 h-5 sm:w-6 sm:h-6 text-slate-700 dark:text-slate-300" />
-              </button>
+                <X className="w-6 h-6" />
+              </Button>
             </div>
 
-            {/* Main navigation */}
-            <nav className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
-              <ul className="space-y-2 sm:space-y-3" role="menu">
+            {/* Navigation */}
+            <nav className="px-6 py-8">
+              <ul className="space-y-3" role="menu">
                 {navItems.map((item) => (
                   <li key={item.path} role="none">
                     <Link
                       href={item.path}
                       role="menuitem"
                       className={cn(
-                        "flex items-center px-3 sm:px-4 py-3 sm:py-4 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-green-500",
+                        "flex items-center gap-3 px-4 py-3 rounded-lg text-lg font-semibold transition-all duration-200",
                         isActive(item.path)
-                          ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"
-                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/50 dark:hover:bg-slate-800/50"
+                          ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30"
+                          : "text-slate-700 dark:text-slate-200 hover:bg-green-50 dark:hover:bg-green-900/30"
                       )}
                       onClick={closeMobileMenu}
                       aria-current={isActive(item.path) ? "page" : undefined}
                     >
-                      <div
-                        className={cn(
-                          "p-2 rounded-lg mr-3",
-                          isActive(item.path)
-                            ? "bg-green-500/20 text-green-600 dark:text-green-400"
-                            : "bg-slate-100/50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300"
-                        )}
-                      >
-                        {item.icon}
-                      </div>
-                      <span className="text-base sm:text-lg font-semibold">
-                        {item.name}
-                      </span>
+                      {item.icon}
+                      <span>{item.name}</span>
                     </Link>
                   </li>
                 ))}
               </ul>
 
-              {/* Social links */}
-              <div className="mt-8 sm:mt-12">
-                <h3 className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4">
+              {/* Social Links */}
+              <div className="mt-8">
+                <h3 className="px-4 text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
                   Connect With Me
                 </h3>
-                <div className="flex justify-center space-x-3 sm:space-x-4">
+                <div className="flex justify-center gap-4">
                   {socialLinks.map((link) => (
                     <a
                       key={link.name}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-all duration-200 text-slate-600 dark:text-slate-300"
                       aria-label={link.name}
                     >
                       {link.icon}
@@ -338,26 +331,15 @@ export default function Navbar() {
               </div>
             </nav>
 
-            {/* Footer section */}
-            <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
+            {/* Footer */}
+            <div className="px-6 py-6 border-t border-slate-200 dark:border-slate-800">
               <Button
-                className="w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-md hover:shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
+                className="w-full rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
                 onClick={handleResumeDownload}
               >
-                <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <Download className="w-5 h-5 mr-2" />
                 Download Resume
               </Button>
-              <div className="flex justify-center mt-4 sm:mt-6">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
-                  onClick={toggleTheme}
-                  aria-label="Toggle theme"
-                >
-                  {themeIcon}
-                </Button>
-              </div>
             </div>
           </div>
         </>

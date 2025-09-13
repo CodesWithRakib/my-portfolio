@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -28,28 +28,20 @@ interface SocialLink {
   hoverColor: string;
   url: string;
 }
-
 interface SkillBadge {
   icon: React.ReactNode;
   name: string;
   color: string;
-  hoverColor: string;
 }
 
 export default function Hero() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
+  
   // Resume file path - centralized for consistency
-  const resumePath = "/Md_Rakib_Islam_Resume.pdf";
-  const resumeFileName = "Md_Rakib_Islam_Resume.pdf";
+  const resumePath = "/Md_Rakib_Islam_Full_Stack_Resume.pdf";
+  const resumeFileName = "Md_Rakib_Islam_Full_Stack_Resume.pdf";
 
   // Set isClient to true when component mounts on client
   useEffect(() => {
@@ -66,41 +58,21 @@ export default function Hero() {
     document.body.removeChild(link);
   }, [resumePath, resumeFileName]);
 
-  // Memoize grid background style
-  const gridBackgroundStyle = useMemo(() => {
+  // Memoize background style
+  const backgroundStyle = useMemo(() => {
     if (!isClient) {
       return {
-        backgroundImage: `
-          linear-gradient(to right, currentColor 1px, transparent 1px),
-          linear-gradient(to bottom, currentColor 1px, transparent 1px)
-        `,
-        backgroundSize: "40px 40px",
-        color: "#94a3b8",
-        opacity: 0.2,
+        background: "linear-gradient(135deg, #f5f7fa 0%, #e4f1f5 100%)",
       };
     }
     return {
-      backgroundImage: `
-        linear-gradient(to right, currentColor 1px, transparent 1px),
-        linear-gradient(to bottom, currentColor 1px, transparent 1px)
-      `,
-      backgroundSize: "40px 40px",
-      color: resolvedTheme === "dark" ? "#94a3b8" : "#94a3b8",
-      opacity: resolvedTheme === "dark" ? 0.3 : 0.2,
+      background: resolvedTheme === "dark" 
+        ? "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" 
+        : "linear-gradient(135deg, #f5f7fa 0%, #e4f1f5 100%)",
     };
   }, [resolvedTheme, isClient]);
 
-  // Memoize radial gradient style - updated to green colors
-  const radialGradientStyle = useMemo(() => {
-    return {
-      background:
-        resolvedTheme === "dark"
-          ? "radial-gradient(800px at 50% 50%, rgba(16, 185, 129, 0.15), transparent 70%)"
-          : "radial-gradient(800px at 50% 50%, rgba(16, 185, 129, 0.25), transparent 70%)",
-    };
-  }, [resolvedTheme]);
-
-  // Memoize social links with green theme colors
+  // Memoize social links
   const socialLinks: SocialLink[] = useMemo(
     () => [
       {
@@ -135,139 +107,94 @@ export default function Hero() {
     []
   );
 
-  // Memoize skill badges with green theme colors
+  // Memoize skill badges
   const skillBadges: SkillBadge[] = useMemo(
     () => [
       {
         icon: <Code className="h-4 w-4" />,
         name: "Next.js",
-        color: "bg-gradient-to-r from-emerald-500 to-green-500",
-        hoverColor: "from-emerald-600 to-green-600",
+        color: "bg-emerald-500",
       },
       {
         icon: <Palette className="h-4 w-4" />,
         name: "UI/UX",
-        color: "bg-gradient-to-r from-green-500 to-lime-500",
-        hoverColor: "from-green-600 to-lime-600",
+        color: "bg-green-500",
       },
       {
         icon: <Zap className="h-4 w-4" />,
         name: "Performance",
-        color: "bg-gradient-to-r from-lime-500 to-yellow-500",
-        hoverColor: "from-lime-600 to-yellow-600",
+        color: "bg-lime-500",
       },
     ],
     []
   );
+
+  // Animation variants
+  const fadeInUp = {
+    initial: { y: 30, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: { duration: 0.6 }
+  };
+  const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.8 }
+  };
 
   return (
     <section
       ref={heroRef}
       className={cn(
         "relative w-full min-h-screen overflow-hidden",
-        "py-16 sm:py-20 md:py-24"
+        "py-16 "
       )}
+      style={backgroundStyle}
     >
-      {/* Simplified background with green gradient and pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-emerald-50 to-green-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-30">
-          <div className="w-full h-full" style={gridBackgroundStyle} />
-        </div>
-
-        {/* Simplified animated gradient orbs with green colors */}
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-emerald-200/30 dark:bg-emerald-800/20 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 15, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: 2,
-          }}
-          className="absolute bottom-1/4 right-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-green-200/30 dark:bg-green-800/20 blur-3xl"
-        />
+      {/* Simplified background with subtle pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5NGEzYjgiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZD0iTTQwIDBIMHY0MCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
       </div>
-
-      {/* Simplified background elements */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <motion.div
-          style={{ y: y.get(), opacity: opacity.get() }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
-        >
-          <div className="absolute inset-0 z-0" style={radialGradientStyle} />
-        </motion.div>
-
-        {/* Simplified animated blobs with green colors */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 2 }}
-          className="absolute rounded-full bg-emerald-500/20 dark:bg-emerald-500/20 blur-3xl"
-          style={{
-            width: "400px",
-            height: "400px",
-            left: "5%",
-            top: "15%",
-          }}
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 2, delay: 0.5 }}
-          className="absolute rounded-full bg-green-500/20 dark:bg-green-500/20 blur-3xl"
-          style={{
-            width: "500px",
-            height: "500px",
-            right: "5%",
-            bottom: "15%",
-          }}
-        />
-      </div>
-
+      
+      {/* Single subtle animated gradient orb */}
+      <motion.div
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-emerald-200/20 dark:bg-emerald-800/20 blur-3xl"
+      />
+      
       <div className="relative z-10 container mx-auto min-h-screen flex items-center px-4 sm:px-6 lg:px-8 w-full max-w-7xl">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Text Content Section */}
           <div className="order-2 lg:order-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
             <motion.div
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
               className="w-full max-w-2xl lg:max-w-none"
             >
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
+                variants={fadeIn}
+                initial="initial"
+                animate="animate"
                 className="flex items-center justify-center lg:justify-start gap-2 text-base md:text-lg font-mono text-emerald-600 dark:text-emerald-400 mb-4"
               >
-                <div className="bg-gradient-to-r from-emerald-500 to-green-500 p-1 rounded-full">
+                <div className="bg-emerald-500 p-1 rounded-full">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <span>Hello, I&apos;m</span>
               </motion.div>
-
+              
               <motion.h1
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-sans mb-4 leading-tight"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
               >
                 <span className="block text-slate-900 dark:text-white">
                   Rakib
@@ -276,12 +203,12 @@ export default function Hero() {
                   Islam.
                 </span>
               </motion.h1>
-
+              
               <motion.div
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
                 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-slate-700 dark:text-slate-300 mb-6 h-10 md:h-12 lg:h-14"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
               >
                 <TypeAnimation
                   sequence={[
@@ -302,11 +229,11 @@ export default function Hero() {
                   deletionSpeed={30}
                 />
               </motion.div>
-
+              
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
                 className="text-base md:text-lg text-slate-700 dark:text-slate-300 mb-6 md:mb-8 max-w-2xl leading-relaxed"
               >
                 I&apos;m a passionate full stack developer who transforms ideas
@@ -325,12 +252,12 @@ export default function Hero() {
                 stack, I build scalable, performant applications that delight
                 users and solve real-world problems.
               </motion.p>
-
+              
               {/* Simplified skill badges */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
                 className="flex flex-wrap justify-center lg:justify-start gap-2 md:gap-3 mb-6 md:mb-8"
               >
                 {skillBadges.map((skill, index) => (
@@ -346,18 +273,17 @@ export default function Hero() {
                   </div>
                 ))}
               </motion.div>
-
+              
               {/* Simplified buttons */}
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
                 className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center lg:justify-start w-full"
               >
-                {/* Primary button */}
                 <Button
                   asChild
-                  className="rounded-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white w-full sm:w-auto"
+                  className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-white w-full sm:w-auto"
                   size="lg"
                 >
                   <Link href="/projects">
@@ -367,8 +293,7 @@ export default function Hero() {
                     </span>
                   </Link>
                 </Button>
-
-                {/* Secondary button */}
+                
                 <Button
                   onClick={handleResumeDownload}
                   variant="outline"
@@ -380,29 +305,14 @@ export default function Hero() {
                     <Download className="ml-2 h-4 w-4" />
                   </span>
                 </Button>
-
-                {/* Tertiary button */}
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="rounded-full text-lime-600 dark:text-lime-400 hover:bg-lime-50 dark:hover:bg-lime-900/20 w-full sm:w-auto"
-                  size="lg"
-                >
-                  <Link href="/contact">
-                    <span className="flex items-center justify-center">
-                      Contact Me
-                      <Mail className="ml-2 h-4 w-4" />
-                    </span>
-                  </Link>
-                </Button>
               </motion.div>
             </motion.div>
-
-            {/* Simplified social links */}
+            
+            {/* Social links */}
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
               className="flex gap-3 md:gap-4 mt-8 md:mt-12 justify-center lg:justify-start"
             >
               {socialLinks.map((social, i) => (
@@ -423,32 +333,30 @@ export default function Hero() {
               ))}
             </motion.div>
           </div>
-
+          
           {/* Profile Image Section */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
             className="relative order-1 lg:order-2 flex justify-center lg:justify-end w-full"
           >
             <div className="relative mx-auto lg:ml-auto lg:mr-0 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80">
-              {/* Simplified animated gradient border */}
+              {/* Simple gradient border */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 opacity-75 blur-md"></div>
-
+              
               {/* Profile image container */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
                 <Image
-                  src="/images/profile.png"
+                  src="/images/profile.jpg"
                   alt="Profile"
                   fill
                   className="object-cover"
                   priority
                 />
-                {/* Simplified overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity"></div>
               </div>
-
-              {/* Simplified floating badge */}
+              
+              {/* Simple floating badge */}
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -458,14 +366,10 @@ export default function Hero() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -bottom-2 -right-2 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-full p-3 shadow-lg"
+                className="absolute -bottom-2 -right-2 bg-emerald-500 text-white rounded-full p-3 shadow-lg"
               >
                 <Code className="h-5 w-5 md:h-6 md:w-6" />
               </motion.div>
-
-              {/* Simplified decorative elements */}
-              <div className="absolute -top-4 -left-4 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-emerald-400 to-green-400 blur-xl opacity-70"></div>
-              <div className="absolute -bottom-4 -right-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-green-400 to-lime-400 blur-xl opacity-70"></div>
             </div>
           </motion.div>
         </div>

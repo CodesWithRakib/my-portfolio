@@ -1,16 +1,18 @@
 "use client";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { FiSearch, FiX, FiFilter } from "react-icons/fi";
 import ProjectCard from "@/components/ProjectCard";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
   // Get all unique tags from projects
   const allTags = useMemo(() => {
@@ -28,6 +30,7 @@ export default function ProjectsPage() {
       if (activeFilter !== "all" && project.category !== activeFilter) {
         return false;
       }
+      
       // Filter by search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -42,10 +45,12 @@ export default function ProjectsPage() {
           return false;
         }
       }
+      
       // Filter by selected tag
       if (selectedTag && !project.tags.includes(selectedTag)) {
         return false;
       }
+      
       return true;
     });
   }, [activeFilter, searchQuery, selectedTag]);
@@ -76,15 +81,27 @@ export default function ProjectsPage() {
     setSelectedTag(tag);
   }, []);
 
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+  const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.6 }
+  };
+
   return (
     <div className="min-h-screen py-10 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 dark:from-slate-900 dark:via-green-900/20 dark:to-emerald-900/20 w-full">
       {/* Simplified Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Static gradient orbs instead of animated ones */}
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-green-200/15 dark:bg-green-800/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-emerald-200/15 dark:bg-emerald-800/10 blur-3xl" />
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-10 dark:opacity-20">
+        {/* Single subtle gradient orb */}
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-green-200/10 dark:bg-green-800/10 blur-3xl" />
+        
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5 dark:opacity-10">
           <div
             className="w-full h-full"
             style={{
@@ -98,10 +115,14 @@ export default function ProjectsPage() {
           />
         </div>
       </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10 md:py-12 lg:py-16">
         {/* Header */}
-        <div className="text-center mb-8 md:mb-12">
+        <motion.div 
+          variants={fadeInUp}
+          initial="initial"
+          animate="animate"
+          className="text-center mb-8 md:mb-12"
+        >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             My{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-400 dark:to-emerald-500">
@@ -112,10 +133,14 @@ export default function ProjectsPage() {
           <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto px-4">
             Selected work showcasing my full-stack development capabilities
           </p>
-        </div>
-
+        </motion.div>
         {/* Search and Filters */}
-        <div className="max-w-4xl mx-auto mb-8 md:mb-10 w-full">
+        <motion.div 
+          variants={fadeInUp}
+          initial="initial"
+          animate="animate"
+          className="max-w-4xl mx-auto mb-8 md:mb-10 w-full"
+        >
           <div className="relative mb-4 md:mb-6">
             <FiSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4 sm:w-5 sm:h-5" />
             <Input
@@ -134,7 +159,6 @@ export default function ProjectsPage() {
               </button>
             )}
           </div>
-
           <Tabs
             value={activeFilter}
             onValueChange={handleFilterChange}
@@ -145,14 +169,13 @@ export default function ProjectsPage() {
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-700 data-[state=active]:text-white text-xs sm:text-sm"
+                  className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-xs sm:text-sm"
                 >
                   {category.label}
                 </TabsTrigger>
               ))}
             </TabsList>
           </Tabs>
-
           <div className="mt-4 md:mt-6">
             <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-2 md:mb-3 flex items-center gap-1">
               <FiFilter className="text-green-500 w-4 h-4" />
@@ -178,15 +201,24 @@ export default function ProjectsPage() {
               ))}
             </div>
           </div>
-        </div>
-
+        </motion.div>
         {/* Results count */}
-        <div className="text-center mb-6 md:mb-8 text-slate-600 dark:text-slate-400 text-sm">
+        <motion.div 
+          variants={fadeIn}
+          initial="initial"
+          animate="animate"
+          className="text-center mb-6 md:mb-8 text-slate-600 dark:text-slate-400 text-sm"
+        >
           Showing {filteredProjects.length} of {projects.length} projects
-        </div>
-
+        </motion.div>
         {/* Projects grid */}
-        <div className="grid grid-cols-1 gap-4 md:gap-6 w-full">
+        <motion.div 
+          ref={projectsRef}
+          variants={fadeIn}
+          initial="initial"
+          animate="animate"
+          className="grid grid-cols-1 gap-4 md:gap-6 w-full"
+        >
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
@@ -201,7 +233,7 @@ export default function ProjectsPage() {
               </p>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
