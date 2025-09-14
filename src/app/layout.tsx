@@ -74,6 +74,8 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#f0fdf4" }, // Light green background
     { media: "(prefers-color-scheme: dark)", color: "#022c22" }, // Dark green background
   ],
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -85,7 +87,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${firaCode.variable} ${jetbrainsMono.variable} font-sans bg-background text-foreground`}
+        className={`${inter.variable} ${firaCode.variable} ${jetbrainsMono.variable} font-sans bg-background text-foreground antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -95,12 +97,12 @@ export default function RootLayout({
         >
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 w-full font-jetbrains-mono pt-16 sm:pt-20">
-              <div className="">{children}</div>
+            <main className=" w-full">     
+                {children}
             </main>
             <Footer />
           </div>
-          <Toaster />
+          <Toaster position="bottom-right" closeButton expand={true} />
         </ThemeProvider>
       </body>
     </html>

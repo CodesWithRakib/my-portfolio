@@ -145,7 +145,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       className={cn(
-        "relative w-full min-h-screen overflow-hidden",
+        "relative w-full overflow-hidden",
         "py-16 "
       )}
       style={backgroundStyle}

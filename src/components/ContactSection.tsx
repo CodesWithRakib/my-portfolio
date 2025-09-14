@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,22 +25,7 @@ export default function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Check for reduced motion preference and low-end devices
-  useEffect(() => {
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setReducedMotion(prefersReducedMotion);
-    
-    // Check for low-end device
-    const isLowEndDevice = navigator.hardwareConcurrency <= 4 || 
-                          (navigator as any).deviceMemory <= 2;
-    
-    if (isLowEndDevice) {
-      setReducedMotion(true);
-    }
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -396,7 +381,7 @@ export default function ContactSection() {
                       Location
                     </h4>
                     <p className="text-slate-600 dark:text-slate-300">
-                      Dhaka, Bangladesh
+                      Dinajpur, Bangladesh
                     </p>
                   </div>
                 </div>
@@ -465,7 +450,7 @@ export default function ContactSection() {
                 </a>
                 
                 <a
-                  href="https://twitter.com/codeswithrakib"
+                  href="https://x.com/codeswithrakib"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-full bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black transition-colors"

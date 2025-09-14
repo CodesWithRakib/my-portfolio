@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback} from "react";
 import { motion } from "framer-motion";
 import { FiSearch, FiX } from "react-icons/fi";
 import ProjectCard from "@/components/ProjectCard";
@@ -11,7 +11,6 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const lastUpdateRef = useRef(0);
 
   // Memoized categories
   const categories = useMemo(

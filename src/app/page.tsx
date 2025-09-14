@@ -6,12 +6,12 @@ import SkillsSection from "@/components/SkillsSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen font-jetbrains-mono">
+    <div className="overflow-hidden">
       <Hero />
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
-    </main>
+    </div>
   );
 }

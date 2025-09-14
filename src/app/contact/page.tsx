@@ -893,12 +893,8 @@ export default function ContactPage() {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.5 }
   };
-  const fadeIn = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    transition: { duration: 0.6 }
-  };
-  
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-950 dark:to-slate-900 py-20">
       {/* Simplified background */}

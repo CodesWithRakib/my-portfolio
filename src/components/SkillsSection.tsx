@@ -9,10 +9,9 @@ import {
   Shield,
   Layers,
   GitBranch,
-  CheckCircle,
   Sparkles,
 } from "lucide-react";
-import { useRef, useState, useMemo, useCallback } from "react";
+import { useRef, useState, useMemo, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -173,7 +172,7 @@ const SkillCard = ({
       onHoverStart={handleHoverStart}
       onHoverEnd={handleHoverEnd}
       className={cn(
-        "relative overflow-hidden bg-white dark:bg-slate-800 rounded-xl shadow-md p-4 md:p-6 border w-full h-full",
+        "relative overflow-hidden bg-white dark:bg-slate-800 rounded-xl shadow-md p-4 md:p-6 border w-full",
         category.borderColor,
         "hover:shadow-lg transition-all duration-300",
         hoveredCategory === category.category &&
@@ -187,9 +186,7 @@ const SkillCard = ({
             category.bgColor
           )}
         >
-          <div className={category.color}>
-            {category.icon}
-          </div>
+          <div className={category.color}>{category.icon}</div>
         </div>
         <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
           {category.category}
@@ -285,11 +282,11 @@ const TechItem = ({ tech }: { tech: TechImage }) => {
 };
 
 // Simplified Marquee Component
-const TechMarquee = ({ 
-  techImages, 
-  isPaused 
-}: { 
-  techImages: TechImage[]; 
+const TechMarquee = ({
+  techImages,
+  isPaused,
+}: {
+  techImages: TechImage[];
   isPaused: boolean;
 }) => {
   return (
@@ -297,7 +294,7 @@ const TechMarquee = ({
       {/* Gradient fade edges */}
       <div className="absolute inset-y-0 left-0 w-8 md:w-16 z-10 bg-gradient-to-r from-white to-transparent dark:from-slate-800 dark:to-transparent"></div>
       <div className="absolute inset-y-0 right-0 w-8 md:w-16 z-10 bg-gradient-to-l from-white to-transparent dark:from-slate-800 dark:to-transparent"></div>
-      
+
       {/* Marquee track */}
       <motion.div
         className="flex"
@@ -320,19 +317,29 @@ const TechMarquee = ({
 };
 
 export default function SkillsSection() {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Handle mounting to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use resolvedTheme for more reliable theme detection
+  const currentTheme = mounted ? resolvedTheme || theme : "light";
 
   // Background style based on theme
   const backgroundStyle = useMemo(() => {
     return {
-      background: theme === "dark" 
-        ? "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" 
-        : "linear-gradient(135deg, #f5f7fa 0%, #e4f1f5 100%)",
+      background:
+        currentTheme === "dark"
+          ? "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
+          : "linear-gradient(135deg, #f5f7fa 0%, #e4f1f5 100%)",
     };
-  }, [theme]);
+  }, [currentTheme]);
 
   return (
     <section
@@ -345,7 +352,7 @@ export default function SkillsSection() {
       <div className="absolute inset-0 opacity-10">
         <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5NGEzYjgiIGZpbGwtb3BhY2l0eT0iMC4yIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6Ii8+PHBhdGggZD0iTTQwIDBIMHY0MCIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9nPjwvc3ZnPg==')]"></div>
       </div>
-      
+
       {/* Single subtle animated orb */}
       <motion.div
         animate={{
@@ -358,7 +365,7 @@ export default function SkillsSection() {
         }}
         className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-green-200/20 dark:bg-green-800/20 blur-3xl"
       />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section header */}
         <motion.div
@@ -381,7 +388,8 @@ export default function SkillsSection() {
             <span className="text-green-600 dark:text-green-400 font-semibold">
               MERN Stack Developer
             </span>
-            , I continuously expand my technical toolkit to build better solutions
+            , I continuously expand my technical toolkit to build better
+            solutions
           </p>
         </motion.div>
         {/* Skills grid */}
@@ -426,10 +434,10 @@ export default function SkillsSection() {
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 md:mb-8 text-center">
             Technologies I Work With
           </h3>
-          
+
           {/* Simplified Marquee */}
           <TechMarquee techImages={techImages} isPaused={isPaused} />
-          
+
           {/* Pause indicator */}
           <div className="flex justify-center mt-4">
             <span className="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">

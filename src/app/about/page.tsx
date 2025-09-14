@@ -64,8 +64,8 @@ export default function AboutPage() {
   const tabContentRef = useRef<HTMLDivElement>(null);
   
   // Resume file path - centralized for consistency
-  const resumePath = "/Md_Rakib_Islam_Resume.pdf";
-  const resumeFileName = "Md_Rakib_Islam_Resume.pdf";
+  const resumePath = "/Md_Rakib_Islam_Full_Stack_Resume.pdf";
+  const resumeFileName = "Md_Rakib_Islam_Full_Stack_Resume.pdf";
 
   // Fix hydration issues
   useEffect(() => {
@@ -367,7 +367,7 @@ export default function AboutPage() {
                     onClick={handleResumeDownload}
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Download CV
+                    Download Resume
                   </Button>
                 </div>
               </div>
@@ -456,7 +456,7 @@ export default function AboutPage() {
                   {/* Timeline line */}
                   <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-400 to-emerald-500 dark:from-green-600 dark:to-emerald-700"></div>
                   <div className="space-y-4 md:space-y-6">
-                    {experienceItems.map((item, index) => (
+                    {experienceItems.map((item) => (
                       <div key={item.id} className="relative">
                         {/* Timeline dot */}
                         <div className="absolute left-2 w-5 h-5 rounded-full bg-gradient-to-r from-green-600 to-emerald-700 dark:from-green-500 dark:to-emerald-600 z-10 border-4 border-white dark:border-slate-800"></div>

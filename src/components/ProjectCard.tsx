@@ -43,7 +43,7 @@ const getCategoryColor = (category: string) => {
   return "from-green-600 to-emerald-600";
 };
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const categoryGradient = getCategoryColor(project.category);
 

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Ably from "ably";
 
-const ably = new Ably.Realtime(process.env.NEXT_PUBLIC_ABLY_API_KEY!);
-
 export async function POST(request: NextRequest) {
   try {
     const { message, sender, channelId } = await request.json();
@@ -13,6 +11,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // ✅ Initialize Ably at runtime
+    const ably = new Ably.Realtime(process.env.ABLY_API_KEY!);
 
     const channel = ably.channels.get(channelId);
 
