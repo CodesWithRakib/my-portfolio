@@ -287,7 +287,7 @@ export default function AboutPage() {
                   <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-white/20 backdrop-blur-sm mb-3 md:mb-5 overflow-hidden border-4 border-white/30">
                     {/* Profile image */}
                     <Image
-                      src="/images/profile.png"
+                      src="/images/profile.jpg"
                       alt="Profile"
                       width={112}
                       height={112}
